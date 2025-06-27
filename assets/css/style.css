@@ -39,3 +39,76 @@ display: flex;justify-content: space-between;align-items: center;padding: 10px 2
   pointer-events: none; /* để click không ảnh hưởng */
 }
 
+ :root{
+    --clr-bg: #f8f9fa;
+    --clr-title: #111;
+    --clr-text: #555;
+    --clr-link: #e60023;          /* accent đỏ tuỳ chỉnh */
+    --sp-xl: 40px;
+    --sp-lg: 24px;
+    --sp-md: 16px;
+    --sp-sm: 8px;
+    font-family: "Inter", Arial, sans-serif;
+  }
+
+  .footer{
+    background: var(--clr-bg);
+    padding: var(--sp-xl) 0;
+  }
+
+  .footer-container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--sp-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-xl);
+  }
+
+  .footer-column{
+    flex: 1 1 220px;          /* co giãn đẹp trên mọi cỡ màn hình */
+  }
+
+  .footer-column h3{
+    font-size: 18px;
+    color: var(--clr-title);
+    margin-bottom: var(--sp-md);
+    position: relative;
+  }
+
+  .footer-column ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-column ul li{
+    margin-bottom: var(--sp-sm);
+    color: var(--clr-text);
+    line-height: 1.5;
+  }
+
+  .footer-column ul li strong{
+    color: var(--clr-title);
+  }
+
+  .payment-methods{
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-sm);
+    align-items: center;
+  }
+
+  .payment-methods img{
+    height: 32px;
+    width: auto;
+  }
+
+  /* Mobile friendly */
+  @media (max-width: 768px){
+    .footer-container{
+      flex-direction: column;
+      gap: var(--sp-lg);
+    }
+  }
+
