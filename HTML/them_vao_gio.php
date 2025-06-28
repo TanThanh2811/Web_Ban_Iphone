@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -10,6 +11,42 @@
  
 </head>
 <body>
+<?php
+$conn = mysqli_connect("localhost", "root", "", "db_thanhhaobaniphone");
+if (!$conn) die("Lỗi kết nối CSDL");
+
+$id_user   = 1; // giả lập user login
+$maSP      = (int)($_POST['id_san_pham'] ?? 0);
+$so_luong  = max(1, (int)($_POST['so_luong'] ?? 1));
+$loaiSP    = 'Mới';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $maSP > 0) {
+  $check = mysqli_query($conn, "
+    SELECT id FROM gio_hang 
+    WHERE id_nguoi_dung = $id_user AND id_san_pham = $maSP AND loaiSP = '$loaiSP'
+  ");
+
+  if (mysqli_num_rows($check)) {
+    // Nếu đã có thì cộng số lượng
+    mysqli_query($conn, "
+      UPDATE gio_hang 
+      SET so_luong = so_luong + $so_luong 
+      WHERE id_nguoi_dung = $id_user AND id_san_pham = $maSP AND loaiSP = '$loaiSP'
+    ");
+  } else {
+    // Nếu chưa có thì thêm mới
+    mysqli_query($conn, "
+      INSERT INTO gio_hang (id_nguoi_dung, id_san_pham, loaiSP, so_luong)
+      VALUES ($id_user, $maSP, '$loaiSP', $so_luong)
+    ");
+  }
+
+  // Chuyển về lại để hiển thị
+  header("Location: gio_hang.php");
+  exit;
+}
+?>
+
 <div class="wrapper">
 
 <header>

@@ -6,6 +6,21 @@
   <link rel="stylesheet" href="../assets/icons/fontawesome-free-6.7.2-web/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/cart.css">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .content {
+      flex: 1;
+      padding: 20px 10px;
+    }
+  </style>
 </head>
 <body>
 <div class="wrapper">
@@ -32,16 +47,41 @@
 <div class="content">
 <?php
 $conn = mysqli_connect("localhost", "root", "", "db_thanhhaobaniphone");
-$id_nguoi_dung = 1; // giả lập user ID
+$id_nguoi_dung = 1; // giả lập user
 
-// ✅ Xử lý xóa sản phẩm
-if (isset($_GET['xoa_id'])) {
-  $xoa_id = (int)$_GET['xoa_id'];
-  mysqli_query($conn, "DELETE FROM gio_hang WHERE id = $xoa_id AND id_nguoi_dung = $id_nguoi_dung");
+// Xử lý cập nhật số lượng
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['action'])) {
+  $id = (int)$_POST['id'];
+  $action = $_POST['action'];
+
+  $res = mysqli_query($conn, "SELECT so_luong FROM gio_hang WHERE id = $id AND id_nguoi_dung = $id_nguoi_dung");
+  if ($row = mysqli_fetch_assoc($res)) {
+    $so_luong = (int)$row['so_luong'];
+    if ($action === 'giam') {
+      if ($so_luong > 1) {
+        $so_luong--;
+        mysqli_query($conn, "UPDATE gio_hang SET so_luong = $so_luong WHERE id = $id");
+      } else {
+        mysqli_query($conn, "DELETE FROM gio_hang WHERE id = $id");
+      }
+    } elseif ($action === 'tang') {
+      $so_luong++;
+      mysqli_query($conn, "UPDATE gio_hang SET so_luong = $so_luong WHERE id = $id");
+    }
+  }
   header("Location: gio_hang.php");
   exit;
 }
 
+// Xử lý xóa sản phẩm nếu có ?xoa_id
+if (isset($_GET['xoa_id'])) {
+  $id_xoa = (int)$_GET['xoa_id'];
+  mysqli_query($conn, "DELETE FROM gio_hang WHERE id = $id_xoa AND id_nguoi_dung = $id_nguoi_dung");
+  header("Location: gio_hang.php");
+  exit;
+}
+
+// Lấy danh sách giỏ hàng mới nhất
 $sql = "
   SELECT gh.id, sp.tenSP, sp.giaBan, sp.hinhAnh, gh.so_luong
   FROM gio_hang gh
@@ -60,13 +100,16 @@ $result = mysqli_query($conn, $sql);
       <h3>GIỎ HÀNG CỦA BẠN:</h3>
       <?php $total = 0; while ($row = mysqli_fetch_assoc($result)): ?>
         <div class="cart-item">
-          <img src="<?= $row['hinhAnh'] ?>" alt="">
+          <img src="<?= $row['hinhAnh'] ?>" alt="Ảnh sản phẩm">
           <div>
             <div><strong><?= $row['tenSP'] ?></strong></div>
             <div class="quantity-control">
-              <button>-</button>
-              <input type="text" value="<?= $row['so_luong'] ?>" style="width: 40px; text-align: center;">
-              <button>+</button>
+              <form method="POST" action="gio_hang.php" style="display:inline-block;">
+                <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                <button name="action" value="giam">-</button>
+                <input type="text" name="so_luong" value="<?= $row['so_luong'] ?>" style="width: 40px; text-align: center;" disabled>
+                <button name="action" value="tang">+</button>
+              </form>
             </div>
             <div><?= number_format($row['giaBan'] * $row['so_luong'], 0, ',', '.') ?>đ</div>
             <a href="gio_hang.php?xoa_id=<?= $row['id'] ?>" onclick="return confirm('Xác nhận xóa sản phẩm này?')">❌ Xóa</a>
@@ -104,7 +147,6 @@ $result = mysqli_query($conn, $sql);
 
 <footer class="footer">
   <div class="footer-container">
-    <!-- Cột: Hỗ trợ khách hàng -->
     <div class="footer-column">
       <h3>Hỗ trợ khách hàng</h3>
       <ul>
@@ -112,8 +154,6 @@ $result = mysqli_query($conn, $sql);
         <li>Hỗ trợ trả góp</li>
       </ul>
     </div>
-
-    <!-- Cột: Liên hệ -->
     <div class="footer-column">
       <h3>Liên hệ</h3>
       <ul>
@@ -124,8 +164,6 @@ $result = mysqli_query($conn, $sql);
         <li><strong>Thời gian hỗ trợ:</strong> 09 : 00 – 23 : 00</li>
       </ul>
     </div>
-
-    <!-- Cột: Hình thức thanh toán -->
     <div class="footer-column">
       <h3>Hình thức thanh toán</h3>
       <div class="payment-methods">
