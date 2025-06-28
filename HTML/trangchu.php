@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <?php
-  $conn = mysqli_connect("localhost", "root", "", "ten_csdl"); // Đổi lại "ten_csdl" theo CSDL bạn dùng
+    <?php
+  $conn = mysqli_connect("localhost", "root", "", "db_thanhhaobaniphone"); // Đổi lại "ten_csdl" theo CSDL bạn dùng
   if (!$conn) {
     die("Kết nối thất bại: " . mysqli_connect_error());
   }
@@ -9,8 +9,6 @@
   $sql_hot = "SELECT * FROM iphone_new ORDER BY tenSP ASC LIMIT 10"; // chọn 4 sản phẩm nổi bật
   $result_hot = mysqli_query($conn, $sql_hot);
   ?>
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
