@@ -6,21 +6,7 @@
   <link rel="stylesheet" href="../assets/icons/fontawesome-free-6.7.2-web/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/cart.css">
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
-    .wrapper {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    .content {
-      flex: 1;
-      padding: 20px 10px;
-    }
-  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -32,6 +18,7 @@
     <li><a href="may_new.html">Máy mới</a></li>
     <li><a href="phu_kien.html">Phụ Kiện</a></li>
     <li><a href="gio_hang.php">Giỏ Hàng</a></li>
+    <li><a href="history.php">Lịch Sử</a></li>
   </div>
   <div class="others">
     <li>
@@ -47,13 +34,10 @@
 <div class="content">
 <?php
 $conn = mysqli_connect("localhost", "root", "", "db_thanhhaobaniphone");
-$id_nguoi_dung = 1; // giả lập user
-
-// Xử lý cập nhật số lượng
+$id_nguoi_dung = 1;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['action'])) {
   $id = (int)$_POST['id'];
   $action = $_POST['action'];
-
   $res = mysqli_query($conn, "SELECT so_luong FROM gio_hang WHERE id = $id AND id_nguoi_dung = $id_nguoi_dung");
   if ($row = mysqli_fetch_assoc($res)) {
     $so_luong = (int)$row['so_luong'];
@@ -72,16 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['action'
   header("Location: gio_hang.php");
   exit;
 }
-
-// Xử lý xóa sản phẩm nếu có ?xoa_id
 if (isset($_GET['xoa_id'])) {
   $id_xoa = (int)$_GET['xoa_id'];
   mysqli_query($conn, "DELETE FROM gio_hang WHERE id = $id_xoa AND id_nguoi_dung = $id_nguoi_dung");
   header("Location: gio_hang.php");
   exit;
 }
-
-// Lấy danh sách giỏ hàng mới nhất
 $sql = "
   SELECT gh.id, sp.tenSP, sp.giaBan, sp.hinhAnh, gh.so_luong
   FROM gio_hang gh
@@ -90,12 +70,10 @@ $sql = "
 ";
 $result = mysqli_query($conn, $sql);
 ?>
-
 <?php if (mysqli_num_rows($result) === 0): ?>
   <div class="empty-cart">🛒 Không có sản phẩm nào trong giỏ hàng.</div>
 <?php else: ?>
   <div class="cart-container">
-    <!-- Giỏ hàng -->
     <div class="cart-left">
       <h3>GIỎ HÀNG CỦA BẠN:</h3>
       <?php $total = 0; while ($row = mysqli_fetch_assoc($result)): ?>
@@ -118,8 +96,6 @@ $result = mysqli_query($conn, $sql);
       <?php $total += $row['giaBan'] * $row['so_luong']; endwhile; ?>
       <div class="cart-total">Tổng tiền: <?= number_format($total, 0, ',', '.') ?>đ</div>
     </div>
-
-    <!-- Thông tin giao hàng -->
     <div class="cart-right">
       <h3>HÌNH THỨC THANH TOÁN:</h3>
       <div class="form-group">
@@ -132,9 +108,9 @@ $result = mysqli_query($conn, $sql);
         <div class="form-group"><input type="text" name="sdt" placeholder="Số điện thoại"></div>
         <div class="form-group"><input type="email" name="email" placeholder="Email"></div>
         <div class="form-group">
-          <select name="tinh"><option>Tỉnh/thành phố</option></select>
-          <select name="quan"><option>Quận/huyện</option></select>
-          <select name="phuong"><option>Phường/xã</option></select>
+          <select class="form-select form-select-sm mb-3" id="city" name="tinh"><option value="" selected>Chọn tỉnh thành</option></select>
+          <select class="form-select form-select-sm mb-3" id="district" name="quan"><option value="" selected>Chọn quận huyện</option></select>
+          <select class="form-select form-select-sm" id="ward" name="phuong"><option value="" selected>Chọn phường xã</option></select>
         </div>
         <div class="form-group"><input type="text" name="dia_chi" placeholder="Địa chỉ"></div>
         <div class="form-group"><textarea name="ghi_chu" placeholder="Yêu cầu khác (không bắt buộc)"></textarea></div>
@@ -172,6 +148,47 @@ $result = mysqli_query($conn, $sql);
     </div>
   </div>
 </footer>
+
+<script>
+  var citis = document.getElementById("city");
+  var districts = document.getElementById("district");
+  var wards = document.getElementById("ward");
+  var Parameter = {
+    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+    method: "GET",
+    responseType: "application/json",
+  };
+  var promise = axios(Parameter);
+  promise.then(function (result) {
+    renderCity(result.data);
+  });
+
+  function renderCity(data) {
+    for (const x of data) {
+      citis.options[citis.options.length] = new Option(x.Name, x.Name);
+    }
+    citis.onchange = function () {
+      districts.length = 1;
+      wards.length = 1;
+      if (this.value != "") {
+        const result = data.find(n => n.Name === this.value);
+        for (const k of result.Districts) {
+          districts.options[districts.options.length] = new Option(k.Name, k.Name);
+        }
+      }
+    };
+    districts.onchange = function () {
+      wards.length = 1;
+      const dataCity = data.find(n => n.Name === citis.value);
+      if (this.value != "") {
+        const dataWards = dataCity.Districts.find(n => n.Name === this.value).Wards;
+        for (const w of dataWards) {
+          wards.options[wards.options.length] = new Option(w.Name, w.Name);
+        }
+      }
+    };
+  }
+</script>
 
 </div>
 </body>

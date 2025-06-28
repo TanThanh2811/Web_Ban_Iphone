@@ -26,6 +26,8 @@
       <li><a href="may_new.html">Máy mới</a></li>
       <li><a href="phu_kien.html">Phụ Kiện</a></li>
       <li><a href="gio_hang.php">Giỏ Hàng</a></li>
+      <li><a href="history.php">Lịch Sử</a></li>
+
     </div>
 
     <div class="others">
