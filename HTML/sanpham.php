@@ -19,7 +19,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../assets/icons/fontawesome-free-6.7.2-web/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
-  <title>trangchu</title>
+  <title>
+    <?php echo $product['tenSP']; ?>
+</title>
+
 </head>
 
 <body>
@@ -57,9 +60,9 @@
         <div class="main-left">
           <img src="<?= htmlspecialchars($product['hinhAnh']) ?>" alt="Hình ảnh <?= htmlspecialchars($product['tenSP']) ?>" />
         </div>
-        <h2><?php echo $product['tenSP']." ".$product['dungLuong']."GB"; ?></h2>
+        <h2><b><?php echo $product['tenSP']." ".$product['dungLuong']."GB"; ?></b></h2>
         <p style="font-size: 26px"><b>Mô tả</b></p>
-        <p style="text-align: left;"><?php echo $product['moTa']; ?></p>
+        <p style="text-align: left; padding-left: 520px;"><?php echo $product['moTa']; ?></p>
         <p>Giá: <?php echo number_format($product['giaBan'], 0, ',', '.'); ?> VNĐ</p>
         <p>Số lượng: <?php echo $product['soLuong']; ?></p>
         <button class="add-to-cart">Thêm vào giỏ hàng</button>

@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../assets/icons/fontawesome-free-6.7.2-web/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
-  <title>trangchu</title>
+  <title>Thành Hảo bán Iphone</title>
 </head>
 
 <body>
