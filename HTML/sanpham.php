@@ -6,8 +6,13 @@
     die("Kết nối thất bại: " . mysqli_connect_error());
   }
 
-  $sql_hot = "SELECT * FROM iphone_new ORDER BY tenSP ASC LIMIT 10";
-  $result_hot = mysqli_query($conn, $sql_hot);
+  // Nhận ID từ URL
+  $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+  // Truy vấn thông tin sản phẩm dựa trên maSP
+  $sql_product = "SELECT * FROM iphone_new WHERE maSP = $id LIMIT 1";
+  $result_product = mysqli_query($conn, $sql_product);
+  $product = mysqli_fetch_assoc($result_product);
 ?>
 <head>
   <meta charset="UTF-8">
@@ -45,24 +50,25 @@
     </div>
   </header>
 
-  <!-- SẢN PHẨM NỔI BẬT -->
-  <section class="container" aria-label="Sản phẩm nổi bật">
-    <h2 class="product-section">🔥 Sản phẩm Hot</h2>
-    <div class="product-grid" role="list">
-      <?php while ($row = mysqli_fetch_assoc($result_hot)): ?>
-        <a href="sanpham.php?id=<?= htmlspecialchars($row['maSP']) ?>" style="text-decoration: none; color: inherit;">
-          <article class="product-card" role="listitem" tabindex="0" aria-label="<?= htmlspecialchars($row['tenSP']) ?>">
-            <div class="discount-badge"><?= $row['tinhTrang'] ?></div>
-            <img src="<?= htmlspecialchars($row['hinhAnh']) ?>" alt="Hình ảnh <?= htmlspecialchars($row['tenSP']) ?>" />
-            <div class="product-name"><?= htmlspecialchars($row['tenSP']) ?> - <?= htmlspecialchars($row['dungLuong']) ?>GB</div>
-            <div class="price-wrapper">
-            <div class="price-current"><?= number_format($row['giaBan'], 0, ',', '.') ?>₫</div>
-            </div>
-          </article>
-        </a>
-      <?php endwhile; ?>
+  <main>
+    <h2 class="product-section">Thông tin về sản phẩm</h2>
+    <div class="product-detail">
+      <?php if ($product): ?>
+        <div class="main-left">
+          <img src="<?= htmlspecialchars($product['hinhAnh']) ?>" alt="Hình ảnh <?= htmlspecialchars($product['tenSP']) ?>" />
+        </div>
+        <h2><?php echo $product['tenSP']." ".$product['dungLuong']."GB"; ?></h2>
+        <p style="font-size: 26px"><b>Mô tả</b></p>
+        <p style="text-align: left;"><?php echo $product['moTa']; ?></p>
+        <p>Giá: <?php echo number_format($product['giaBan'], 0, ',', '.'); ?> VNĐ</p>
+        <p>Số lượng: <?php echo $product['soLuong']; ?></p>
+        <button class="add-to-cart">Thêm vào giỏ hàng</button>
+        <button class="buy-now">Mua ngay</button>
+      <?php else: ?>
+        <p>Không tìm thấy sản phẩm.</p>
+      <?php endif; ?>
     </div>
-  </section>
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -93,4 +99,7 @@
     </div>
   </footer>
 </body>
+<?php
+  mysqli_close($conn); // Đóng kết nối
+  ?>
 </html>

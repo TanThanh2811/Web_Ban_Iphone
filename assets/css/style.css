@@ -18,25 +18,36 @@ display: flex;justify-content: space-between;align-items: center;padding: 10px 2
   display: flex;
   align-items: center; }
 .search-box {
-  position: relative;
+    position: relative;
+    display: inline-block;
 }
 
-.search-box input {
-  height: 30px;
-  padding: 5px 30px 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
+.search-box input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px; /* Hoặc tùy chỉnh theo ý muốn */
+    transition: border-color 0.3s;
 }
 
-.search-box i {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #333;
-  font-size: 16px;
-  pointer-events: none; /* để click không ảnh hưởng */
+.search-box input[type="text"]:focus {
+    border-color: #007BFF; /* Màu khi focus */
+    outline: none;
+}
+
+.search-box button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.search-box button i {
+    color: #007BFF; /* Màu cho biểu tượng */
+    font-size: 18px; /* Kích thước biểu tượng */
 }
 
 ::content
@@ -151,3 +162,89 @@ display: flex;justify-content: space-between;align-items: center;padding: 10px 2
   justify-content: space-between;
   align-items: center;
 }
+
+/* Phần css của sản phẩm trong trang sanpham.php */
+.product-detail {
+  background-color: #ffffff;
+  padding-left: 30px;
+  padding: 30px;
+  max-width: 1450px;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.main-left{
+  float: left;
+  max-width: 500px;
+}
+/* Tên sản phẩm */
+.product-detail h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #212529;
+}
+
+/* Hình ảnh sản phẩm */
+.product-detail img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mô tả sản phẩm */
+.product-detail p {
+  font-size: 16px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* Giá và số lượng */
+.product-detail p:nth-of-type(2) {
+  font-weight: bold;
+  font-size: 18px;
+  color: #e60023;
+}
+
+.product-detail p:nth-of-type(3) {
+  color: #555;
+}
+
+/* Nút hành động */
+.product-detail button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  margin: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-detail .add-to-cart {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.product-detail .add-to-cart:hover {
+  background-color: #0056b3;
+}
+
+.product-detail .buy-now {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.product-detail .buy-now:hover {
+  background-color: #1e7e34;
+}
+
+/* Phần không tìm thấy */
+.product-detail p:last-child {
+  font-style: italic;
+  color: #999;
+}
+/* Kết thúc của phần css của sản phẩm trong trang sanpham.php */
