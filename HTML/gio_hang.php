@@ -12,46 +12,66 @@
 <?php include "header.php"; ?>
 <div class="content">
 <?php
+session_start();
+
 $conn = mysqli_connect("localhost", "root", "", "db_thanhhaobaniphone");
-$id_nguoi_dung = 1;
+if (!$conn) {
+    die("Lỗi kết nối CSDL: " . mysqli_connect_error());
+}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['action'])) {
-  $id = (int)$_POST['id'];
-  $action = $_POST['action'];
+if (!isset($_SESSION['username'])) {
+    header("Location: profile.php");
+    exit;
+}
 
-  $res = mysqli_query($conn, "SELECT soLuong FROM gio_hang WHERE id = $id AND maKH = $id_nguoi_dung");
-  if ($row = mysqli_fetch_assoc($res)) {
-    $soLuong = (int)$row['soLuong'];
-    if ($action === 'giam') {
-      if ($soLuong > 1) {
-        $soLuong--;
-        mysqli_query($conn, "UPDATE gio_hang SET soLuong = $soLuong WHERE id = $id");
-      } else {
-        mysqli_query($conn, "DELETE FROM gio_hang WHERE id = $id");
-      }
-    } elseif ($action === 'tang') {
-      $soLuong++;
-      mysqli_query($conn, "UPDATE gio_hang SET soLuong = $soLuong WHERE id = $id");
+$username = $_SESSION['username'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST['action'])) {
+    // Lấy danh sách sản phẩm dựa trên username và maSP
+    $id = (int)$_POST['id']; // id không tồn tại, cần sửa logic
+    $action = $_POST['action'];
+
+    // Thay vì dùng id, sử dụng username và maSP để xác định sản phẩm
+    $maSP = $id; // Giả sử id là maSP (cần điều chỉnh nếu không đúng)
+    $res = mysqli_query($conn, "SELECT soLuong FROM gio_hang WHERE username = '$username' AND maSP = $maSP");
+    if ($res === false) {
+        die("Lỗi truy vấn số lượng: " . mysqli_error($conn));
     }
-  }
-  header("Location: gio_hang.php");
-  exit;
+    if ($row = mysqli_fetch_assoc($res)) {
+        $soLuong = (int)$row['soLuong'];
+        if ($action === 'giam') {
+            if ($soLuong > 1) {
+                $soLuong--;
+                mysqli_query($conn, "UPDATE gio_hang SET soLuong = $soLuong WHERE username = '$username' AND maSP = $maSP") or die("Lỗi cập nhật: " . mysqli_error($conn));
+            } else {
+                mysqli_query($conn, "DELETE FROM gio_hang WHERE username = '$username' AND maSP = $maSP") or die("Lỗi xóa: " . mysqli_error($conn));
+            }
+        } elseif ($action === 'tang') {
+            $soLuong++;
+            mysqli_query($conn, "UPDATE gio_hang SET soLuong = $soLuong WHERE username = '$username' AND maSP = $maSP") or die("Lỗi cập nhật: " . mysqli_error($conn));
+        }
+    }
+    header("Location: gio_hang.php");
+    exit;
 }
 
 if (isset($_GET['xoa_id'])) {
-  $id_xoa = (int)$_GET['xoa_id'];
-  mysqli_query($conn, "DELETE FROM gio_hang WHERE id = $id_xoa AND maKH = $id_nguoi_dung");
-  header("Location: gio_hang.php");
-  exit;
+    $maSP_xoa = (int)$_GET['xoa_id']; // id không tồn tại, dùng maSP
+    mysqli_query($conn, "DELETE FROM gio_hang WHERE username = '$username' AND maSP = $maSP_xoa") or die("Lỗi xóa: " . mysqli_error($conn));
+    header("Location: gio_hang.php");
+    exit;
 }
 
 $sql = "
-  SELECT gh.id, sp.tenSP, sp.giaBan, sp.hinhAnh, gh.soLuong, sp.dungLuong
+  SELECT gh.username, gh.maSP, sp.tenSP, sp.giaBan, sp.hinhAnh, gh.soLuong, sp.dungLuong
   FROM gio_hang gh
   JOIN iphone_new sp ON gh.maSP = sp.maSP
-  WHERE gh.maKH = $id_nguoi_dung AND gh.loaiSP = 'Mới'
+  WHERE gh.username = '$username'
 ";
 $result = mysqli_query($conn, $sql);
+if ($result === false) {
+    die("Lỗi truy vấn giỏ hàng: " . mysqli_error($conn));
+}
 ?>
 
 <?php if (mysqli_num_rows($result) === 0): ?>
@@ -67,14 +87,14 @@ $result = mysqli_query($conn, $sql);
             <div><strong><?= $row['tenSP'] . " " . $row['dungLuong'] . "GB" ?></strong></div>
             <div class="quantity-control">
               <form method="POST" action="gio_hang.php" style="display:inline-block;">
-                <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                <input type="hidden" name="id" value="<?= $row['maSP'] ?>"> <!-- Sử dụng maSP thay id -->
                 <button name="action" value="giam">-</button>
                 <input type="text" name="soLuong" value="<?= $row['soLuong'] ?>" style="width: 40px; text-align: center;" disabled>
                 <button name="action" value="tang">+</button>
               </form>
             </div>
             <div><?= number_format($row['giaBan'] * $row['soLuong'], 0, ',', '.') ?>đ</div>
-            <a href="gio_hang.php?xoa_id=<?= $row['id'] ?>" onclick="return confirm('Xác nhận xóa sản phẩm này?')">❌ Xóa</a>
+            <a href="gio_hang.php?xoa_id=<?= $row['maSP'] ?>" onclick="return confirm('Xác nhận xóa sản phẩm này?')">❌ Xóa</a>
           </div>
         </div>
       <?php $total += $row['giaBan'] * $row['soLuong']; endwhile; ?>
@@ -149,5 +169,6 @@ $result = mysqli_query($conn, $sql);
 </script>
 
 <?php include "footer.php"; ?>
+<?php $conn->close(); ?>
 </body>
 </html>

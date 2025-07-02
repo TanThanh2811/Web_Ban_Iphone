@@ -8,6 +8,7 @@
 
   // Nhận ID từ URL
   $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+  $loaiSP = isset($_GET['loaiSP']) ? intval($_GET['loaiSP']) : 0;
 
   // Truy vấn thông tin sản phẩm dựa trên maSP
   $sql_product = "SELECT * FROM iphone_new WHERE maSP = $id LIMIT 1";
@@ -42,7 +43,7 @@
         <form action="them_vao_gio.php" method="get">
           <input type="hidden" name="maSP" value="<?= $product['maSP'] ?>">
           <input type="hidden" name="so_luong" value="1">
-          <input type="hidden" name="loaiSP" value="Mới">
+          <input type="hidden" name="loaiSP" value="<?= $loaiSP ?>">
           <button type="submit" class="add-to-cart">Thêm vào giỏ hàng</button>
         </form>
       <?php else: ?>
