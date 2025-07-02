@@ -14,10 +14,12 @@
 <?php
 $conn = mysqli_connect("localhost", "root", "", "db_thanhhaobaniphone");
 $id_nguoi_dung = 1;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['action'])) {
   $id = (int)$_POST['id'];
   $action = $_POST['action'];
-  $res = mysqli_query($conn, "SELECT so_luong FROM gio_hang WHERE id = $id AND id_nguoi_dung = $id_nguoi_dung");
+
+  $res = mysqli_query($conn, "SELECT so_luong FROM gio_hang WHERE id = $id AND maKH = $id_nguoi_dung");
   if ($row = mysqli_fetch_assoc($res)) {
     $so_luong = (int)$row['so_luong'];
     if ($action === 'giam') {
@@ -35,20 +37,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['action'
   header("Location: gio_hang.php");
   exit;
 }
+
 if (isset($_GET['xoa_id'])) {
   $id_xoa = (int)$_GET['xoa_id'];
-  mysqli_query($conn, "DELETE FROM gio_hang WHERE id = $id_xoa AND id_nguoi_dung = $id_nguoi_dung");
+  mysqli_query($conn, "DELETE FROM gio_hang WHERE id = $id_xoa AND maKH = $id_nguoi_dung");
   header("Location: gio_hang.php");
   exit;
 }
+
 $sql = "
   SELECT gh.id, sp.tenSP, sp.giaBan, sp.hinhAnh, gh.so_luong
   FROM gio_hang gh
-  JOIN iphone_new sp ON gh.id_san_pham = sp.maSP
-  WHERE gh.id_nguoi_dung = $id_nguoi_dung AND gh.loaiSP = 'Mới'
+  JOIN iphone_new sp ON gh.maSP = sp.maSP
+  WHERE gh.maKH = $id_nguoi_dung AND gh.loaiSP = 'Mới'
 ";
 $result = mysqli_query($conn, $sql);
 ?>
+
 <?php if (mysqli_num_rows($result) === 0): ?>
   <div class="empty-cart">🛒 Không có sản phẩm nào trong giỏ hàng.</div>
 <?php else: ?>
@@ -75,12 +80,14 @@ $result = mysqli_query($conn, $sql);
       <?php $total += $row['giaBan'] * $row['so_luong']; endwhile; ?>
       <div class="cart-total">Tổng tiền: <?= number_format($total, 0, ',', '.') ?>đ</div>
     </div>
+
     <div class="cart-right">
       <h3>HÌNH THỨC THANH TOÁN:</h3>
       <div class="form-group">
         <label><input type="radio" name="pttt"> Nhận hàng tại cửa hàng</label><br>
         <label><input type="radio" name="pttt"> Thanh toán khi nhận hàng</label>
       </div>
+
       <h3>THÔNG TIN GIAO HÀNG:</h3>
       <form action="dat_hang.php" method="POST">
         <div class="form-group"><input type="text" name="ho_ten" placeholder="Họ tên"></div>
