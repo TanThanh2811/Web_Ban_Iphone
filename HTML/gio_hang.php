@@ -66,7 +66,7 @@ $sql = "
   SELECT gh.username, gh.maSP, sp.tenSP, sp.giaBan, sp.hinhAnh, gh.soLuong, sp.dungLuong
   FROM gio_hang gh
   JOIN iphone_new sp ON gh.maSP = sp.maSP
-  WHERE gh.username = '$username'
+  WHERE gh.username = '$username' 
 ";
 $result = mysqli_query($conn, $sql);
 if ($result === false) {

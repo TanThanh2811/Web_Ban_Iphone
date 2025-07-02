@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 02, 2025 lúc 04:39 PM
+-- Thời gian đã tạo: Th7 02, 2025 lúc 04:53 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -72,7 +72,8 @@ INSERT INTO `gio_hang` (`username`, `maSP`, `loaiSP`, `soLuong`) VALUES
 ('maivanhao21', 6, '', 1),
 ('maivanhao21', 7, 'Mới', 3),
 ('maivanhao21', 9, 'Mới', 1),
-('maivanhao21', 1, 'Cũ', 1);
+('maivanhao21', 1, 'Cũ', 2),
+('maivanhao21', 3, 'Cũ', 1);
 
 -- --------------------------------------------------------
 
@@ -129,21 +130,21 @@ CREATE TABLE `iphone_used` (
 --
 
 INSERT INTO `iphone_used` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `tinhTrang`, `hinhAnh`, `dungLuong`, `doMoi`, `pin`) VALUES
-(1, 'iPhone X 64GB Cũ', 'iPhone X với thiết kế sang trọng, hiệu năng ổn định, phù hợp nhu cầu sử dụng cơ bản.', 4500000, 5, 'Còn hàng', 'https://th.bing.com/th/id/OIP.aYHzTdyRvM_yBtEXkVzPEgHaI4?w=159&h=191&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 97, 90),
-(2, 'iPhone XS 64GB Cũ', 'iPhone XS sở hữu Face ID, camera kép chụp ảnh sắc nét, hiệu năng mạnh mẽ. ', 5000000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.4pVRG1Gm2op3GyjZMsU9YwHaEw?w=246&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 91),
-(3, 'iPhone XS Max 64GB Cũ', 'Màn hình lớn 6.5 inch, camera đẹp, pin ổn định, trải nghiệm giải trí tuyệt vời.', 5900000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.v1xvmFed4Vl9dAJBCsTHuAHaEK?w=299&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 92),
-(4, 'iPhone 11 64GB Cũ', 'iPhone 11 nổi bật với camera góc rộng, hiệu năng vượt trội.', 6300000, 6, 'Còn hàng', 'https://th.bing.com/th/id/OIP.4mzSBXcKinjxs3C-jonFcAHaGr?w=200&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 93),
-(5, 'iPhone 11 Pro 64GB Cũ', 'Thiết kế sang trọng, 3 camera chuyên nghiệp, hiệu năng mạnh. ', 7900000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.GSjdyIjD2RBbL0mOORJV7QHaHZ?w=183&h=182&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 92),
-(6, 'iPhone 11 Pro Max 64GB Cũ', 'Màn hình lớn sắc nét, pin khỏe, camera chất lượng cao.', 8700000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.vbiukn_rm1N3WmwMzYs8ZwHaE7?w=224&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 91),
-(7, 'iPhone 12 64GB Cũ', 'iPhone 12 thiết kế viền vuông hiện đại, hiệu năng mạnh mẽ.', 9300000, 5, 'Còn hàng', 'https://th.bing.com/th/id/OIP.AGNp-Ve2aJvN1q_nBqXyiQHaGc?w=215&h=188&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 94),
-(8, 'iPhone 12 Pro 128GB Cũ', 'Sở hữu 3 camera chất lượng, màn hình OLED siêu nét.', 11500000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.AGNp-Ve2aJvN1q_nBqXyiQHaGc?w=201&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 98, 93),
-(9, 'iPhone 12 Pro Max 128GB Cũ', 'Màn hình lớn 6.7 inch, camera đỉnh cao cho trải nghiệm tuyệt vời.', 12500000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.3mxJyKPfiUdkO_ecKSRfoQHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 98, 92),
-(10, 'iPhone 13 128GB Cũ', 'iPhone 13 hiệu năng vượt trội, camera cải tiến.', 14500000, 5, 'Còn hàng', 'https://th.bing.com/th/id/OIP.KmbMzI-Z45BziGywi8QqgQHaIf?w=148&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 96),
-(11, 'iPhone 13 Pro 128GB Cũ', '3 camera chuyên nghiệp, thiết kế cao cấp, pin khỏe.', 17500000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.pZ1wifY_Q16qbXbTE_VOnQHaH0?w=222&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 96),
-(12, 'iPhone 13 Pro Max 128GB Cũ', 'Màn hình lớn, pin tốt, ngoại hình đẹp, trải nghiệm đỉnh cao.', 18500000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.dV3mUwg4Fiuins7mlXNKWQHaFj?w=264&h=198&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 95),
-(13, 'iPhone 14 128GB Cũ', 'Thiết kế hiện đại, camera cải tiến, pin dung lượng cao.', 19000000, 4, 'Còn hàng', 'https://didongthongminh.vn/upload_images/images/2023/10/20/iphone-14-cu-256gb-4.jpg', 128, 99, 98),
-(14, 'iPhone 14 Pro 128GB Cũ', 'Màn hình ProMotion 120Hz, camera chuyên nghiệp, pin tốt.', 22000000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.6im4_ydu3hJ5GwDwb4vWIgHaHa?w=179&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 98),
-(15, 'iPhone 14 Pro Max 128GB Cũ', 'iPhone cao cấp nhất, màn hình lớn, pin khỏe, ngoại hình đẹp.', 24000000, 2, 'Còn hàng', 'https://th.bing.com/th/id/OIP.FjhOj95EUtIDKYuQIM7VEQHaHa?w=186&h=186&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 98);
+(1, 'iPhone X Cũ', 'iPhone X với thiết kế sang trọng, hiệu năng ổn định, phù hợp nhu cầu sử dụng cơ bản.', 4500000, 5, 'Còn hàng', 'https://th.bing.com/th/id/OIP.aYHzTdyRvM_yBtEXkVzPEgHaI4?w=159&h=191&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 97, 90),
+(2, 'iPhone XS Cũ', 'iPhone XS sở hữu Face ID, camera kép chụp ảnh sắc nét, hiệu năng mạnh mẽ. ', 5000000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.4pVRG1Gm2op3GyjZMsU9YwHaEw?w=246&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 91),
+(3, 'iPhone XS Max Cũ', 'Màn hình lớn 6.5 inch, camera đẹp, pin ổn định, trải nghiệm giải trí tuyệt vời.', 5900000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.v1xvmFed4Vl9dAJBCsTHuAHaEK?w=299&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 92),
+(4, 'iPhone 11 Cũ', 'iPhone 11 nổi bật với camera góc rộng, hiệu năng vượt trội.', 6300000, 6, 'Còn hàng', 'https://th.bing.com/th/id/OIP.4mzSBXcKinjxs3C-jonFcAHaGr?w=200&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 93),
+(5, 'iPhone 11 Pro Cũ', 'Thiết kế sang trọng, 3 camera chuyên nghiệp, hiệu năng mạnh. ', 7900000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.GSjdyIjD2RBbL0mOORJV7QHaHZ?w=183&h=182&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 92),
+(6, 'iPhone 11 Pro Max Cũ', 'Màn hình lớn sắc nét, pin khỏe, camera chất lượng cao.', 8700000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.vbiukn_rm1N3WmwMzYs8ZwHaE7?w=224&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 91),
+(7, 'iPhone 12 Cũ', 'iPhone 12 thiết kế viền vuông hiện đại, hiệu năng mạnh mẽ.', 9300000, 5, 'Còn hàng', 'https://th.bing.com/th/id/OIP.AGNp-Ve2aJvN1q_nBqXyiQHaGc?w=215&h=188&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 94),
+(8, 'iPhone 12 Pro Cũ', 'Sở hữu 3 camera chất lượng, màn hình OLED siêu nét.', 11500000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.AGNp-Ve2aJvN1q_nBqXyiQHaGc?w=201&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 98, 93),
+(9, 'iPhone 12 Pro Max Cũ', 'Màn hình lớn 6.7 inch, camera đỉnh cao cho trải nghiệm tuyệt vời.', 12500000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.3mxJyKPfiUdkO_ecKSRfoQHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 98, 92),
+(10, 'iPhone 13 Cũ', 'iPhone 13 hiệu năng vượt trội, camera cải tiến.', 14500000, 5, 'Còn hàng', 'https://th.bing.com/th/id/OIP.KmbMzI-Z45BziGywi8QqgQHaIf?w=148&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 96),
+(11, 'iPhone 13 Pro Cũ', '3 camera chuyên nghiệp, thiết kế cao cấp, pin khỏe.', 17500000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.pZ1wifY_Q16qbXbTE_VOnQHaH0?w=222&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 96),
+(12, 'iPhone 13 Pro Max Cũ', 'Màn hình lớn, pin tốt, ngoại hình đẹp, trải nghiệm đỉnh cao.', 18500000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.dV3mUwg4Fiuins7mlXNKWQHaFj?w=264&h=198&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 95),
+(13, 'iPhone 14 Cũ', 'Thiết kế hiện đại, camera cải tiến, pin dung lượng cao.', 19000000, 4, 'Còn hàng', 'https://didongthongminh.vn/upload_images/images/2023/10/20/iphone-14-cu-256gb-4.jpg', 128, 99, 98),
+(14, 'iPhone 14 Pro Cũ', 'Màn hình ProMotion 120Hz, camera chuyên nghiệp, pin tốt.', 22000000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.6im4_ydu3hJ5GwDwb4vWIgHaHa?w=179&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 98),
+(15, 'iPhone 14 Pro Max Cũ', 'iPhone cao cấp nhất, màn hình lớn, pin khỏe, ngoại hình đẹp.', 24000000, 2, 'Còn hàng', 'https://th.bing.com/th/id/OIP.FjhOj95EUtIDKYuQIM7VEQHaHa?w=186&h=186&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 98);
 
 -- --------------------------------------------------------
 
