@@ -2,7 +2,10 @@
 $conn = mysqli_connect("localhost", "root", "", "db_thanhhaobaniphone");
 if (!$conn) die("Lỗi kết nối CSDL");
 
-$maKH     = 1; // giả lập người dùng
+if(isset($maKH))
+    echo "có tồn tại";
+else echo "k tồn tại maKH";
+
 $maSP     = (int)($_GET['maSP'] ?? 0);
 $so_luong = max(1, (int)($_GET['so_luong'] ?? 1));
 $loaiSP   = $_GET['loaiSP'] ?? 'Mới';
