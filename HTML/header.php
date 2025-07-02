@@ -1,9 +1,14 @@
+<style>
+  a:hover{
+    color: red;
+  }
+</style>
 <!-- HEADER -->
 <header>
   <div class="logo"><a href="trangchu.php"><img src="../assets/images/logo.png" alt="logo"></a></div>
 
   <div class="menu">
-    <li><a href="may_used.html">Máy cũ</a></li>
+    <li><a href="may_used.php">Máy cũ</a></li>
     <li><a href="may_new.php">Máy mới</a></li>
     <li><a href="phu_kien.php">Phụ Kiện</a></li>
     <li><a href="gio_hang.php">Giỏ Hàng</a></li>

@@ -12,10 +12,10 @@ if ($conn->connect_error) {
 }
 
 // Nếu đã đăng nhập → Lấy thông tin người dùng
-if (isset($_SESSION['tenKH'])) {
-    $tenKH = $_SESSION['tenKH'];
-    $stmt = $conn->prepare("SELECT * FROM khachhang WHERE tenKH = ? LIMIT 1");
-    $stmt->bind_param("s", $tenKH);
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $stmt = $conn->prepare("SELECT * FROM khachhang WHERE username = ? LIMIT 1");
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
     $userInfo = $result->fetch_assoc();
@@ -26,51 +26,53 @@ if (isset($_SESSION['tenKH'])) {
 
     // ===== XỬ LÝ ĐĂNG KÝ =====
     if (isset($_POST['register'])) {
-        $tenKH = $_POST['regUser'];
-        $sdt = $_POST['regPhone'];
-        $email = $_POST['regEmail'];
-        $diaChi = $_POST['regAddress'];
-        $pass = $_POST['regPass'];
-        $confirm = $_POST['regConfirm'];
+      $username = $_POST['regUsername']; // Lấy username từ form
+      $tenKH = $_POST['regUser'];
+      $sdt = $_POST['regPhone'];
+      $email = $_POST['regEmail'];
+      $diaChi = $_POST['regAddress'];
+      $pass = $_POST['regPass'];
+      $confirm = $_POST['regConfirm'];
 
-        if ($pass !== $confirm) {
-            $msg = "⚠️ Mật khẩu không khớp!";
-            $showLogin = false;
-        } else {
-            $hashed = password_hash($pass, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO khachhang (tenKH, sdt, email, diaChi, matKhau) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssss", $tenKH, $sdt, $email, $diaChi, $hashed);
-            if ($stmt->execute()) {
-                $msg = "✅ Đăng ký thành công! Vui lòng đăng nhập.";
-                $showLogin = true;
-            } else {
-                $msg = "❌ Lỗi khi đăng ký. Có thể email đã tồn tại!";
-                $showLogin = false;
-            }
-        }
+      if ($pass !== $confirm) {
+          $msg = "⚠️ Mật khẩu không khớp!";
+          $showLogin = false;
+      } else {
+          $hashed = password_hash($pass, PASSWORD_DEFAULT);
+          $stmt = $conn->prepare("INSERT INTO khachhang (username, tenKH, sdt, email, diaChi, matKhau) VALUES (?, ?, ?, ?, ?, ?)");
+          $stmt->bind_param("ssssss", $username, $tenKH, $sdt, $email, $diaChi, $hashed);
+          if ($stmt->execute()) {
+              $msg = "✅ Đăng ký thành công! Vui lòng đăng nhập.";
+              $showLogin = true;
+          } else {
+              $msg = "❌ Lỗi khi đăng ký. Có thể username hoặc email đã tồn tại!";
+              $showLogin = false;
+          }
+      }
     }
 
     // ===== XỬ LÝ ĐĂNG NHẬP =====
     if (isset($_POST['login'])) {
-        $login = $_POST['loginUser'];
-        $pass = $_POST['loginPass'];
+      $login = $_POST['loginUser'];
+      $pass = $_POST['loginPass'];
 
-        $stmt = $conn->prepare("SELECT * FROM khachhang WHERE tenKH=? OR email=? LIMIT 1");
-        $stmt->bind_param("ss", $login, $login);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows == 1) {
-            $user = $result->fetch_assoc();
-            if (password_verify($pass, $user['matKhau'])) {
-                $_SESSION['tenKH'] = $user['tenKH'];
-                $msg = "✅ Đăng nhập thành công. Xin chào, " . $user['tenKH'] . "! Bạn sẽ được chuyển về trang chủ trong 3 giây...";
-                header("refresh:3; url=../HTML/trangchu.php");
-            } else {
-                $msg = "❌ Sai mật khẩu.";
-            }
-        } else {
-            $msg = "❌ Tài khoản không tồn tại.";
-        }
+      $stmt = $conn->prepare("SELECT * FROM khachhang WHERE username=? OR email=? LIMIT 1");
+      $stmt->bind_param("ss", $login, $login);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      if ($result->num_rows == 1) {
+          $user = $result->fetch_assoc();
+          if (password_verify($pass, $user['matKhau'])) {
+              $_SESSION['tenKH'] = $user['tenKH'];
+              $_SESSION['username'] = $user['username']; // Lưu username vào session
+              $msg = "✅ Đăng nhập thành công. Xin chào, " . $user['tenKH'] . "! Bạn sẽ được chuyển về trang chủ trong 3 giây...";
+              header(" url=../HTML/trangchu.php");
+          } else {
+              $msg = "❌ Sai mật khẩu.";
+          }
+      } else {
+          $msg = "❌ Tài khoản không tồn tại.";
+      }
     }
 }
 ?>
@@ -85,7 +87,7 @@ if (isset($_SESSION['tenKH'])) {
     body { font-family: Arial; background: #f2f2f2; padding: 0px; }
 .container { width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 8px #ccc; }
     .form-group { margin-bottom: 10px; }
-    input { width: 100%; padding: 8px; margin-top: 5px; }
+    input { width: 95%; padding: 8px; margin-top: 5px; }
     button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
     .link { margin-top: 10px; text-align: center; }
     .link a { color: #007bff; cursor: pointer; text-decoration: underline; }
@@ -105,15 +107,20 @@ if (isset($_SESSION['tenKH'])) {
   <p><strong>Số điện thoại:</strong> <?= htmlspecialchars($userInfo['sdt']) ?></p>
   <p><strong>Email:</strong> <?= htmlspecialchars($userInfo['email']) ?></p>
   <p><strong>Địa chỉ:</strong> <?= htmlspecialchars($userInfo['diaChi']) ?></p>
+  <form id="logoutForm" method="post" action="logout.php" onsubmit="return confirmLogout();">
+  <button type="submit" name="logout">Đăng xuất</button>
+  </form>
 <?php elseif (isset($_SESSION['tenKH'])): ?>
-  <p>Đăng nhập thành công! Đang chuyển về trang chủ...</p>
+  <div style="text-align: center; margin-top: 20px;">
+    <p>✅ Đăng nhập thành công!</p>
+    <a href="../HTML/trangchu.php">↩️Quay lại trang chủ</a>
+  </div>
+
 <?php else: ?>
   <p>Không tìm thấy thông tin người dùng.</p>
 <?php endif; ?>
 
-  <form id="logoutForm" method="post" action="logout.php" onsubmit="return confirmLogout();">
-  <button type="submit" name="logout">Đăng xuất</button>
-</form>
+  
 
 <script>
   function confirmLogout() {
@@ -150,6 +157,10 @@ if (isset($_SESSION['tenKH'])) {
       <div class="form-group">
         <label>Tên khách hàng:</label>
         <input type="text" name="regUser" required>
+      </div>
+      <div class="form-group">
+        <label>Tên đăng nhập:</label>
+        <input type="text" name="regUsername" required>
       </div>
       <div class="form-group">
         <label>Số điện thoại:</label>

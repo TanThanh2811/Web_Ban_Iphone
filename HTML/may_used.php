@@ -24,9 +24,8 @@
     $dongList = [];
     $sql = "SELECT DISTINCT 
                 SUBSTRING_INDEX(SUBSTRING(tenSP, LOCATE('iPhone ', tenSP) + 7), ' ', 1) AS dong
-            FROM iphone_new
+            FROM iphone_used
             WHERE tenSP LIKE 'iPhone %'
-            HAVING dong >= 14
             ORDER BY dong + 0 ASC";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
@@ -36,17 +35,17 @@
     // Bắt đầu in HTML
     foreach ($dongList as $dong) {
         $search = "%iPhone $dong%";
-        $stmt = $conn->prepare("SELECT * FROM iphone_new WHERE tenSP LIKE ?");
+        $stmt = $conn->prepare("SELECT * FROM iphone_used WHERE tenSP LIKE ?");
         $stmt->bind_param("s", $search);
         $stmt->execute();
         $result = $stmt->get_result();
     ?>
 
-    <section class="container" aria-label="iPhone <?= $dong ?> Series">
-    <h2 class="product-section">iPhone <?= $dong ?> Series </h2>
+    <section class="container" aria-label="iPhone <?= $dong ?> Series Cũ">
+    <h2 class="product-section">iPhone <?= $dong ?> Series Cũ</h2>
     <div class="product-grid" role="list">
         <?php while ($row = $result->fetch_assoc()): ?>
-        <a href="sanpham.php?id=<?= htmlspecialchars($row['maSP']) ?>&loaiSP=Mới" style="text-decoration: none; color: inherit;">
+        <a href="sanpham.php?id=<?= htmlspecialchars($row['maSP']) ?>&loaiSP=Cũ" style="text-decoration: none; color: inherit;">
             <article class="product-card" role="listitem" tabindex="0" aria-label="<?= htmlspecialchars($row['tenSP']) ?>">
             <div class="discount-badge"><?= htmlspecialchars($row['tinhTrang']) ?></div>
             <img src="<?= htmlspecialchars($row['hinhAnh']) ?>" alt="Hình ảnh <?= htmlspecialchars($row['tenSP']) ?>" />

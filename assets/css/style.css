@@ -111,7 +111,7 @@ header {
 .footer {
   background: var(--clr-bg);
   padding: var(--sp-xl) 0;
-  margin-top: 40px; /* 👉 tạo khoảng cách với nội dung phía trên */
+  margin-top: 40px;
 }
 .footer-container {
   max-width: 1200px;
@@ -201,70 +201,67 @@ header {
   align-items: center;
 }
 
-/* Chi tiết sản phẩm */
+/* ==== Chi tiết sản phẩm ==== */
 .product-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
   background-color: #ffffff;
-  padding-left: 30px;
   padding: 30px;
-  max-width: 1450px;
-  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.main-left {
+  flex: 1 1 400px;
   text-align: center;
 }
-.main-left {
-  float: left;
-  max-width: 500px;
+
+.main-left img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-.product-detail h2 {
+
+.main-right {
+  flex: 2 1 600px;
+  padding: 10px;
+  text-align: left;
+}
+
+.main-right h2 {
   font-size: 28px;
   margin-bottom: 20px;
   color: #212529;
 }
-.product-detail img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-.product-detail p {
+
+.main-right .mo-ta {
   font-size: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   line-height: 1.6;
 }
-.product-detail p:nth-of-type(2) {
-  font-weight: bold;
-  font-size: 18px;
-  color: #e60023;
+
+.main-right p {
+  font-size: 16px;
+  margin-bottom: 12px;
 }
-.product-detail p:nth-of-type(3) {
-  color: #555;
-}
-.product-detail button {
+
+.add-to-cart {
   padding: 12px 24px;
   font-size: 16px;
   border: none;
   border-radius: 8px;
-  margin: 10px;
+  margin-top: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-.product-detail .add-to-cart {
   background-color: #007bff;
   color: #fff;
+  transition: all 0.3s ease;
 }
-.product-detail .add-to-cart:hover {
+
+.add-to-cart:hover {
   background-color: #0056b3;
-}
-.product-detail .buy-now {
-  background-color: #28a745;
-  color: #fff;
-}
-.product-detail .buy-now:hover {
-  background-color: #1e7e34;
-}
-.product-detail p:last-child {
-  font-style: italic;
-  color: #999;
 }
