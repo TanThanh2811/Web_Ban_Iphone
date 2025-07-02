@@ -1,0 +1,181 @@
+<?php
+session_start();
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "db_thanhhaobaniphone";
+
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("Kết nối thất bại: " . $conn->connect_error);
+}
+
+// Nếu đã đăng nhập → Lấy thông tin người dùng
+if (isset($_SESSION['tenKH'])) {
+    $tenKH = $_SESSION['tenKH'];
+    $stmt = $conn->prepare("SELECT * FROM khachhang WHERE tenKH = ? LIMIT 1");
+    $stmt->bind_param("s", $tenKH);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $userInfo = $result->fetch_assoc();
+} else {
+    // Biến logic cho phần giao diện đăng nhập / đăng ký
+    $msg = "";
+    $showLogin = true;
+
+    // ===== XỬ LÝ ĐĂNG KÝ =====
+    if (isset($_POST['register'])) {
+        $tenKH = $_POST['regUser'];
+        $sdt = $_POST['regPhone'];
+        $email = $_POST['regEmail'];
+        $diaChi = $_POST['regAddress'];
+        $pass = $_POST['regPass'];
+        $confirm = $_POST['regConfirm'];
+
+        if ($pass !== $confirm) {
+            $msg = "⚠️ Mật khẩu không khớp!";
+            $showLogin = false;
+        } else {
+            $hashed = password_hash($pass, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("INSERT INTO khachhang (tenKH, sđt, email, diaChi, matKhau) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $tenKH, $sdt, $email, $diaChi, $hashed);
+            if ($stmt->execute()) {
+                $msg = "✅ Đăng ký thành công! Vui lòng đăng nhập.";
+                $showLogin = true;
+            } else {
+                $msg = "❌ Lỗi khi đăng ký. Có thể email đã tồn tại!";
+                $showLogin = false;
+            }
+        }
+    }
+
+    // ===== XỬ LÝ ĐĂNG NHẬP =====
+    if (isset($_POST['login'])) {
+        $login = $_POST['loginUser'];
+        $pass = $_POST['loginPass'];
+
+        $stmt = $conn->prepare("SELECT * FROM khachhang WHERE tenKH=? OR email=? LIMIT 1");
+        $stmt->bind_param("ss", $login, $login);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows == 1) {
+            $user = $result->fetch_assoc();
+            if (password_verify($pass, $user['matKhau'])) {
+                $_SESSION['tenKH'] = $user['tenKH'];
+                $msg = "✅ Đăng nhập thành công. Xin chào, " . $user['tenKH'] . "! Bạn sẽ được chuyển về trang chủ trong 3 giây...";
+                header("refresh:3; url=../index.php");
+            } else {
+                $msg = "❌ Sai mật khẩu.";
+            }
+        } else {
+            $msg = "❌ Tài khoản không tồn tại.";
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thông tin cá nhân / Đăng nhập</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    body { font-family: Arial; background: #f2f2f2; padding: 0px; }
+    .container { width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 8px #ccc; }
+    .form-group { margin-bottom: 10px; }
+    input { width: 100%; padding: 8px; margin-top: 5px; }
+    button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+    .link { margin-top: 10px; text-align: center; }
+    .link a { color: #007bff; cursor: pointer; text-decoration: underline; }
+    .msg { background: #fff3cd; padding: 10px; border: 1px solid #ffeeba; margin-bottom: 15px; }
+    h3 { margin-top: 0; text-align: center; }
+  </style>
+</head>
+<body>
+<?php include "header.php"; ?>
+
+<div class="content">
+<div class="container">
+<?php if (isset($_SESSION['tenKH'])): ?>
+  <h3>Thông tin cá nhân</h3>
+  <p><strong>Tên:</strong> <?= htmlspecialchars($userInfo['tenKH']) ?></p>
+  <p><strong>Số điện thoại:</strong> <?= htmlspecialchars($userInfo['sđt']) ?></p>
+  <p><strong>Email:</strong> <?= htmlspecialchars($userInfo['email']) ?></p>
+  <p><strong>Địa chỉ:</strong> <?= htmlspecialchars($userInfo['diaChi']) ?></p>
+  <form method="post" action="logout.php">
+    <button type="submit" name="logout">Đăng xuất</button>
+  </form>
+
+<?php else: ?>
+  <?php if (!empty($msg)): ?>
+    <div class="msg"><?= $msg ?></div>
+  <?php endif; ?>
+
+  <!-- Đăng nhập -->
+  <div id="loginForm" style="display: <?= $showLogin ? 'block' : 'none' ?>;">
+    <form method="POST">
+      <h3>Đăng nhập</h3>
+      <div class="form-group">
+        <label>Tài khoản hoặc Email:</label>
+        <input type="text" name="loginUser" required>
+      </div>
+      <div class="form-group">
+        <label>Mật khẩu:</label>
+        <input type="password" name="loginPass" required>
+      </div>
+      <button type="submit" name="login">Đăng nhập</button>
+    </form>
+    <div class="link">Chưa có tài khoản? <a onclick="showRegister()">Đăng ký</a></div>
+  </div>
+
+  <!-- Đăng ký -->
+  <div id="registerForm" style="display: <?= $showLogin ? 'none' : 'block' ?>;">
+    <form method="POST">
+      <h3>Đăng ký</h3>
+      <div class="form-group">
+        <label>Tên khách hàng:</label>
+        <input type="text" name="regUser" required>
+      </div>
+      <div class="form-group">
+        <label>Số điện thoại:</label>
+        <input type="text" name="regPhone" required>
+      </div>
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" name="regEmail" required>
+      </div>
+      <div class="form-group">
+        <label>Địa chỉ:</label>
+        <input type="text" name="regAddress" required>
+      </div>
+      <div class="form-group">
+        <label>Mật khẩu:</label>
+        <input type="password" name="regPass" required>
+      </div>
+      <div class="form-group">
+        <label>Nhập lại mật khẩu:</label>
+        <input type="password" name="regConfirm" required>
+      </div>
+      <button type="submit" name="register">Đăng ký</button>
+    </form>
+    <div class="link">Đã có tài khoản? <a onclick="showLogin()">Đăng nhập</a></div>
+  </div>
+<?php endif; ?>
+</div>
+</div>
+<script>
+  function showRegister() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+  }
+
+  function showLogin() {
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'block';
+  }
+</script>
+<?php include "footer.php"; ?>
+</body>
+</html>

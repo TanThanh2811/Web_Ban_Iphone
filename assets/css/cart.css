@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  padding: 20px;
+  padding: 0px;
 }
 .cart-container {
   display: flex;
@@ -33,17 +33,6 @@ body {
   text-align: center;
   margin-top: 50px;
   color: #888;
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
 }
 
 .content {

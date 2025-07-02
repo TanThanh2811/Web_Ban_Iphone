@@ -49,5 +49,5 @@ mysqli_query($conn, "
 mysqli_query($conn, "DELETE FROM gio_hang WHERE id_nguoi_dung = $id_nguoi_dung");
 
 // 6. Thông báo
-echo "<script>alert('🛍️ Đặt hàng thành công!'); window.location.href='trangchu.php';</script>";
+echo "<script>alert(' Đặt hàng thành công!'); window.location.href='trangchu.php';</script>";
 ?>

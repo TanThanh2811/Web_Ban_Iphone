@@ -24,7 +24,7 @@
     <div class="menu">
       <li><a href="may_used.html">Máy cũ</a></li>
       <li><a href="may_new.html">Máy mới</a></li>
-      <li><a href="phu_kien.html">Phụ Kiện</a></li>
+      <li><a href="phu_kien.php">Phụ Kiện</a></li>
       <li><a href="gio_hang.php">Giỏ Hàng</a></li>
       <li><a href="history.php">Lịch Sử</a></li>
 
@@ -41,7 +41,7 @@
           </form>
         </div>
       </li>
-      <li><a class="fa-solid fa-circle-user" href="profile.html"></a></li>
+      <li><a class="fa-solid fa-circle-user" href="profile.php"></a></li>
     </div>
   </header>
 
