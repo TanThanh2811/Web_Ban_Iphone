@@ -6,6 +6,7 @@ if (!$conn) {
     die("Lỗi kết nối CSDL: " . mysqli_connect_error());
 }
 
+
 if (!isset($_SESSION['username'])) {
     die("Chưa đăng nhập!");
 }
@@ -15,6 +16,10 @@ echo "Username từ session: " . $username . "<br>"; // Log để kiểm tra
 
 $maSP = (int)($_GET['maSP'] ?? 0);
 $so_luong = max(1, (int)($_GET['so_luong'] ?? 1));
+if (!isset($_GET['loaiSP']) || $_GET['loaiSP'] === "") {
+    die("Thiếu hoặc rỗng tham số loaiSP!");
+}
+
 $loaiSP = $_GET['loaiSP'];
 
 echo "maSP: $maSP, so_luong: $so_luong, loaiSP: $loaiSP<br>"; // Log tham số
@@ -44,7 +49,7 @@ if ($maSP > 0) {
         if ($stmt === false) {
             die("Lỗi prepare (thêm vào giỏ hàng): " . $conn->error);
         }
-        $stmt->bind_param("siis", $username, $maSP, $loaiSP, $so_luong);
+        $stmt->bind_param("sisi", $username, $maSP, $loaiSP, $so_luong);
         if ($stmt->execute()) {
             echo "Thêm sản phẩm thành công!<br>";
         } else {

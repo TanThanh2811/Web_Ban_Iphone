@@ -7,8 +7,9 @@
   }
 
   // Nhận ID từ URL
-  $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-  $loaiSP = isset($_GET['loaiSP']) ? intval($_GET['loaiSP']) : 0;
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$loaiSP = isset($_GET['loaiSP']) ? $_GET['loaiSP'] : "";
+
 
   // Truy vấn thông tin sản phẩm dựa trên maSP
   $sql_product = "SELECT * FROM iphone_new WHERE maSP = $id LIMIT 1";
