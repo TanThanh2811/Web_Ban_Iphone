@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 02, 2025 lúc 12:03 PM
+-- Thời gian đã tạo: Th7 02, 2025 lúc 01:50 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -35,14 +35,6 @@ CREATE TABLE `chitiet_donhang` (
   `giaBan` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `chitiet_donhang`
---
-
-INSERT INTO `chitiet_donhang` (`maDH`, `maSP`, `loaiSP`, `soLuong`, `giaBan`) VALUES
-(4, 7, '', 1, 19900000),
-(5, 7, '', 4, 19900000);
-
 -- --------------------------------------------------------
 
 --
@@ -56,13 +48,29 @@ CREATE TABLE `donhang` (
   `trangThai` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Đang đổ dữ liệu cho bảng `donhang`
+-- Cấu trúc bảng cho bảng `gio_hang`
 --
 
-INSERT INTO `donhang` (`maDH`, `maKH`, `ngayDat`, `trangThai`) VALUES
-(4, 1, '2025-06-28', 'Chờ xác nhận'),
-(5, 1, '2025-06-28', 'Chờ xác nhận');
+CREATE TABLE `gio_hang` (
+  `username` varchar(255) NOT NULL,
+  `maSP` int(11) NOT NULL,
+  `loaiSP` enum('Mới','Cũ') NOT NULL,
+  `soLuong` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `gio_hang`
+--
+
+INSERT INTO `gio_hang` (`username`, `maSP`, `loaiSP`, `soLuong`) VALUES
+('0', 7, '', 1),
+('0', 7, '', 1),
+('0', 9, '', 1),
+('maivanhao21', 7, '', 1),
+('maivanhao21', 3, '', 1);
 
 -- --------------------------------------------------------
 
@@ -93,7 +101,24 @@ INSERT INTO `iphone_new` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `tinhTra
 (5, 'Iphone 16 Plus', 'Thiết Kế Tinh Tế, Hiệu Năng Ấn Tượng\r\n\r\niPhone 16 Plus là mẫu điện thoại thông minh cao cấp thuộc dòng iPhone 16 Series của Apple, được thiết kế để mang lại trải nghiệm hoàn hảo cho người dùng nhờ sự kết hợp giữa màn hình lớn, hiệu năng mạnh mẽ và các tính năng tiên tiến. Với màn hình 6.7 inch, iPhone 16 Plus là lựa chọn lý tưởng cho những người yêu thích các thiết bị có màn hình rộng để xem phim, chơi game, và làm việc đa nhiệm.', 28900000, 4, 'Còn Hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/0029111xanh-mong-ket550-9970.jpeg', 256),
 (6, 'Iphone 15 Plus', 'iPhone 15 Plus mang đến trải nghiệm di động với màn hình lớn, thời lượng pin dài, và hiệu năng mạnh mẽ. Đây là sự lựa chọn hoàn hảo cho những ai yêu thích không gian hiển thị rộng rãi nhưng vẫn giữ được thiết kế sang trọng, hiện đại của Apple.', 27900000, 7, 'Còn hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-plus-blue-thumbtz-1-650x650-1712.png', 256),
 (7, 'Iphone 15', 'iPhone 15 là phiên bản tiêu chuẩn trong dòng sản phẩm mới của Apple, mang đến sự cân bằng giữa hiệu năng, thiết kế và giá cả. Với những cải tiến về camera, chip xử lý và màn hình, iPhone 15 là lựa chọn lý tưởng cho người dùng cần một chiếc điện thoại mạnh mẽ, hiện đại nhưng không quá cầu kỳ.', 19900000, 3, 'Còn Hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-black-thumbtz0-650x650-1646.png', 256),
-(9, 'Iphone 14', NULL, 18990000, 2, 'Còn hàng', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_14_blue_pdp_image_position-1a_blue_color_vn_1.png', 256),
+(9, 'Iphone 14', NULL, 18990000, 2, 'Còn hàng', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_14_blue_pdp_image_position-1a_blue_color_vn_1.png', 256);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `iphone_used`
+--
+
+CREATE TABLE `iphone_used` (
+  `maSP` int(11) NOT NULL,
+  `tenSP` varchar(255) NOT NULL,
+  `moTa` text DEFAULT NULL,
+  `giaBan` bigint(20) NOT NULL,
+  `soLuong` int(11) NOT NULL DEFAULT 0,
+  `tinhTrang` varchar(50) DEFAULT NULL,
+  `hinhAnh` varchar(255) DEFAULT NULL,
+  `dungLuong` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -107,6 +132,7 @@ CREATE TABLE `khachhang` (
   `email` varchar(100) DEFAULT NULL,
   `sdt` varchar(20) NOT NULL,
   `diaChi` text NOT NULL,
+  `username` varchar(255) NOT NULL,
   `matKhau` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -114,10 +140,43 @@ CREATE TABLE `khachhang` (
 -- Đang đổ dữ liệu cho bảng `khachhang`
 --
 
-INSERT INTO `khachhang` (`maKH`, `tenKH`, `email`, `sdt`, `diaChi`, `matKhau`) VALUES
-(1, 'Nguyễn Văn A', 'A@gmail.com', '0123456789', 'tân thới hiệp', ''),
-(3, 'thành', 'thanh@gmail.com', '0123456789', 'tan cahnhs hiệp', '$2y$10$71.gQBKUj6d2ek0enJ2gguOjxL6QD8aG2BDI94m5DVKjfcvfG/4vq'),
-(4, 'Mai Văn Hảo', 'maivanhao5667@gmail.com', '0399714932', '11/12 trung mỹ tây', '$2y$10$m5idbrIuwisdjCVSA1H52uG8ZkHIrHftuRRRYnuhPJHgV9ElHxX7K');
+INSERT INTO `khachhang` (`maKH`, `tenKH`, `email`, `sdt`, `diaChi`, `username`, `matKhau`) VALUES
+(5, 'Mai Văn Hảo', 'maivanhao5667@gmail.com', '0399714932', '11/12 trung mỹ tây', 'maivanhao21', '$2y$10$0E4tW2y1holmBYNOJkFsh.A00TAofUPHVEAmn0HJqhPBoNiu2HsJW');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `phukien`
+--
+
+CREATE TABLE `phukien` (
+  `maPK` int(11) NOT NULL,
+  `tenPK` varchar(255) NOT NULL,
+  `loaiPK` varchar(50) NOT NULL,
+  `soLuong` int(11) NOT NULL DEFAULT 0,
+  `giaBan` bigint(20) NOT NULL,
+  `moTa` text NOT NULL,
+  `hinhAnh` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `thongtin_giaohang`
+--
+
+CREATE TABLE `thongtin_giaohang` (
+  `id` int(11) NOT NULL,
+  `maDH` int(11) NOT NULL,
+  `ho_ten` varchar(100) NOT NULL,
+  `sdt` varchar(20) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `tinh` varchar(100) NOT NULL,
+  `quan` varchar(100) NOT NULL,
+  `phuong` varchar(100) NOT NULL,
+  `dia_chi` text NOT NULL,
+  `ghi_chu` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -143,10 +202,23 @@ ALTER TABLE `iphone_new`
   ADD PRIMARY KEY (`maSP`);
 
 --
+-- Chỉ mục cho bảng `iphone_used`
+--
+ALTER TABLE `iphone_used`
+  ADD PRIMARY KEY (`maSP`);
+
+--
 -- Chỉ mục cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`maKH`);
+
+--
+-- Chỉ mục cho bảng `thongtin_giaohang`
+--
+ALTER TABLE `thongtin_giaohang`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `maDH` (`maDH`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
@@ -168,7 +240,13 @@ ALTER TABLE `iphone_new`
 -- AUTO_INCREMENT cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `maKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `maKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `thongtin_giaohang`
+--
+ALTER TABLE `thongtin_giaohang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -185,6 +263,12 @@ ALTER TABLE `chitiet_donhang`
 --
 ALTER TABLE `donhang`
   ADD CONSTRAINT `donhang_ibfk_1` FOREIGN KEY (`maKH`) REFERENCES `khachhang` (`maKH`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `thongtin_giaohang`
+--
+ALTER TABLE `thongtin_giaohang`
+  ADD CONSTRAINT `thongtin_giaohang_ibfk_1` FOREIGN KEY (`maDH`) REFERENCES `donhang` (`maDH`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
