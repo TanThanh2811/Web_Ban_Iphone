@@ -4,7 +4,7 @@
 
   <div class="menu">
     <li><a href="may_used.html">Máy cũ</a></li>
-    <li><a href="may_new.html">Máy mới</a></li>
+    <li><a href="may_new.php">Máy mới</a></li>
     <li><a href="phu_kien.php">Phụ Kiện</a></li>
     <li><a href="gio_hang.php">Giỏ Hàng</a></li>
     <li><a href="history.php">Lịch Sử</a></li>

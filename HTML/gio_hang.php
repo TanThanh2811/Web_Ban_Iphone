@@ -19,19 +19,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['action'
   $id = (int)$_POST['id'];
   $action = $_POST['action'];
 
-  $res = mysqli_query($conn, "SELECT so_luong FROM gio_hang WHERE id = $id AND maKH = $id_nguoi_dung");
+  $res = mysqli_query($conn, "SELECT soLuong FROM gio_hang WHERE id = $id AND maKH = $id_nguoi_dung");
   if ($row = mysqli_fetch_assoc($res)) {
-    $so_luong = (int)$row['so_luong'];
+    $soLuong = (int)$row['soLuong'];
     if ($action === 'giam') {
-      if ($so_luong > 1) {
-        $so_luong--;
-        mysqli_query($conn, "UPDATE gio_hang SET so_luong = $so_luong WHERE id = $id");
+      if ($soLuong > 1) {
+        $soLuong--;
+        mysqli_query($conn, "UPDATE gio_hang SET soLuong = $soLuong WHERE id = $id");
       } else {
         mysqli_query($conn, "DELETE FROM gio_hang WHERE id = $id");
       }
     } elseif ($action === 'tang') {
-      $so_luong++;
-      mysqli_query($conn, "UPDATE gio_hang SET so_luong = $so_luong WHERE id = $id");
+      $soLuong++;
+      mysqli_query($conn, "UPDATE gio_hang SET soLuong = $soLuong WHERE id = $id");
     }
   }
   header("Location: gio_hang.php");
@@ -46,7 +46,7 @@ if (isset($_GET['xoa_id'])) {
 }
 
 $sql = "
-  SELECT gh.id, sp.tenSP, sp.giaBan, sp.hinhAnh, gh.so_luong
+  SELECT gh.id, sp.tenSP, sp.giaBan, sp.hinhAnh, gh.soLuong, sp.dungLuong
   FROM gio_hang gh
   JOIN iphone_new sp ON gh.maSP = sp.maSP
   WHERE gh.maKH = $id_nguoi_dung AND gh.loaiSP = 'Mới'
@@ -64,20 +64,20 @@ $result = mysqli_query($conn, $sql);
         <div class="cart-item">
           <img src="<?= $row['hinhAnh'] ?>" alt="Ảnh sản phẩm">
           <div>
-            <div><strong><?= $row['tenSP'] ?></strong></div>
+            <div><strong><?= $row['tenSP'] . " " . $row['dungLuong'] . "GB" ?></strong></div>
             <div class="quantity-control">
               <form method="POST" action="gio_hang.php" style="display:inline-block;">
                 <input type="hidden" name="id" value="<?= $row['id'] ?>">
                 <button name="action" value="giam">-</button>
-                <input type="text" name="so_luong" value="<?= $row['so_luong'] ?>" style="width: 40px; text-align: center;" disabled>
+                <input type="text" name="soLuong" value="<?= $row['soLuong'] ?>" style="width: 40px; text-align: center;" disabled>
                 <button name="action" value="tang">+</button>
               </form>
             </div>
-            <div><?= number_format($row['giaBan'] * $row['so_luong'], 0, ',', '.') ?>đ</div>
+            <div><?= number_format($row['giaBan'] * $row['soLuong'], 0, ',', '.') ?>đ</div>
             <a href="gio_hang.php?xoa_id=<?= $row['id'] ?>" onclick="return confirm('Xác nhận xóa sản phẩm này?')">❌ Xóa</a>
           </div>
         </div>
-      <?php $total += $row['giaBan'] * $row['so_luong']; endwhile; ?>
+      <?php $total += $row['giaBan'] * $row['soLuong']; endwhile; ?>
       <div class="cart-total">Tổng tiền: <?= number_format($total, 0, ',', '.') ?>đ</div>
     </div>
 
@@ -100,7 +100,7 @@ $result = mysqli_query($conn, $sql);
         </div>
         <div class="form-group"><input type="text" name="dia_chi" placeholder="Địa chỉ"></div>
         <div class="form-group"><textarea name="ghi_chu" placeholder="Yêu cầu khác (không bắt buộc)"></textarea></div>
-        <button type="submit" class="checkout-btn">THANH TOÁN</button>
+        <button type="submit" class="checkout-btn">ĐẶT HÀNG</button>
       </form>
     </div>
   </div>

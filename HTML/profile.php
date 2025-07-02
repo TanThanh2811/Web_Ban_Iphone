@@ -38,7 +38,7 @@ if (isset($_SESSION['tenKH'])) {
             $showLogin = false;
         } else {
             $hashed = password_hash($pass, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO khachhang (tenKH, sđt, email, diaChi, matKhau) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO khachhang (tenKH, sdt, email, diaChi, matKhau) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param("sssss", $tenKH, $sdt, $email, $diaChi, $hashed);
             if ($stmt->execute()) {
                 $msg = "✅ Đăng ký thành công! Vui lòng đăng nhập.";
@@ -64,7 +64,7 @@ if (isset($_SESSION['tenKH'])) {
             if (password_verify($pass, $user['matKhau'])) {
                 $_SESSION['tenKH'] = $user['tenKH'];
                 $msg = "✅ Đăng nhập thành công. Xin chào, " . $user['tenKH'] . "! Bạn sẽ được chuyển về trang chủ trong 3 giây...";
-                header("refresh:3; url=../index.php");
+                header("refresh:3; url=../HTML/trangchu.php");
             } else {
                 $msg = "❌ Sai mật khẩu.";
             }
@@ -83,7 +83,7 @@ if (isset($_SESSION['tenKH'])) {
   <link rel="stylesheet" href="../assets/css/style.css">
   <style>
     body { font-family: Arial; background: #f2f2f2; padding: 0px; }
-    .container { width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 8px #ccc; }
+.container { width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 8px #ccc; }
     .form-group { margin-bottom: 10px; }
     input { width: 100%; padding: 8px; margin-top: 5px; }
     button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
@@ -99,14 +99,27 @@ if (isset($_SESSION['tenKH'])) {
 <div class="content">
 <div class="container">
 <?php if (isset($_SESSION['tenKH'])): ?>
+  <?php if (isset($userInfo) && $userInfo): ?>
   <h3>Thông tin cá nhân</h3>
   <p><strong>Tên:</strong> <?= htmlspecialchars($userInfo['tenKH']) ?></p>
-  <p><strong>Số điện thoại:</strong> <?= htmlspecialchars($userInfo['sđt']) ?></p>
+  <p><strong>Số điện thoại:</strong> <?= htmlspecialchars($userInfo['sdt']) ?></p>
   <p><strong>Email:</strong> <?= htmlspecialchars($userInfo['email']) ?></p>
   <p><strong>Địa chỉ:</strong> <?= htmlspecialchars($userInfo['diaChi']) ?></p>
-  <form method="post" action="logout.php">
-    <button type="submit" name="logout">Đăng xuất</button>
-  </form>
+<?php elseif (isset($_SESSION['tenKH'])): ?>
+  <p>Đăng nhập thành công! Đang chuyển về trang chủ...</p>
+<?php else: ?>
+  <p>Không tìm thấy thông tin người dùng.</p>
+<?php endif; ?>
+
+  <form id="logoutForm" method="post" action="logout.php" onsubmit="return confirmLogout();">
+  <button type="submit" name="logout">Đăng xuất</button>
+</form>
+
+<script>
+  function confirmLogout() {
+    return confirm("Bạn có chắc chắn muốn đăng xuất không?");
+  }
+</script>
 
 <?php else: ?>
   <?php if (!empty($msg)): ?>
@@ -148,7 +161,7 @@ if (isset($_SESSION['tenKH'])) {
       </div>
       <div class="form-group">
         <label>Địa chỉ:</label>
-        <input type="text" name="regAddress" required>
+<input type="text" name="regAddress" required>
       </div>
       <div class="form-group">
         <label>Mật khẩu:</label>
