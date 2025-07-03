@@ -4,7 +4,7 @@ if (!$conn) {
   die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
-$id_nguoi_dung = 1; // giả lập
+$id_nguoi_dung = $ // giả lập
 
 // Lấy thông tin từ form
 $ho_ten = $_POST['ho_ten'] ?? '';
