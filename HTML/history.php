@@ -1,8 +1,24 @@
 <?php
 $conn = mysqli_connect("localhost", "root", "", "db_thanhhaobaniphone");
-$id_nguoi_dung = 1; // giả lập
+session_start();
 
-$sql_don = "SELECT * FROM donhang WHERE maKH = $id_nguoi_dung ORDER BY ngayDat DESC";
+if (!isset($_SESSION['username'])) {
+    header("Location: profile.php");
+    exit;
+}
+$username = $_SESSION['username'];
+$sql_id = "SELECT maKH FROM khachhang WHERE username = '$username' LIMIT 1";
+$res_id = mysqli_query($conn, $sql_id);
+
+if (!$res_id) {
+    die("Lỗi truy vấn SQL: " . mysqli_error($conn));
+}
+
+$id_khachhang = mysqli_fetch_assoc($res_id);
+$maKH = $id_khachhang['maKH'];
+
+
+$sql_don = "SELECT * FROM donhang WHERE maKH = $maKH ORDER BY ngayDat DESC";
 $res_don = mysqli_query($conn, $sql_don);
 ?>
 

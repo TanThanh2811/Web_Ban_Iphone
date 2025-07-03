@@ -4,7 +4,13 @@ if (!$conn) {
   die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
-$id_nguoi_dung = $ // giả lập
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: profile.php");
+    exit;
+}
+$username = $_SESSION['username'];
 
 // Lấy thông tin từ form
 $ho_ten = $_POST['ho_ten'] ?? '';
@@ -17,11 +23,19 @@ $dia_chi = $_POST['dia_chi'] ?? '';
 $ghi_chu = $_POST['ghi_chu'] ?? '';
 
 // 1. Tạo đơn hàng mới
-mysqli_query($conn, "INSERT INTO donhang (maKH, ngayDat, trangThai) VALUES ($id_nguoi_dung, CURDATE(), 'Chờ xác nhận')");
+mysqli_query($conn, "INSERT INTO donhang (maKH, ngayDat, trangThai) VALUES ($username, CURDATE(), 'Chờ xác nhận')");
 $maDH = mysqli_insert_id($conn); // lấy mã đơn hàng vừa tạo
 
 // 2. Lấy sản phẩm trong giỏ hàng
-$sql_gio = "SELECT * FROM gio_hang WHERE id_nguoi_dung = $id_nguoi_dung";
+$resGia = mysqli_query($conn, "SELECT giaBan FROM gio_hang WHERE maSP = $maSP");
+if ($resGia === false) {
+    die("Lỗi truy vấn giá bán: " . mysqli_error($conn));
+}
+if (mysqli_num_rows($resGia) > 0) {
+    $gia = mysqli_fetch_assoc($resGia)['giaBan'];
+} else {
+    die("Không tìm thấy sản phẩm với maSP = $maSP trong bảng $bang");
+}
 $res_gio = mysqli_query($conn, $sql_gio);
 
 // 3. Chèn vào chi tiết đơn hàng
@@ -29,7 +43,7 @@ while ($row = mysqli_fetch_assoc($res_gio)) {
   $maSP = $row['id_san_pham'];
   $soLuong = $row['so_luong'];
   $loaiSP = $row['loaiSP'];
-  $bang = ($loaiSP === 'Cũ') ? 'iphone_cu' : 'iphone_new';
+  $bang = ($loaiSP === 'Cũ') ? 'iphone_used' : 'iphone_new';
   $resGia = mysqli_query($conn, "SELECT giaBan FROM $bang WHERE maSP = $maSP");
   $gia = mysqli_fetch_assoc($resGia)['giaBan'];
 
@@ -46,7 +60,7 @@ mysqli_query($conn, "
 ");
 
 // 5. Xóa giỏ hàng sau khi đặt
-mysqli_query($conn, "DELETE FROM gio_hang WHERE id_nguoi_dung = $id_nguoi_dung");
+mysqli_query($conn, "DELETE FROM gio_hang WHERE username = $username");
 
 // 6. Thông báo
 echo "<script>alert(' Đặt hàng thành công!'); window.location.href='trangchu.php';</script>";
