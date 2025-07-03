@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 02, 2025 lúc 04:53 PM
+-- Thời gian đã tạo: Th7 03, 2025 lúc 04:28 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -30,10 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `chitiet_donhang` (
   `maDH` int(11) NOT NULL,
   `maSP` int(11) NOT NULL,
-  `loaiSP` enum('M?i','C?') NOT NULL,
+  `loaiSP` enum('Mới','Cũ','Phụ kiện') NOT NULL,
   `soLuong` int(11) NOT NULL,
   `giaBan` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `chitiet_donhang`
+--
+
+INSERT INTO `chitiet_donhang` (`maDH`, `maSP`, `loaiSP`, `soLuong`, `giaBan`) VALUES
+(1, 1, 'Mới', 1, 22900000),
+(1, 2, 'Mới', 1, 30900000);
 
 -- --------------------------------------------------------
 
@@ -47,6 +55,13 @@ CREATE TABLE `donhang` (
   `ngayDat` date NOT NULL,
   `trangThai` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `donhang`
+--
+
+INSERT INTO `donhang` (`maDH`, `maKH`, `ngayDat`, `trangThai`) VALUES
+(1, 5, '2025-07-03', 'Đang xử lý');
 
 -- --------------------------------------------------------
 
@@ -69,11 +84,7 @@ INSERT INTO `gio_hang` (`username`, `maSP`, `loaiSP`, `soLuong`) VALUES
 ('0', 7, '', 1),
 ('0', 7, '', 1),
 ('0', 9, '', 1),
-('maivanhao21', 6, '', 1),
-('maivanhao21', 7, 'Mới', 3),
-('maivanhao21', 9, 'Mới', 1),
-('maivanhao21', 1, 'Cũ', 2),
-('maivanhao21', 3, 'Cũ', 1);
+('maivanhao21', 9, 'Mới', 1);
 
 -- --------------------------------------------------------
 
@@ -254,7 +265,7 @@ ALTER TABLE `thongtin_giaohang`
 -- AUTO_INCREMENT cho bảng `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `iphone_new`
