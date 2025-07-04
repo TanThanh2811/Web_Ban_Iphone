@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <link rel="stylesheet" href="../assets/css/style_admin.css">
 <h2>Thêm iPhone Cũ</h2>
+
 <form method="post">
     Tên SP: <input type="text" name="tenSP" required><br>
     Mô tả: <textarea name="moTa"></textarea><br>
@@ -30,4 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     Độ mới (%): <input type="number" name="doMoi" min="0" max="100"><br>
     Pin (%): <input type="number" name="pin" min="0" max="100"><br>
     <button type="submit">Thêm</button>
+    
+    <a href="iphone_used.php"><button type="button">Trở về</button></a>
 </form>

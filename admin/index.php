@@ -27,6 +27,7 @@ if (!isset($_SESSION['admin'])) {
 <main>
     <a href="iphone_new.php" class="admin-button">Quản lý iPhone Mới</a>
     <a href="iphone_used.php" class="admin-button">Quản lý iPhone Cũ</a>
+    <a href="phukien.php" class="admin-button">Quản lý Phụ Kiện</a>
     <a href="logout.php" class="admin-button" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">Đăng xuất</a>
 </main>
 

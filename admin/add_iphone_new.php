@@ -28,4 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     Ảnh (URL): <input type="text" name="hinhAnh"><br>
     Dung lượng: <input type="number" name="dungLuong"><br>
     <button type="submit">Thêm</button>
+
+    <a href="iphone_new.php"><button type="button">Trở về</button></a>
+   
 </form>
