@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION['admin_logged_in'])) {
+    if (isset($_COOKIE['admin_login'])) {
+        $_SESSION['admin_logged_in'] = true;
+    } else {
+        header("Location: login.php");
+        exit();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -16,7 +28,6 @@
     <a href="iphone_new.php" class="admin-button">Quản lý iPhone Mới</a>
     <a href="iphone_used.php" class="admin-button">Quản lý iPhone Cũ</a>
     <a href="logout.php" class="admin-button" onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">Đăng xuất</a>
-
 </main>
 
 </body>
