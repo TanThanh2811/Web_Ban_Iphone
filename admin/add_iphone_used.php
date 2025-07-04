@@ -5,14 +5,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $moTa = $_POST['moTa'];
     $gia = $_POST['giaBan'];
     $soLuong = $_POST['soLuong'];
-    $tinhTrang = $_POST['tinhTrang'];
     $hinhAnh = $_POST['hinhAnh'];
     $dungLuong = $_POST['dungLuong'];
     $doMoi = $_POST['doMoi'];
     $pin = $_POST['pin'];
 
-    $sql = "INSERT INTO iphone_used (tenSP, moTa, giaBan, soLuong, tinhTrang, hinhAnh, dungLuong, doMoi, pin)
-            VALUES ('$ten', '$moTa', '$gia', '$soLuong', '$tinhTrang', '$hinhAnh', '$dungLuong', '$doMoi', '$pin')";
+    $sql = "INSERT INTO iphone_used (tenSP, moTa, giaBan, soLuong, hinhAnh, dungLuong, doMoi, pin)
+            VALUES ('$ten', '$moTa', '$gia', '$soLuong', '$hinhAnh', '$dungLuong', '$doMoi', '$pin')";
     mysqli_query($conn, $sql);
     header("Location: iphone_used.php");
 }
@@ -25,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     Mô tả: <textarea name="moTa"></textarea><br>
     Giá bán: <input type="number" name="giaBan" required><br>
     Số lượng: <input type="number" name="soLuong" required><br>
-    Tình trạng: <input type="text" name="tinhTrang" required><br>
     Ảnh (URL): <input type="text" name="hinhAnh"><br>
     Dung lượng: <input type="number" name="dungLuong"><br>
     Độ mới (%): <input type="number" name="doMoi" min="0" max="100"><br>
