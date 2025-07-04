@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 03, 2025 lúc 04:28 PM
+-- Thời gian đã tạo: Th7 04, 2025 lúc 08:59 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -72,7 +72,7 @@ INSERT INTO `donhang` (`maDH`, `maKH`, `ngayDat`, `trangThai`) VALUES
 CREATE TABLE `gio_hang` (
   `username` varchar(255) NOT NULL,
   `maSP` int(11) NOT NULL,
-  `loaiSP` enum('Mới','Cũ') NOT NULL,
+  `loaiSP` enum('new','used','pk') NOT NULL,
   `soLuong` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -81,10 +81,10 @@ CREATE TABLE `gio_hang` (
 --
 
 INSERT INTO `gio_hang` (`username`, `maSP`, `loaiSP`, `soLuong`) VALUES
-('0', 7, '', 1),
-('0', 7, '', 1),
-('0', 9, '', 1),
-('maivanhao21', 9, 'Mới', 1);
+('maivanhao21', 1, 'used', 1),
+('maivanhao21', 9, 'new', 1),
+('maivanhao21', 8, 'pk', 1),
+('maivanhao21', 2, 'pk', 1);
 
 -- --------------------------------------------------------
 
@@ -188,13 +188,27 @@ INSERT INTO `khachhang` (`maKH`, `tenKH`, `email`, `sdt`, `diaChi`, `username`, 
 
 CREATE TABLE `phukien` (
   `maPK` int(11) NOT NULL,
-  `tenPK` varchar(255) NOT NULL,
+  `tenSP` varchar(255) NOT NULL,
   `loaiPK` varchar(50) NOT NULL,
   `soLuong` int(11) NOT NULL DEFAULT 0,
   `giaBan` bigint(20) NOT NULL,
   `moTa` text NOT NULL,
   `hinhAnh` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `phukien`
+--
+
+INSERT INTO `phukien` (`maPK`, `tenSP`, `loaiPK`, `soLuong`, `giaBan`, `moTa`, `hinhAnh`) VALUES
+(1, 'Tai nghe Apple AirPods 4', 'Tai Nghe', 4, 3900000, 'Apple AirPods 4 – Chống Ồn Chủ Động, Âm Thanh Đỉnh Cao\r\n\r\nAirPods 4 mang đến trải nghiệm âm thanh sống động với công nghệ chống ồn chủ động (ANC) và chế độ xuyên âm thông minh. Thiết kế mới vừa vặn, thoải mái cùng thời lượng pin dài giúp bạn tận hưởng âm nhạc suốt cả ngày. Kết nối nhanh chóng với iPhone, iPad và Mac, đây là lựa chọn hoàn hảo cho người yêu công nghệ và âm thanh chất lượng cao. ', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-4-cong-usb-c-anc-1-638615780217991382-750x500-6906-4563.jpg'),
+(2, 'Tai nghe Apple Airpod 4 ANC', 'Tai Nghe', 2, 4900000, 'Apple AirPods 4 – Chống Ồn Chủ Động, Âm Thanh Đỉnh Cao\r\n\r\nAirPods 4 mang đến trải nghiệm âm thanh sống động với công nghệ chống ồn chủ động (ANC) và chế độ xuyên âm thông minh. Thiết kế mới vừa vặn, thoải mái cùng thời lượng pin dài giúp bạn tận hưởng âm nhạc suốt cả ngày. Kết nối nhanh chóng với iPhone, iPad và Mac, đây là lựa chọn hoàn hảo cho người yêu công nghệ và âm thanh chất lượng cao.', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-4-cong-usb-c-anc-1-638615780217991382-750x500-6906.jpg'),
+(3, 'Tai nghe Apple AirPods Pro 2 New - Type C', 'Tai Nghe', 4, 5500000, 'Trải Nghiệm Âm Thanh Cao Cấp Với Kết Nối Type-C\r\n\r\nAirPods Pro 2 New - Type C là phiên bản nâng cấp của dòng AirPods Pro, mang đến trải nghiệm âm thanh cao cấp với nhiều tính năng tiên tiến. Phiên bản này nổi bật với kết nối sạc Type-C, giúp bạn dễ dàng sạc và kết nối thiết bị của mình với các nguồn điện và thiết bị khác.\r\n\r\nAirPods Pro 2 New - Type C là sự lựa chọn tuyệt vời cho những ai tìm kiếm một trải nghiệm âm thanh chất lượng cao với sự tiện lợi của kết nối sạc Type-C, cùng với các tính năng tiên tiến như chống ồn chủ động và âm thanh không gian, đáp ứng nhu cầu sử dụng hàng ngày và giải trí.', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-pro-2-thumb-650x650-5838-5817.png'),
+(4, 'AirPods 3 New', 'Tai Nghe', 2, 3590000, 'Âm Thanh Nâng Cao và Thiết Kế Tinh Tế\r\n\r\nAirPods 3 New đại diện cho sự nâng cấp từ dòng AirPods trước đó với nhiều cải tiến về chất lượng âm thanh, thiết kế và tính năng. Phiên bản này mang đến trải nghiệm nghe nhạc và gọi điện thoại tốt hơn với âm thanh sống động, thiết kế mới mẻ và nhiều tính năng tiên tiến.\r\n\r\nAirPods 3 New là sự lựa chọn tuyệt vời cho những ai muốn trải nghiệm âm thanh chất lượng cao với các tính năng hiện đại và thiết kế tiện lợi. Sản phẩm phù hợp cho những ai yêu thích sự kết hợp giữa âm thanh rõ ràng, thoải mái khi sử dụng và khả năng kết nối thông minh.', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-3-thumb-650x650-4985.png'),
+(5, 'AirPods Pro 2 New', 'Tai Nghe', 5, 5500000, 'Trải Nghiệm Âm Thanh Đỉnh Cao Với Công Nghệ Mới\r\n\r\nAirPods Pro 2 New là phiên bản nâng cấp của dòng AirPods Pro, cung cấp trải nghiệm âm thanh tuyệt vời với nhiều tính năng tiên tiến hơn. Được trang bị công nghệ âm thanh mới nhất và các tính năng tiên tiến, AirPods Pro 2 mang đến sự kết hợp hoàn hảo giữa chất lượng âm thanh, tiện lợi và thiết kế hiện đại.\r\n\r\nAirPods Pro 2 New là lựa chọn lý tưởng cho những ai yêu thích âm thanh chất lượng cao và các tính năng tiên tiến trong một thiết kế nhỏ gọn và tiện lợi, với khả năng chống ồn hiệu quả và âm thanh không gian để nâng cao trải nghiệm nghe nhạc và giải trí.', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-pro-2-thumb-650x650-5838.png'),
+(6, 'AirPods Max New', 'Tai Nghe', 1, 11900000, 'Tai Nghe Over-Ear Cao Cấp Với Âm Thanh Vòm Sống Động\r\n\r\nAirPods Max là phiên bản cao cấp của dòng AirPods, mang đến trải nghiệm âm thanh tuyệt vời với thiết kế over-ear và nhiều tính năng tiên tiến. Được trang bị công nghệ âm thanh tiên tiến nhất, khả năng chống ồn chủ động, và âm thanh không gian, AirPods Max mang đến chất lượng âm thanh và sự thoải mái tối ưu cho người dùng.\r\n\r\nAirPods Max là lựa chọn lý tưởng cho những ai yêu thích âm thanh chất lượng cao với thiết kế sang trọng và tính năng tiên tiến. Với công nghệ âm thanh vòm và khả năng chống ồn chủ động, sản phẩm mang đến trải nghiệm nghe nhạc và giải trí đỉnh cao.', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-max-select-hong-thumb-650x650-4477.png'),
+(7, 'AirPods 2 New', 'Tai Nghe', 2, 2690000, 'Âm Thanh Tuyệt Vời và Kết Nối Thông Minh\r\n\r\nAirPods 2  mang đến trải nghiệm âm thanh chất lượng cao với nhiều cải tiến về kết nối và tính năng so với phiên bản trước. Với thiết kế tiện lợi và công nghệ tiên tiến, AirPods 2 là sự lựa chọn hoàn hảo cho những ai muốn thưởng thức âm nhạc và gọi điện thoại mà không bị vướng víu dây.', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-2-650x650-1320.png'),
+(8, 'Củ sạc Apple Power Adapter 20W Type-C', 'Sạc Iphone', 1, 549000, 'Sạc nhanh 20W USB-C Power Adapter là phụ kiện hoàn hảo cho iPhone, iPad có hỗ trợ sạc nhanh, đặc biệt là dòng iPhone 12 mới ra mắt. Một sản phẩm phụ kiện chính hãng từ Apple sẽ mang đến hiệu suất sạc và độ an toàn tối ưu cho iPhone, iPad của bạn.\r\n\r\n', 'https://cdn2.fptshop.com.vn/unsafe/750x0/filters:format(webp):quality(75)/2020_10_20_637387863045789128_pk-apple-00720432-2.png');
 
 -- --------------------------------------------------------
 
@@ -251,6 +265,12 @@ ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`maKH`);
 
 --
+-- Chỉ mục cho bảng `phukien`
+--
+ALTER TABLE `phukien`
+  ADD PRIMARY KEY (`maPK`);
+
+--
 -- Chỉ mục cho bảng `thongtin_giaohang`
 --
 ALTER TABLE `thongtin_giaohang`
@@ -278,6 +298,12 @@ ALTER TABLE `iphone_new`
 --
 ALTER TABLE `khachhang`
   MODIFY `maKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `phukien`
+--
+ALTER TABLE `phukien`
+  MODIFY `maPK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `thongtin_giaohang`

@@ -14,15 +14,16 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username'];
 echo "Username từ session: " . $username . "<br>"; // Log để kiểm tra
 
-$maSP = (int)($_GET['maSP'] ?? 0);
-$so_luong = max(1, (int)($_GET['so_luong'] ?? 1));
-if (!isset($_GET['loaiSP']) || $_GET['loaiSP'] === "") {
+$maSP = (int)($_REQUEST['maSP'] ?? 0);
+$so_luong = max(1, (int)($_REQUEST['so_luong'] ?? 1));
+$loaiSP = $_REQUEST['loaiSP'] ?? '';
+
+if ($loaiSP === "") {
     die("Thiếu hoặc rỗng tham số loaiSP!");
 }
 
-$loaiSP = $_GET['loaiSP'];
 
-echo "maSP: $maSP, so_luong: $so_luong, loaiSP: $loaiSP<br>"; // Log tham số
+echo "maSP: $maSP, loaiSP: $loaiSP, so_luong: $so_luong<br>"; // Log tham số
 
 if ($maSP > 0) {
     $stmt = $conn->prepare("SELECT username FROM gio_hang WHERE username = ? AND maSP = ? AND loaiSP = ?");
@@ -57,7 +58,7 @@ if ($maSP > 0) {
         }
     }
     $stmt->close();
-
+    //header("Refresh: 3; url=gio_hang.php");
     header("Location: gio_hang.php");
     exit;
 } else {

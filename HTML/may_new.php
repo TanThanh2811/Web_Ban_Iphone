@@ -46,7 +46,7 @@
     <h2 class="product-section">iPhone <?= $dong ?> Series </h2>
     <div class="product-grid" role="list">
         <?php while ($row = $result->fetch_assoc()): ?>
-        <a href="sanpham.php?id=<?= htmlspecialchars($row['maSP']) ?>&loaiSP=Mới" style="text-decoration: none; color: inherit;">
+        <a href="sanpham.php?id=<?= htmlspecialchars($row['maSP']) ?>&loaiSP=new" style="text-decoration: none; color: inherit;">
             <article class="product-card" role="listitem" tabindex="0" aria-label="<?= htmlspecialchars($row['tenSP']) ?>">
             <div class="discount-badge"><?= htmlspecialchars($row['tinhTrang']) ?></div>
             <img src="<?= htmlspecialchars($row['hinhAnh']) ?>" alt="Hình ảnh <?= htmlspecialchars($row['tenSP']) ?>" />

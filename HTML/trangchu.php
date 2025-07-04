@@ -27,7 +27,7 @@
     <h2 class="product-section">🔥 Sản phẩm Hot</h2>
     <div class="product-grid" role="list">
       <?php while ($row = mysqli_fetch_assoc($result_hot)): ?>
-        <a href="sanpham.php?id=<?= htmlspecialchars($row['maSP'])?>&loaiSP=Mới" style="text-decoration: none; color: inherit;">
+        <a href="sanpham.php?id=<?= htmlspecialchars($row['maSP'])?>&loaiSP=new" style="text-decoration: none; color: inherit;">
           <article class="product-card" role="listitem" tabindex="0" aria-label="<?= htmlspecialchars($row['tenSP']) ?>">
             <div class="discount-badge"><?= $row['tinhTrang'] ?></div>
             <img src="<?= htmlspecialchars($row['hinhAnh']) ?>" alt="Hình ảnh <?= htmlspecialchars($row['tenSP']) ?>" />
