@@ -1,14 +1,16 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-    if (isset($_COOKIE['admin_login'])) {
-        $_SESSION['admin_logged_in'] = true;
+
+if (!isset($_SESSION['admin'])) {
+    if (isset($_COOKIE['admin_login']) && $_COOKIE['admin_login'] === 'admin') {
+        $_SESSION['admin'] = 'admin';
     } else {
         header("Location: login.php");
         exit();
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="vi">
