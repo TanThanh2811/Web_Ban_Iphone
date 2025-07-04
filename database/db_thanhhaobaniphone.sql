@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 04, 2025 lúc 10:30 AM
+-- Thời gian đã tạo: Th7 04, 2025 lúc 03:26 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -30,10 +30,22 @@ SET time_zone = "+00:00";
 CREATE TABLE `chitiet_donhang` (
   `maDH` int(11) NOT NULL,
   `maSP` int(11) NOT NULL,
-  `loaiSP` enum('Mới','Cũ','Phụ kiện') NOT NULL,
+  `loaiSP` enum('new','used','pk') NOT NULL,
   `soLuong` int(11) NOT NULL,
   `giaBan` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `chitiet_donhang`
+--
+
+INSERT INTO `chitiet_donhang` (`maDH`, `maSP`, `loaiSP`, `soLuong`, `giaBan`) VALUES
+(17, 9, 'new', 0, 18990000),
+(18, 8, 'pk', 1, 549000),
+(18, 9, 'new', 1, 18990000),
+(19, 9, 'new', 1, 18990000),
+(19, 11, 'new', 1, 28500000),
+(19, 1, 'used', 1, 4500000);
 
 -- --------------------------------------------------------
 
@@ -48,6 +60,16 @@ CREATE TABLE `donhang` (
   `trangThai` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `donhang`
+--
+
+INSERT INTO `donhang` (`maDH`, `maKH`, `ngayDat`, `trangThai`) VALUES
+(16, 6, '2025-07-04', 'Đã hủy'),
+(17, 6, '2025-07-04', 'Đang giao hàng'),
+(18, 6, '2025-07-04', 'Chờ xác nhận'),
+(19, 6, '2025-07-04', 'Chờ xác nhận');
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +82,14 @@ CREATE TABLE `gio_hang` (
   `loaiSP` enum('new','used','pk') NOT NULL,
   `soLuong` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `gio_hang`
+--
+
+INSERT INTO `gio_hang` (`username`, `maSP`, `loaiSP`, `soLuong`) VALUES
+('maivanhao', 1, 'used', 1),
+('maivanhao', 9, 'new', 1);
 
 -- --------------------------------------------------------
 
@@ -90,7 +120,8 @@ INSERT INTO `iphone_new` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `tinhTra
 (5, 'Iphone 16 Plus', 'Thiết Kế Tinh Tế, Hiệu Năng Ấn Tượng\r\n\r\niPhone 16 Plus là mẫu điện thoại thông minh cao cấp thuộc dòng iPhone 16 Series của Apple, được thiết kế để mang lại trải nghiệm hoàn hảo cho người dùng nhờ sự kết hợp giữa màn hình lớn, hiệu năng mạnh mẽ và các tính năng tiên tiến. Với màn hình 6.7 inch, iPhone 16 Plus là lựa chọn lý tưởng cho những người yêu thích các thiết bị có màn hình rộng để xem phim, chơi game, và làm việc đa nhiệm.', 28900000, 4, 'Còn Hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/0029111xanh-mong-ket550-9970.jpeg', 256),
 (6, 'Iphone 15 Plus', 'iPhone 15 Plus mang đến trải nghiệm di động với màn hình lớn, thời lượng pin dài, và hiệu năng mạnh mẽ. Đây là sự lựa chọn hoàn hảo cho những ai yêu thích không gian hiển thị rộng rãi nhưng vẫn giữ được thiết kế sang trọng, hiện đại của Apple.', 27900000, 7, 'Còn hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-plus-blue-thumbtz-1-650x650-1712.png', 256),
 (7, 'Iphone 15', 'iPhone 15 là phiên bản tiêu chuẩn trong dòng sản phẩm mới của Apple, mang đến sự cân bằng giữa hiệu năng, thiết kế và giá cả. Với những cải tiến về camera, chip xử lý và màn hình, iPhone 15 là lựa chọn lý tưởng cho người dùng cần một chiếc điện thoại mạnh mẽ, hiện đại nhưng không quá cầu kỳ.', 19900000, 3, 'Còn Hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-black-thumbtz0-650x650-1646.png', 256),
-(9, 'Iphone 14', NULL, 18990000, 2, 'Còn hàng', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_14_blue_pdp_image_position-1a_blue_color_vn_1.png', 256);
+(9, 'Iphone 14', NULL, 18990000, 2, 'Còn hàng', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_14_blue_pdp_image_position-1a_blue_color_vn_1.png', 256),
+(11, 'Iphone 14 Pro', 'iPhone 14 Pro là một trong những sản phẩm cao cấp nhất của Apple, ra mắt vào tháng 9 năm 2022. Với thiết kế mới lạ, hiệu năng mạnh mẽ và những cải tiến đáng kể trong công nghệ, iPhone 14 Pro đã nhanh chóng thu hút sự quan tâm của người dùng và trở thành một trong những lựa chọn hàng đầu trên thị trường.', 28500000, 7, 'Còn hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-14-pro-tim-3-camera-41031.png', 256);
 
 -- --------------------------------------------------------
 
@@ -162,7 +193,7 @@ INSERT INTO `khachhang` (`maKH`, `tenKH`, `email`, `sdt`, `diaChi`, `username`, 
 --
 
 CREATE TABLE `phukien` (
-  `maPK` int(11) NOT NULL,
+  `maSP` int(11) NOT NULL,
   `tenSP` varchar(255) NOT NULL,
   `loaiPK` varchar(50) NOT NULL,
   `soLuong` int(11) NOT NULL DEFAULT 0,
@@ -175,7 +206,7 @@ CREATE TABLE `phukien` (
 -- Đang đổ dữ liệu cho bảng `phukien`
 --
 
-INSERT INTO `phukien` (`maPK`, `tenSP`, `loaiPK`, `soLuong`, `giaBan`, `moTa`, `hinhAnh`) VALUES
+INSERT INTO `phukien` (`maSP`, `tenSP`, `loaiPK`, `soLuong`, `giaBan`, `moTa`, `hinhAnh`) VALUES
 (1, 'Tai nghe Apple AirPods 4', 'Tai Nghe', 4, 3900000, 'Apple AirPods 4 – Chống Ồn Chủ Động, Âm Thanh Đỉnh Cao\r\n\r\nAirPods 4 mang đến trải nghiệm âm thanh sống động với công nghệ chống ồn chủ động (ANC) và chế độ xuyên âm thông minh. Thiết kế mới vừa vặn, thoải mái cùng thời lượng pin dài giúp bạn tận hưởng âm nhạc suốt cả ngày. Kết nối nhanh chóng với iPhone, iPad và Mac, đây là lựa chọn hoàn hảo cho người yêu công nghệ và âm thanh chất lượng cao. ', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-4-cong-usb-c-anc-1-638615780217991382-750x500-6906-4563.jpg'),
 (2, 'Tai nghe Apple Airpod 4 ANC', 'Tai Nghe', 2, 4900000, 'Apple AirPods 4 – Chống Ồn Chủ Động, Âm Thanh Đỉnh Cao\r\n\r\nAirPods 4 mang đến trải nghiệm âm thanh sống động với công nghệ chống ồn chủ động (ANC) và chế độ xuyên âm thông minh. Thiết kế mới vừa vặn, thoải mái cùng thời lượng pin dài giúp bạn tận hưởng âm nhạc suốt cả ngày. Kết nối nhanh chóng với iPhone, iPad và Mac, đây là lựa chọn hoàn hảo cho người yêu công nghệ và âm thanh chất lượng cao.', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-4-cong-usb-c-anc-1-638615780217991382-750x500-6906.jpg'),
 (3, 'Tai nghe Apple AirPods Pro 2 New - Type C', 'Tai Nghe', 4, 5500000, 'Trải Nghiệm Âm Thanh Cao Cấp Với Kết Nối Type-C\r\n\r\nAirPods Pro 2 New - Type C là phiên bản nâng cấp của dòng AirPods Pro, mang đến trải nghiệm âm thanh cao cấp với nhiều tính năng tiên tiến. Phiên bản này nổi bật với kết nối sạc Type-C, giúp bạn dễ dàng sạc và kết nối thiết bị của mình với các nguồn điện và thiết bị khác.\r\n\r\nAirPods Pro 2 New - Type C là sự lựa chọn tuyệt vời cho những ai tìm kiếm một trải nghiệm âm thanh chất lượng cao với sự tiện lợi của kết nối sạc Type-C, cùng với các tính năng tiên tiến như chống ồn chủ động và âm thanh không gian, đáp ứng nhu cầu sử dụng hàng ngày và giải trí.', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/airpods-pro-2-thumb-650x650-5838-5817.png'),
@@ -205,6 +236,16 @@ CREATE TABLE `thongtin_giaohang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- Đang đổ dữ liệu cho bảng `thongtin_giaohang`
+--
+
+INSERT INTO `thongtin_giaohang` (`id`, `maDH`, `ho_ten`, `sdt`, `email`, `tinh`, `quan`, `phuong`, `dia_chi`, `ghi_chu`) VALUES
+(14, 16, 'mai văn hảo', '0399714932', 'maivanhao5667@gmail.com', '', '', '', '11/12 trung mỹ tây 9', ''),
+(15, 17, 'mai văn hảo', '0399714932', 'maivanhao5667@gmail.com', '', '', '', '11/12 trung mỹ tây 9', ''),
+(16, 18, 'mai văn hảo', '0399714932', 'maivanhao5667@gmail.com', '', '', '', '11/12 trung mỹ tây 9', ''),
+(17, 19, 'mai văn hảo', '0399714932', 'maivanhao5667@gmail.com', '', '', '', '11/12 trung mỹ tây 9', '');
+
+--
 -- Chỉ mục cho các bảng đã đổ
 --
 
@@ -212,7 +253,7 @@ CREATE TABLE `thongtin_giaohang` (
 -- Chỉ mục cho bảng `chitiet_donhang`
 --
 ALTER TABLE `chitiet_donhang`
-  ADD PRIMARY KEY (`maDH`,`maSP`,`loaiSP`);
+  ADD KEY `fk_ctdh_donhang` (`maDH`);
 
 --
 -- Chỉ mục cho bảng `donhang`
@@ -243,7 +284,7 @@ ALTER TABLE `khachhang`
 -- Chỉ mục cho bảng `phukien`
 --
 ALTER TABLE `phukien`
-  ADD PRIMARY KEY (`maPK`);
+  ADD PRIMARY KEY (`maSP`);
 
 --
 -- Chỉ mục cho bảng `thongtin_giaohang`
@@ -260,13 +301,13 @@ ALTER TABLE `thongtin_giaohang`
 -- AUTO_INCREMENT cho bảng `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT cho bảng `iphone_new`
 --
 ALTER TABLE `iphone_new`
-  MODIFY `maSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `maSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `khachhang`
@@ -278,13 +319,13 @@ ALTER TABLE `khachhang`
 -- AUTO_INCREMENT cho bảng `phukien`
 --
 ALTER TABLE `phukien`
-  MODIFY `maPK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `maSP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `thongtin_giaohang`
 --
 ALTER TABLE `thongtin_giaohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -294,7 +335,8 @@ ALTER TABLE `thongtin_giaohang`
 -- Các ràng buộc cho bảng `chitiet_donhang`
 --
 ALTER TABLE `chitiet_donhang`
-  ADD CONSTRAINT `chitiet_donhang_ibfk_1` FOREIGN KEY (`maDH`) REFERENCES `donhang` (`maDH`) ON DELETE CASCADE;
+  ADD CONSTRAINT `chitiet_donhang_ibfk_1` FOREIGN KEY (`maDH`) REFERENCES `donhang` (`maDH`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_ctdh_donhang` FOREIGN KEY (`maDH`) REFERENCES `donhang` (`maDH`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `donhang`

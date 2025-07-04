@@ -37,7 +37,7 @@
     <h2 class="product-section">Phụ Kiện: <?= htmlspecialchars($loai) ?></h2>
     <div class="product-grid" role="list">
       <?php while ($row = $result->fetch_assoc()): ?>
-        <a href="sanpham.php?id=<?= htmlspecialchars($row['maPK']) ?>&loaiSP=pk" style="text-decoration: none; color: inherit;">
+        <a href="sanpham.php?id=<?= htmlspecialchars($row['maSP']) ?>&loaiSP=pk" style="text-decoration: none; color: inherit;">
           <article class="product-card" role="listitem" tabindex="0" aria-label="<?= htmlspecialchars($row['tenSP']) ?>">
             <div class="discount-badge">Số lượng: <?= $row['soLuong'] ?></div>
             <img src="<?= htmlspecialchars($row['hinhAnh']) ?>" alt="Hình ảnh <?= htmlspecialchars($row['tenSP']) ?>" />

@@ -22,7 +22,7 @@ switch ($loaiSP) {
     break;
   case "pk":
     $table = "phukien";
-    $id_field = "maPK";
+    $id_field = "maSP";
     $name_field = "tenSP";
     break;
   default:

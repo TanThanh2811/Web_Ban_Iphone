@@ -1,67 +1,104 @@
 <?php
 $conn = mysqli_connect("localhost", "root", "", "db_thanhhaobaniphone");
 if (!$conn) {
-  die("Kết nối thất bại: " . mysqli_connect_error());
+    die("Kết nối thất bại: " . mysqli_connect_error());
 }
 
 session_start();
-
 if (!isset($_SESSION['username'])) {
     header("Location: profile.php");
     exit;
 }
 $username = $_SESSION['username'];
 
-// Lấy thông tin từ form
-$ho_ten = $_POST['ho_ten'] ?? '';
-$sdt = $_POST['sdt'] ?? '';
-$email = $_POST['email'] ?? '';
-$tinh = $_POST['tinh'] ?? '';
-$quan = $_POST['quan'] ?? '';
-$phuong = $_POST['phuong'] ?? '';
-$dia_chi = $_POST['dia_chi'] ?? '';
-$ghi_chu = $_POST['ghi_chu'] ?? '';
-
-// 1. Tạo đơn hàng mới
-mysqli_query($conn, "INSERT INTO donhang (maKH, ngayDat, trangThai) VALUES ($username, CURDATE(), 'Chờ xác nhận')");
-$maDH = mysqli_insert_id($conn); // lấy mã đơn hàng vừa tạo
-
-// 2. Lấy sản phẩm trong giỏ hàng
-$resGia = mysqli_query($conn, "SELECT giaBan FROM gio_hang WHERE maSP = $maSP");
-if ($resGia === false) {
-    die("Lỗi truy vấn giá bán: " . mysqli_error($conn));
+// Lấy maKH từ bảng khachhang
+$sql_user = "SELECT maKH FROM khachhang WHERE username = '$username'";
+$res_user = mysqli_query($conn, $sql_user);
+if (!$res_user || mysqli_num_rows($res_user) === 0) {
+    die("Không tìm thấy thông tin người dùng.");
 }
-if (mysqli_num_rows($resGia) > 0) {
-    $gia = mysqli_fetch_assoc($resGia)['giaBan'];
-} else {
-    die("Không tìm thấy sản phẩm với maSP = $maSP trong bảng $bang");
+$maKH = mysqli_fetch_assoc($res_user)['maKH'];
+
+// Lấy thông tin giao hàng từ form
+$ho_ten   = $_POST['ho_ten'] ?? '';
+$sdt      = $_POST['sdt'] ?? '';
+$email    = $_POST['email'] ?? '';
+$tinh     = $_POST['tinh'] ?? '';
+$quan     = $_POST['quan'] ?? '';
+$phuong   = $_POST['phuong'] ?? '';
+$dia_chi  = $_POST['dia_chi'] ?? '';
+$ghi_chu  = $_POST['ghi_chu'] ?? '';
+
+// 1. Tạo đơn hàng
+$sql_donhang = "INSERT INTO donhang (maKH, ngayDat, trangThai) VALUES ('$maKH', CURDATE(), 'Chờ xác nhận')";
+if (!mysqli_query($conn, $sql_donhang)) {
+    die("Lỗi tạo đơn hàng: " . mysqli_error($conn));
 }
+$maDH = mysqli_insert_id($conn);
+
+// 2. Lấy giỏ hàng
+$sql_gio = "SELECT * FROM gio_hang WHERE username = '$username'";
 $res_gio = mysqli_query($conn, $sql_gio);
-
-// 3. Chèn vào chi tiết đơn hàng
-while ($row = mysqli_fetch_assoc($res_gio)) {
-  $maSP = $row['id_san_pham'];
-  $soLuong = $row['so_luong'];
-  $loaiSP = $row['loaiSP'];
-  $bang = ($loaiSP === 'Cũ') ? 'iphone_used' : 'iphone_new';
-  $resGia = mysqli_query($conn, "SELECT giaBan FROM $bang WHERE maSP = $maSP");
-  $gia = mysqli_fetch_assoc($resGia)['giaBan'];
-
-  mysqli_query($conn, "
-    INSERT INTO chitiet_donhang (maDH, maSP, loaiSP, soLuong, giaBan)
-    VALUES ($maDH, $maSP, '$loaiSP', $soLuong, $gia)
-  ");
+if (!$res_gio) {
+    die("Lỗi truy vấn giỏ hàng: " . mysqli_error($conn));
 }
+
+// 3. Xử lý từng sản phẩm
+while ($row = mysqli_fetch_assoc($res_gio)) {
+    $maSP = $row['maSP'];
+    $soLuong = $row['soLuong'];
+    $loaiSP = $row['loaiSP'];
+
+    // Xác định bảng
+    switch ($loaiSP) {
+        case 'new':
+            $bang = 'iphone_new';
+            break;
+        case 'used':
+            $bang = 'iphone_used';
+            break;
+        case 'pk':
+            $bang = 'phukien';
+            break;
+        default:
+            continue 2; // loại không hợp lệ
+    }
+
+    // Lấy giá
+    $sql_gia = "SELECT giaBan FROM $bang WHERE maSP = '$maSP'";
+    $resGia = mysqli_query($conn, $sql_gia);
+    if (!$resGia || mysqli_num_rows($resGia) === 0) {
+        echo "❌ Không tìm thấy giá cho maSP=$maSP trong $bang<br>";
+        continue;
+    }
+
+    $gia = mysqli_fetch_assoc($resGia)['giaBan'];
+
+    // Thử chèn
+    $sql_ctdh = "
+        INSERT INTO chitiet_donhang (maDH, maSP, loaiSP, soLuong, giaBan)
+        VALUES ('$maDH', '$maSP', '$loaiSP', '$soLuong', '$gia')
+    ";
+    if (!mysqli_query($conn, $sql_ctdh)) {
+        echo "❌ Lỗi khi thêm CTĐH: " . mysqli_error($conn) . "<br>";
+    } else {
+        echo "✔️ Thêm CTĐH thành công: maSP=$maSP<br>";
+    }
+}
+
 
 // 4. Thêm thông tin giao hàng
-mysqli_query($conn, "
-  INSERT INTO thongtin_giaohang (maDH, ho_ten, sdt, email, tinh, quan, phuong, dia_chi, ghi_chu)
-  VALUES ($maDH, '$ho_ten', '$sdt', '$email', '$tinh', '$quan', '$phuong', '$dia_chi', '$ghi_chu')
-");
+$sql_gh = "
+    INSERT INTO thongtin_giaohang (maDH, ho_ten, sdt, email, tinh, quan, phuong, dia_chi, ghi_chu)
+    VALUES ('$maDH', '$ho_ten', '$sdt', '$email', '$tinh', '$quan', '$phuong', '$dia_chi', '$ghi_chu')
+";
+if (!mysqli_query($conn, $sql_gh)) {
+    die("Lỗi thêm thông tin giao hàng: " . mysqli_error($conn));
+}
 
-// 5. Xóa giỏ hàng sau khi đặt
-mysqli_query($conn, "DELETE FROM gio_hang WHERE username = $username");
+// 5. Xóa giỏ hàng
+mysqli_query($conn, "DELETE FROM gio_hang WHERE username = '$username'");
 
 // 6. Thông báo
-echo "<script>alert(' Đặt hàng thành công!'); window.location.href='trangchu.php';</script>";
+echo "<script>alert('Đặt hàng thành công!'); window.location.href='trangchu.php';</script>";
 ?>

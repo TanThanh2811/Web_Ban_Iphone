@@ -68,7 +68,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             $res = mysqli_query($conn, "SELECT * FROM iphone_used WHERE maSP = $maSP LIMIT 1");
             break;
         case 'pk':
-            $res = mysqli_query($conn, "SELECT * FROM phukien WHERE maPK = $maSP LIMIT 1");
+            $res = mysqli_query($conn, "SELECT * FROM phukien WHERE maSP = $maSP LIMIT 1");
             break;
         default:
             $res = false;

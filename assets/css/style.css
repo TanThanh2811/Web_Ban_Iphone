@@ -178,11 +178,13 @@ header {
   overflow: hidden;
   padding: 10px;
   text-align: center;
+  min-height: 240px;
 }
 
 /* Ảnh sản phẩm */
 .product-card img {
   width: 100%;
+  min-height: 200px;
   max-height: 180px;
   object-fit: contain;
   border-radius: 8px;
@@ -265,3 +267,32 @@ header {
 .add-to-cart:hover {
   background-color: #0056b3;
 }
+.khung_donhang {
+    position: relative;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+}
+
+/* Nút hủy nằm ở góc trên bên phải */
+.button_huydonhang {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    padding: 6px 12px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button_huydonhang:hover {
+    background-color: #c0392b;
+}
+
