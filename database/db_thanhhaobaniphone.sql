@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 04, 2025 lúc 08:59 AM
+-- Thời gian đã tạo: Th7 04, 2025 lúc 10:30 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -35,14 +35,6 @@ CREATE TABLE `chitiet_donhang` (
   `giaBan` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `chitiet_donhang`
---
-
-INSERT INTO `chitiet_donhang` (`maDH`, `maSP`, `loaiSP`, `soLuong`, `giaBan`) VALUES
-(1, 1, 'Mới', 1, 22900000),
-(1, 2, 'Mới', 1, 30900000);
-
 -- --------------------------------------------------------
 
 --
@@ -56,13 +48,6 @@ CREATE TABLE `donhang` (
   `trangThai` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `donhang`
---
-
-INSERT INTO `donhang` (`maDH`, `maKH`, `ngayDat`, `trangThai`) VALUES
-(1, 5, '2025-07-03', 'Đang xử lý');
-
 -- --------------------------------------------------------
 
 --
@@ -75,16 +60,6 @@ CREATE TABLE `gio_hang` (
   `loaiSP` enum('new','used','pk') NOT NULL,
   `soLuong` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `gio_hang`
---
-
-INSERT INTO `gio_hang` (`username`, `maSP`, `loaiSP`, `soLuong`) VALUES
-('maivanhao21', 1, 'used', 1),
-('maivanhao21', 9, 'new', 1),
-('maivanhao21', 8, 'pk', 1),
-('maivanhao21', 2, 'pk', 1);
 
 -- --------------------------------------------------------
 
@@ -178,7 +153,7 @@ CREATE TABLE `khachhang` (
 --
 
 INSERT INTO `khachhang` (`maKH`, `tenKH`, `email`, `sdt`, `diaChi`, `username`, `matKhau`) VALUES
-(5, 'Mai Văn Hảo', 'maivanhao5667@gmail.com', '0399714932', '11/12 trung mỹ tây', 'maivanhao21', '$2y$10$0E4tW2y1holmBYNOJkFsh.A00TAofUPHVEAmn0HJqhPBoNiu2HsJW');
+(6, 'Mai Văn Hảo', 'maivanhao5667@gmail.com', '0399714932', '11/12 trung mỹ tây', 'maivanhao', '$2y$10$2T6jSvSwKLEOxKqhYivADOLWE8nDuJtoqyGj0r7BHZrfgqerw/lGm');
 
 -- --------------------------------------------------------
 
@@ -297,7 +272,7 @@ ALTER TABLE `iphone_new`
 -- AUTO_INCREMENT cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `maKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `maKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `phukien`
