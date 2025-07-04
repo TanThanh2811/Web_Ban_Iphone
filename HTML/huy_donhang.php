@@ -38,6 +38,36 @@ if (!$res_check || mysqli_num_rows($res_check) === 0) {
 // Cập nhật trạng thái đơn hàng
 $sql_update = "UPDATE donhang SET trangThai = 'Đã hủy' WHERE maDH = $maDH";
 if (mysqli_query($conn, $sql_update)) {
+    // 1. Lấy chi tiết đơn hàng
+    $sql_ct = "SELECT maSP, loaiSP, soLuong FROM chitiet_donhang WHERE maDH = $maDH";
+    $res_ct = mysqli_query($conn, $sql_ct);
+
+    if ($res_ct && mysqli_num_rows($res_ct) > 0) {
+        while ($row = mysqli_fetch_assoc($res_ct)) {
+            $maSP = $row['maSP'];
+            $loaiSP = $row['loaiSP'];
+            $soLuong = $row['soLuong'];
+
+            // Xác định bảng theo loại sản phẩm
+            switch ($loaiSP) {
+                case 'new':
+                    $bang = 'iphone_new';
+                    break;
+                case 'used':
+                    $bang = 'iphone_used';
+                    break;
+                case 'pk':
+                    $bang = 'phukien';
+                    break;
+                default:
+                    continue; // loại không hợp lệ
+            }
+
+            // Cập nhật số lượng hàng tồn kho
+            $sql_tang = "UPDATE $bang SET soLuong = soLuong + $soLuong WHERE maSP = '$maSP'";
+            mysqli_query($conn, $sql_tang);
+        }
+    }
     echo "<script>alert('Đã hủy đơn hàng thành công.'); window.location.href = 'history.php';</script>";
 } else {
     echo "Lỗi khi hủy đơn hàng: " . mysqli_error($conn);

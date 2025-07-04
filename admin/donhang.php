@@ -46,7 +46,7 @@ $result = mysqli_query($conn, $sql);
         <select name="status">
             <option value="">-- Trạng thái --</option>
             <?php
-            $trangThaiList = ['Chờ xử lý', 'Đã xác nhận', 'Đang giao hàng', 'Đã giao', 'Đã hủy'];
+            $trangThaiList = ['Chờ xác nhận', 'Đang xử lý', 'Đang giao hàng', 'Đã giao', 'Đã hủy'];
             foreach ($trangThaiList as $tt) {
                 $selected = $tt === $status ? 'selected' : '';
                 echo "<option value='$tt' $selected>$tt</option>";

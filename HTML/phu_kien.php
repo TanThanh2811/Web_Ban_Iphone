@@ -39,7 +39,9 @@
       <?php while ($row = $result->fetch_assoc()): ?>
         <a href="sanpham.php?id=<?= htmlspecialchars($row['maSP']) ?>&loaiSP=pk" style="text-decoration: none; color: inherit;">
           <article class="product-card" role="listitem" tabindex="0" aria-label="<?= htmlspecialchars($row['tenSP']) ?>">
-            <div class="discount-badge">Số lượng: <?= $row['soLuong'] ?></div>
+            <div class="discount-badge <?= ($row['soLuong'] == 0) ? 'out-of-stock' : 'in-stock' ?>">
+              <?= ($row['soLuong'] == 0) ? 'Hết hàng' : 'Còn hàng' ?>
+            </div>
             <img src="<?= htmlspecialchars($row['hinhAnh']) ?>" alt="Hình ảnh <?= htmlspecialchars($row['tenSP']) ?>" />
             <div class="product-name"><?= htmlspecialchars($row['tenSP']) ?></div>
             <div class="price-wrapper">

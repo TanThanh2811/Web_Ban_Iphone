@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 04, 2025 lúc 03:26 PM
+-- Thời gian đã tạo: Th7 05, 2025 lúc 01:13 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -35,18 +35,6 @@ CREATE TABLE `chitiet_donhang` (
   `giaBan` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `chitiet_donhang`
---
-
-INSERT INTO `chitiet_donhang` (`maDH`, `maSP`, `loaiSP`, `soLuong`, `giaBan`) VALUES
-(17, 9, 'new', 0, 18990000),
-(18, 8, 'pk', 1, 549000),
-(18, 9, 'new', 1, 18990000),
-(19, 9, 'new', 1, 18990000),
-(19, 11, 'new', 1, 28500000),
-(19, 1, 'used', 1, 4500000);
-
 -- --------------------------------------------------------
 
 --
@@ -56,19 +44,9 @@ INSERT INTO `chitiet_donhang` (`maDH`, `maSP`, `loaiSP`, `soLuong`, `giaBan`) VA
 CREATE TABLE `donhang` (
   `maDH` int(11) NOT NULL,
   `maKH` int(11) NOT NULL,
-  `ngayDat` date NOT NULL,
+  `ngayDat` datetime NOT NULL,
   `trangThai` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `donhang`
---
-
-INSERT INTO `donhang` (`maDH`, `maKH`, `ngayDat`, `trangThai`) VALUES
-(16, 6, '2025-07-04', 'Đã hủy'),
-(17, 6, '2025-07-04', 'Đang giao hàng'),
-(18, 6, '2025-07-04', 'Chờ xác nhận'),
-(19, 6, '2025-07-04', 'Chờ xác nhận');
 
 -- --------------------------------------------------------
 
@@ -83,14 +61,6 @@ CREATE TABLE `gio_hang` (
   `soLuong` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Đang đổ dữ liệu cho bảng `gio_hang`
---
-
-INSERT INTO `gio_hang` (`username`, `maSP`, `loaiSP`, `soLuong`) VALUES
-('maivanhao', 1, 'used', 1),
-('maivanhao', 9, 'new', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -103,7 +73,6 @@ CREATE TABLE `iphone_new` (
   `moTa` text DEFAULT NULL,
   `giaBan` bigint(20) NOT NULL,
   `soLuong` int(11) NOT NULL DEFAULT 0,
-  `tinhTrang` varchar(50) DEFAULT NULL,
   `hinhAnh` varchar(255) DEFAULT NULL,
   `dungLuong` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -112,16 +81,16 @@ CREATE TABLE `iphone_new` (
 -- Đang đổ dữ liệu cho bảng `iphone_new`
 --
 
-INSERT INTO `iphone_new` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `tinhTrang`, `hinhAnh`, `dungLuong`) VALUES
-(1, 'Iphone 16', 'iPhone 16 - Thiết Kế Hiện Đại, Hiệu Năng Ổn Định\r\niPhone 16 là mẫu điện thoại thông minh mới nhất thuộc dòng sản phẩm iPhone 16 Series của Apple, mang đến sự kết hợp hoàn hảo giữa thiết kế hiện đại, hiệu năng mạnh mẽ và các tính năng nổi bật. Đây là lựa chọn lý tưởng cho những người dùng đang tìm kiếm một chiếc điện thoại chất lượng cao với giá thành hợp lý.', 22900000, 3, 'Còn hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/0029121hong550-5140.jpeg', 256),
-(2, 'Iphone 16 Pro', 'Sức Mạnh Vượt Trội và Thiết Kế Sang Trọng\r\n\r\niPhone 16 Pro là một trong những mẫu điện thoại thông minh cao cấp nhất của Apple, thuộc dòng sản phẩm iPhone 16 Series. Với thiết kế tinh tế và hiệu năng mạnh mẽ, iPhone 16 Pro mang đến trải nghiệm đỉnh cao cho những ai yêu thích công nghệ và đòi hỏi sự hoàn hảo trong mọi chi tiết.', 30900000, 5, 'Còn hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-16-pro-black-titanium-pdp-image-position-1a-black-titanium-240910084614-8821.jpg', 256),
-(3, 'Iphone 16 Pro Max', 'iPhone 16 Pro Max – Màn Hình Lớn, Hiệu Năng Vượt Trội\r\n\r\niPhone 16 Pro Max sở hữu màn hình Super Retina XDR 6.9 inch, khung viền titan bền bỉ và chip A18 Pro mạnh mẽ. Camera 48MP nâng cấp cho ảnh sắc nét, hỗ trợ quay video 4K 120fps. Thời lượng pin dài hơn, mang đến trải nghiệm cao cấp suốt cả ngày.  ', 34900000, 2, 'Còn hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/0029327titan-tu-nhien550-9590.jpeg', 256),
-(4, 'Iphone 15 Pro Max', 'iPhone 15 Pro Max – Sự Hoàn Hảo Trong Từng Chi Tiết\r\n\r\niPhone 15 Pro Max mang đến những cải tiến vượt bậc, cả về thiết kế lẫn hiệu năng. Với khung viền titan bền bỉ, màn hình Super Retina XDR tuyệt đẹp và cụm camera chuyên nghiệp, iPhone 15 Pro Max hứa hẹn mang đến trải nghiệm công nghệ đỉnh cao.', 30900000, 6, 'Còn hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-15-pro-max-black-thumbtz-650x650-2203.png', 256),
-(5, 'Iphone 16 Plus', 'Thiết Kế Tinh Tế, Hiệu Năng Ấn Tượng\r\n\r\niPhone 16 Plus là mẫu điện thoại thông minh cao cấp thuộc dòng iPhone 16 Series của Apple, được thiết kế để mang lại trải nghiệm hoàn hảo cho người dùng nhờ sự kết hợp giữa màn hình lớn, hiệu năng mạnh mẽ và các tính năng tiên tiến. Với màn hình 6.7 inch, iPhone 16 Plus là lựa chọn lý tưởng cho những người yêu thích các thiết bị có màn hình rộng để xem phim, chơi game, và làm việc đa nhiệm.', 28900000, 4, 'Còn Hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/0029111xanh-mong-ket550-9970.jpeg', 256),
-(6, 'Iphone 15 Plus', 'iPhone 15 Plus mang đến trải nghiệm di động với màn hình lớn, thời lượng pin dài, và hiệu năng mạnh mẽ. Đây là sự lựa chọn hoàn hảo cho những ai yêu thích không gian hiển thị rộng rãi nhưng vẫn giữ được thiết kế sang trọng, hiện đại của Apple.', 27900000, 7, 'Còn hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-plus-blue-thumbtz-1-650x650-1712.png', 256),
-(7, 'Iphone 15', 'iPhone 15 là phiên bản tiêu chuẩn trong dòng sản phẩm mới của Apple, mang đến sự cân bằng giữa hiệu năng, thiết kế và giá cả. Với những cải tiến về camera, chip xử lý và màn hình, iPhone 15 là lựa chọn lý tưởng cho người dùng cần một chiếc điện thoại mạnh mẽ, hiện đại nhưng không quá cầu kỳ.', 19900000, 3, 'Còn Hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-black-thumbtz0-650x650-1646.png', 256),
-(9, 'Iphone 14', NULL, 18990000, 2, 'Còn hàng', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_14_blue_pdp_image_position-1a_blue_color_vn_1.png', 256),
-(11, 'Iphone 14 Pro', 'iPhone 14 Pro là một trong những sản phẩm cao cấp nhất của Apple, ra mắt vào tháng 9 năm 2022. Với thiết kế mới lạ, hiệu năng mạnh mẽ và những cải tiến đáng kể trong công nghệ, iPhone 14 Pro đã nhanh chóng thu hút sự quan tâm của người dùng và trở thành một trong những lựa chọn hàng đầu trên thị trường.', 28500000, 7, 'Còn hàng', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-14-pro-tim-3-camera-41031.png', 256);
+INSERT INTO `iphone_new` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `hinhAnh`, `dungLuong`) VALUES
+(1, 'Iphone 16', 'iPhone 16 - Thiết Kế Hiện Đại, Hiệu Năng Ổn Định\r\niPhone 16 là mẫu điện thoại thông minh mới nhất thuộc dòng sản phẩm iPhone 16 Series của Apple, mang đến sự kết hợp hoàn hảo giữa thiết kế hiện đại, hiệu năng mạnh mẽ và các tính năng nổi bật. Đây là lựa chọn lý tưởng cho những người dùng đang tìm kiếm một chiếc điện thoại chất lượng cao với giá thành hợp lý.', 22900000, 3, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/0029121hong550-5140.jpeg', 256),
+(2, 'Iphone 16 Pro', 'Sức Mạnh Vượt Trội và Thiết Kế Sang Trọng\r\n\r\niPhone 16 Pro là một trong những mẫu điện thoại thông minh cao cấp nhất của Apple, thuộc dòng sản phẩm iPhone 16 Series. Với thiết kế tinh tế và hiệu năng mạnh mẽ, iPhone 16 Pro mang đến trải nghiệm đỉnh cao cho những ai yêu thích công nghệ và đòi hỏi sự hoàn hảo trong mọi chi tiết.', 30900000, 5, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-16-pro-black-titanium-pdp-image-position-1a-black-titanium-240910084614-8821.jpg', 256),
+(3, 'Iphone 16 Pro Max', 'iPhone 16 Pro Max – Màn Hình Lớn, Hiệu Năng Vượt Trội\r\n\r\niPhone 16 Pro Max sở hữu màn hình Super Retina XDR 6.9 inch, khung viền titan bền bỉ và chip A18 Pro mạnh mẽ. Camera 48MP nâng cấp cho ảnh sắc nét, hỗ trợ quay video 4K 120fps. Thời lượng pin dài hơn, mang đến trải nghiệm cao cấp suốt cả ngày.  ', 34900000, 2, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/0029327titan-tu-nhien550-9590.jpeg', 256),
+(4, 'Iphone 15 Pro Max', 'iPhone 15 Pro Max – Sự Hoàn Hảo Trong Từng Chi Tiết\r\n\r\niPhone 15 Pro Max mang đến những cải tiến vượt bậc, cả về thiết kế lẫn hiệu năng. Với khung viền titan bền bỉ, màn hình Super Retina XDR tuyệt đẹp và cụm camera chuyên nghiệp, iPhone 15 Pro Max hứa hẹn mang đến trải nghiệm công nghệ đỉnh cao.', 30900000, 6, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-15-pro-max-black-thumbtz-650x650-2203.png', 256),
+(5, 'Iphone 16 Plus', 'Thiết Kế Tinh Tế, Hiệu Năng Ấn Tượng\r\n\r\niPhone 16 Plus là mẫu điện thoại thông minh cao cấp thuộc dòng iPhone 16 Series của Apple, được thiết kế để mang lại trải nghiệm hoàn hảo cho người dùng nhờ sự kết hợp giữa màn hình lớn, hiệu năng mạnh mẽ và các tính năng tiên tiến. Với màn hình 6.7 inch, iPhone 16 Plus là lựa chọn lý tưởng cho những người yêu thích các thiết bị có màn hình rộng để xem phim, chơi game, và làm việc đa nhiệm.', 28900000, 4, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/0029111xanh-mong-ket550-9970.jpeg', 256),
+(6, 'Iphone 15 Plus', 'iPhone 15 Plus mang đến trải nghiệm di động với màn hình lớn, thời lượng pin dài, và hiệu năng mạnh mẽ. Đây là sự lựa chọn hoàn hảo cho những ai yêu thích không gian hiển thị rộng rãi nhưng vẫn giữ được thiết kế sang trọng, hiện đại của Apple.', 27900000, 7, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-plus-blue-thumbtz-1-650x650-1712.png', 256),
+(7, 'Iphone 15', 'iPhone 15 là phiên bản tiêu chuẩn trong dòng sản phẩm mới của Apple, mang đến sự cân bằng giữa hiệu năng, thiết kế và giá cả. Với những cải tiến về camera, chip xử lý và màn hình, iPhone 15 là lựa chọn lý tưởng cho người dùng cần một chiếc điện thoại mạnh mẽ, hiện đại nhưng không quá cầu kỳ.', 19900000, 3, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-black-thumbtz0-650x650-1646.png', 256),
+(9, 'Iphone 14', NULL, 18990000, 0, 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_14_blue_pdp_image_position-1a_blue_color_vn_1.png', 256),
+(11, 'Iphone 14 Pro', 'iPhone 14 Pro là một trong những sản phẩm cao cấp nhất của Apple, ra mắt vào tháng 9 năm 2022. Với thiết kế mới lạ, hiệu năng mạnh mẽ và những cải tiến đáng kể trong công nghệ, iPhone 14 Pro đã nhanh chóng thu hút sự quan tâm của người dùng và trở thành một trong những lựa chọn hàng đầu trên thị trường.', 28500000, 7, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-14-pro-tim-3-camera-41031.png', 256);
 
 -- --------------------------------------------------------
 
@@ -135,7 +104,6 @@ CREATE TABLE `iphone_used` (
   `moTa` text DEFAULT NULL,
   `giaBan` bigint(20) NOT NULL,
   `soLuong` int(11) NOT NULL DEFAULT 0,
-  `tinhTrang` varchar(50) DEFAULT NULL,
   `hinhAnh` varchar(255) DEFAULT NULL,
   `dungLuong` int(11) NOT NULL,
   `doMoi` int(11) NOT NULL,
@@ -146,22 +114,22 @@ CREATE TABLE `iphone_used` (
 -- Đang đổ dữ liệu cho bảng `iphone_used`
 --
 
-INSERT INTO `iphone_used` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `tinhTrang`, `hinhAnh`, `dungLuong`, `doMoi`, `pin`) VALUES
-(1, 'iPhone X Cũ', 'iPhone X với thiết kế sang trọng, hiệu năng ổn định, phù hợp nhu cầu sử dụng cơ bản.', 4500000, 5, 'Còn hàng', 'https://th.bing.com/th/id/OIP.aYHzTdyRvM_yBtEXkVzPEgHaI4?w=159&h=191&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 97, 90),
-(2, 'iPhone XS Cũ', 'iPhone XS sở hữu Face ID, camera kép chụp ảnh sắc nét, hiệu năng mạnh mẽ. ', 5000000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.4pVRG1Gm2op3GyjZMsU9YwHaEw?w=246&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 91),
-(3, 'iPhone XS Max Cũ', 'Màn hình lớn 6.5 inch, camera đẹp, pin ổn định, trải nghiệm giải trí tuyệt vời.', 5900000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.v1xvmFed4Vl9dAJBCsTHuAHaEK?w=299&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 92),
-(4, 'iPhone 11 Cũ', 'iPhone 11 nổi bật với camera góc rộng, hiệu năng vượt trội.', 6300000, 6, 'Còn hàng', 'https://th.bing.com/th/id/OIP.4mzSBXcKinjxs3C-jonFcAHaGr?w=200&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 93),
-(5, 'iPhone 11 Pro Cũ', 'Thiết kế sang trọng, 3 camera chuyên nghiệp, hiệu năng mạnh. ', 7900000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.GSjdyIjD2RBbL0mOORJV7QHaHZ?w=183&h=182&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 92),
-(6, 'iPhone 11 Pro Max Cũ', 'Màn hình lớn sắc nét, pin khỏe, camera chất lượng cao.', 8700000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.vbiukn_rm1N3WmwMzYs8ZwHaE7?w=224&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 91),
-(7, 'iPhone 12 Cũ', 'iPhone 12 thiết kế viền vuông hiện đại, hiệu năng mạnh mẽ.', 9300000, 5, 'Còn hàng', 'https://th.bing.com/th/id/OIP.AGNp-Ve2aJvN1q_nBqXyiQHaGc?w=215&h=188&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 94),
-(8, 'iPhone 12 Pro Cũ', 'Sở hữu 3 camera chất lượng, màn hình OLED siêu nét.', 11500000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.AGNp-Ve2aJvN1q_nBqXyiQHaGc?w=201&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 98, 93),
-(9, 'iPhone 12 Pro Max Cũ', 'Màn hình lớn 6.7 inch, camera đỉnh cao cho trải nghiệm tuyệt vời.', 12500000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.3mxJyKPfiUdkO_ecKSRfoQHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 98, 92),
-(10, 'iPhone 13 Cũ', 'iPhone 13 hiệu năng vượt trội, camera cải tiến.', 14500000, 5, 'Còn hàng', 'https://th.bing.com/th/id/OIP.KmbMzI-Z45BziGywi8QqgQHaIf?w=148&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 96),
-(11, 'iPhone 13 Pro Cũ', '3 camera chuyên nghiệp, thiết kế cao cấp, pin khỏe.', 17500000, 4, 'Còn hàng', 'https://th.bing.com/th/id/OIP.pZ1wifY_Q16qbXbTE_VOnQHaH0?w=222&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 96),
-(12, 'iPhone 13 Pro Max Cũ', 'Màn hình lớn, pin tốt, ngoại hình đẹp, trải nghiệm đỉnh cao.', 18500000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.dV3mUwg4Fiuins7mlXNKWQHaFj?w=264&h=198&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 95),
-(13, 'iPhone 14 Cũ', 'Thiết kế hiện đại, camera cải tiến, pin dung lượng cao.', 19000000, 4, 'Còn hàng', 'https://didongthongminh.vn/upload_images/images/2023/10/20/iphone-14-cu-256gb-4.jpg', 128, 99, 98),
-(14, 'iPhone 14 Pro Cũ', 'Màn hình ProMotion 120Hz, camera chuyên nghiệp, pin tốt.', 22000000, 3, 'Còn hàng', 'https://th.bing.com/th/id/OIP.6im4_ydu3hJ5GwDwb4vWIgHaHa?w=179&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 98),
-(15, 'iPhone 14 Pro Max Cũ', 'iPhone cao cấp nhất, màn hình lớn, pin khỏe, ngoại hình đẹp.', 24000000, 2, 'Còn hàng', 'https://th.bing.com/th/id/OIP.FjhOj95EUtIDKYuQIM7VEQHaHa?w=186&h=186&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 98);
+INSERT INTO `iphone_used` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `hinhAnh`, `dungLuong`, `doMoi`, `pin`) VALUES
+(1, 'iPhone X Cũ', 'iPhone X với thiết kế sang trọng, hiệu năng ổn định, phù hợp nhu cầu sử dụng cơ bản.', 4500000, 5, 'https://th.bing.com/th/id/OIP.aYHzTdyRvM_yBtEXkVzPEgHaI4?w=159&h=191&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 97, 90),
+(2, 'iPhone XS Cũ', 'iPhone XS sở hữu Face ID, camera kép chụp ảnh sắc nét, hiệu năng mạnh mẽ. ', 5000000, 4, 'https://th.bing.com/th/id/OIP.4pVRG1Gm2op3GyjZMsU9YwHaEw?w=246&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 91),
+(3, 'iPhone XS Max Cũ', 'Màn hình lớn 6.5 inch, camera đẹp, pin ổn định, trải nghiệm giải trí tuyệt vời.', 5900000, 3, 'https://th.bing.com/th/id/OIP.v1xvmFed4Vl9dAJBCsTHuAHaEK?w=299&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 92),
+(4, 'iPhone 11 Cũ', 'iPhone 11 nổi bật với camera góc rộng, hiệu năng vượt trội.', 6300000, 6, 'https://th.bing.com/th/id/OIP.4mzSBXcKinjxs3C-jonFcAHaGr?w=200&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 93),
+(5, 'iPhone 11 Pro Cũ', 'Thiết kế sang trọng, 3 camera chuyên nghiệp, hiệu năng mạnh. ', 7900000, 4, 'https://th.bing.com/th/id/OIP.GSjdyIjD2RBbL0mOORJV7QHaHZ?w=183&h=182&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 92),
+(6, 'iPhone 11 Pro Max Cũ', 'Màn hình lớn sắc nét, pin khỏe, camera chất lượng cao.', 8700000, 3, 'https://th.bing.com/th/id/OIP.vbiukn_rm1N3WmwMzYs8ZwHaE7?w=224&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 91),
+(7, 'iPhone 12 Cũ', 'iPhone 12 thiết kế viền vuông hiện đại, hiệu năng mạnh mẽ.', 9300000, 5, 'https://th.bing.com/th/id/OIP.AGNp-Ve2aJvN1q_nBqXyiQHaGc?w=215&h=188&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 94),
+(8, 'iPhone 12 Pro Cũ', 'Sở hữu 3 camera chất lượng, màn hình OLED siêu nét.', 11500000, 4, 'https://th.bing.com/th/id/OIP.AGNp-Ve2aJvN1q_nBqXyiQHaGc?w=201&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 98, 93),
+(9, 'iPhone 12 Pro Max Cũ', 'Màn hình lớn 6.7 inch, camera đỉnh cao cho trải nghiệm tuyệt vời.', 12500000, 3, 'https://th.bing.com/th/id/OIP.3mxJyKPfiUdkO_ecKSRfoQHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 98, 92),
+(10, 'iPhone 13 Cũ', 'iPhone 13 hiệu năng vượt trội, camera cải tiến.', 14500000, 5, 'https://th.bing.com/th/id/OIP.KmbMzI-Z45BziGywi8QqgQHaIf?w=148&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 96),
+(11, 'iPhone 13 Pro Cũ', '3 camera chuyên nghiệp, thiết kế cao cấp, pin khỏe.', 17500000, 4, 'https://th.bing.com/th/id/OIP.pZ1wifY_Q16qbXbTE_VOnQHaH0?w=222&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 96),
+(12, 'iPhone 13 Pro Max Cũ', 'Màn hình lớn, pin tốt, ngoại hình đẹp, trải nghiệm đỉnh cao.', 18500000, 3, 'https://th.bing.com/th/id/OIP.dV3mUwg4Fiuins7mlXNKWQHaFj?w=264&h=198&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 95),
+(13, 'iPhone 14 Cũ', 'Thiết kế hiện đại, camera cải tiến, pin dung lượng cao.', 19000000, 4, 'https://didongthongminh.vn/upload_images/images/2023/10/20/iphone-14-cu-256gb-4.jpg', 128, 99, 98),
+(14, 'iPhone 14 Pro Cũ', 'Màn hình ProMotion 120Hz, camera chuyên nghiệp, pin tốt.', 22000000, 3, 'https://th.bing.com/th/id/OIP.6im4_ydu3hJ5GwDwb4vWIgHaHa?w=179&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 98),
+(15, 'iPhone 14 Pro Max Cũ', 'iPhone cao cấp nhất, màn hình lớn, pin khỏe, ngoại hình đẹp.', 24000000, 2, 'https://th.bing.com/th/id/OIP.FjhOj95EUtIDKYuQIM7VEQHaHa?w=186&h=186&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 128, 99, 98);
 
 -- --------------------------------------------------------
 
@@ -228,22 +196,10 @@ CREATE TABLE `thongtin_giaohang` (
   `ho_ten` varchar(100) NOT NULL,
   `sdt` varchar(20) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `tinh` varchar(100) NOT NULL,
-  `quan` varchar(100) NOT NULL,
-  `phuong` varchar(100) NOT NULL,
+  `thanhToan` varchar(50) NOT NULL,
   `dia_chi` text NOT NULL,
   `ghi_chu` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `thongtin_giaohang`
---
-
-INSERT INTO `thongtin_giaohang` (`id`, `maDH`, `ho_ten`, `sdt`, `email`, `tinh`, `quan`, `phuong`, `dia_chi`, `ghi_chu`) VALUES
-(14, 16, 'mai văn hảo', '0399714932', 'maivanhao5667@gmail.com', '', '', '', '11/12 trung mỹ tây 9', ''),
-(15, 17, 'mai văn hảo', '0399714932', 'maivanhao5667@gmail.com', '', '', '', '11/12 trung mỹ tây 9', ''),
-(16, 18, 'mai văn hảo', '0399714932', 'maivanhao5667@gmail.com', '', '', '', '11/12 trung mỹ tây 9', ''),
-(17, 19, 'mai văn hảo', '0399714932', 'maivanhao5667@gmail.com', '', '', '', '11/12 trung mỹ tây 9', '');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -301,7 +257,7 @@ ALTER TABLE `thongtin_giaohang`
 -- AUTO_INCREMENT cho bảng `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT cho bảng `iphone_new`
@@ -325,7 +281,7 @@ ALTER TABLE `phukien`
 -- AUTO_INCREMENT cho bảng `thongtin_giaohang`
 --
 ALTER TABLE `thongtin_giaohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

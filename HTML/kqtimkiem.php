@@ -11,21 +11,21 @@ if (!empty($query)) {
     $query_escaped = mysqli_real_escape_string($conn, $query);
 
     // Tìm trong iphone_new
-    $sql_new = "SELECT maSP, tenSP, giaBan, hinhAnh, 'new' as loaiSP FROM iphone_new WHERE tenSP LIKE '%$query_escaped%'";
+    $sql_new = "SELECT maSP, tenSP, soLuong, giaBan, hinhAnh, 'new' as loaiSP FROM iphone_new WHERE tenSP LIKE '%$query_escaped%'";
     $result_new = mysqli_query($conn, $sql_new);
     if (!$result_new) {
         die("Lỗi truy vấn iphone_new: " . mysqli_error($conn));
     }
 
     // Tìm trong iphone_used
-    $sql_used = "SELECT maSP, tenSP, giaBan, hinhAnh, 'used' as loaiSP FROM iphone_used WHERE tenSP LIKE '%$query_escaped%'";
+    $sql_used = "SELECT maSP, tenSP, soLuong, giaBan, hinhAnh, 'used' as loaiSP FROM iphone_used WHERE tenSP LIKE '%$query_escaped%'";
     $result_used = mysqli_query($conn, $sql_used);
     if (!$result_used) {
         die("Lỗi truy vấn iphone_used: " . mysqli_error($conn));
     }
 
     // Tìm trong phukien
-    $sql_pk = "SELECT maPK as maSP, tenSP as tenSP, giaBan, hinhAnh, 'phukien' as loaiSP FROM phukien WHERE tenSP LIKE '%$query_escaped%'";
+    $sql_pk = "SELECT maSP as maSP, tenSP as tenSP, soLuong, giaBan, hinhAnh, 'phukien' as loaiSP FROM phukien WHERE tenSP LIKE '%$query_escaped%'";
     $result_pk = mysqli_query($conn, $sql_pk);
     if (!$result_pk) {
         die("Lỗi truy vấn phukien: " . mysqli_error($conn));
@@ -60,6 +60,9 @@ if (!empty($query)) {
       <?php foreach ($results as $row): ?>
         <a href="sanpham.php?id=<?= $row['maSP'] ?>&loaiSP=<?= $row['loaiSP'] ?>" style="text-decoration: none; color: inherit;">
           <article class="product-card">
+            <div class="discount-badge <?= ($row['soLuong'] == 0) ? 'out-of-stock' : 'in-stock' ?>">
+              <?= ($row['soLuong'] == 0) ? 'Hết hàng' : 'Còn hàng' ?>
+            </div>
             <img src="<?= htmlspecialchars($row['hinhAnh']) ?>" alt="<?= htmlspecialchars($row['tenSP']) ?>">
             <div class="product-name"><?= htmlspecialchars($row['tenSP']) ?></div>
             <div class="price-current"><?= number_format($row['giaBan'], 0, ',', '.') ?>₫</div>

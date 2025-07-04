@@ -23,14 +23,21 @@ $maKH = mysqli_fetch_assoc($res_user)['maKH'];
 $ho_ten   = $_POST['ho_ten'] ?? '';
 $sdt      = $_POST['sdt'] ?? '';
 $email    = $_POST['email'] ?? '';
+$thanhToan = $_POST['pttt'] ?? '';
 $tinh     = $_POST['tinh'] ?? '';
 $quan     = $_POST['quan'] ?? '';
 $phuong   = $_POST['phuong'] ?? '';
 $dia_chi  = $_POST['dia_chi'] ?? '';
+if (isset($_POST['store_address']) && !empty($_POST['store_address'])) {
+    $dia_chi = $_POST['store_address'];
+} else {
+    $dia_chi = $_POST['dia_chi'] . ", " . $_POST['phuong'] . ", " . $_POST['quan'] . ", " . $_POST['tinh'];
+}
+
 $ghi_chu  = $_POST['ghi_chu'] ?? '';
 
 // 1. Tạo đơn hàng
-$sql_donhang = "INSERT INTO donhang (maKH, ngayDat, trangThai) VALUES ('$maKH', CURDATE(), 'Chờ xác nhận')";
+$sql_donhang = "INSERT INTO donhang (maKH, ngayDat, trangThai) VALUES ('$maKH', NOW(), 'Chờ xác nhận')";
 if (!mysqli_query($conn, $sql_donhang)) {
     die("Lỗi tạo đơn hàng: " . mysqli_error($conn));
 }
@@ -83,14 +90,25 @@ while ($row = mysqli_fetch_assoc($res_gio)) {
         echo "❌ Lỗi khi thêm CTĐH: " . mysqli_error($conn) . "<br>";
     } else {
         echo "✔️ Thêm CTĐH thành công: maSP=$maSP<br>";
+        // ✅ Giảm số lượng sản phẩm trong kho
+        $sql_update_stock = "
+            UPDATE $bang
+            SET soLuong = soLuong - $soLuong
+            WHERE maSP = '$maSP' AND soLuong >= $soLuong
+        ";
+        if (!mysqli_query($conn, $sql_update_stock)) {
+            echo "❌ Lỗi khi cập nhật kho: " . mysqli_error($conn) . "<br>";
+        } else {
+            echo "✔️ Đã giảm số lượng tồn kho của maSP=$maSP<br>";
+        }
     }
 }
 
 
 // 4. Thêm thông tin giao hàng
-$sql_gh = "
-    INSERT INTO thongtin_giaohang (maDH, ho_ten, sdt, email, tinh, quan, phuong, dia_chi, ghi_chu)
-    VALUES ('$maDH', '$ho_ten', '$sdt', '$email', '$tinh', '$quan', '$phuong', '$dia_chi', '$ghi_chu')
+    $sql_gh = "
+    INSERT INTO thongtin_giaohang (maDH, ho_ten, sdt, email, thanhToan, dia_chi, ghi_chu)
+    VALUES ('$maDH', '$ho_ten', '$sdt', '$email', '$thanhToan', '$dia_chi', '$ghi_chu')
 ";
 if (!mysqli_query($conn, $sql_gh)) {
     die("Lỗi thêm thông tin giao hàng: " . mysqli_error($conn));
@@ -100,5 +118,6 @@ if (!mysqli_query($conn, $sql_gh)) {
 mysqli_query($conn, "DELETE FROM gio_hang WHERE username = '$username'");
 
 // 6. Thông báo
-echo "<script>alert('Đặt hàng thành công!'); window.location.href='trangchu.php';</script>";
+header("Location: history.php");
+exit;
 ?>

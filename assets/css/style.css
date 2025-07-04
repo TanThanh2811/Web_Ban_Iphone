@@ -293,6 +293,17 @@ header {
 }
 
 .button_huydonhang:hover {
-    background-color: #c0392b;
+    background-color: #ff1900;
+}
+
+/*Còn hàng và hết hàng*/
+.out-of-stock {
+  color: #ff0019;
+  font-weight: bold;
+}
+
+.in-stock {
+  color: rgb(5, 158, 25);
+  font-weight: bold;
 }
 

@@ -131,30 +131,91 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
       <?php $total += $giaBan * $soLuong; endforeach; ?>
       <div class="cart-total">Tổng tiền: <?= number_format($total, 0, ',', '.') ?>đ</div>
-    </div>
-
-    <div class="cart-right">
-      <h3>HÌNH THỨC THANH TOÁN:</h3>
-      <div class="form-group">
-        <label><input type="radio" name="pttt"> Nhận hàng tại cửa hàng</label><br>
-        <label><input type="radio" name="pttt"> Thanh toán khi nhận hàng</label>
+      <div style="text-align:right; margin-top: 20px;">
+        <button id="btn-show-checkout" class="checkout-btn">ĐẶT HÀNG</button>
       </div>
-
-      <h3>THÔNG TIN GIAO HÀNG:</h3>
-      <form action="dat_hang.php" method="POST">
-        <div class="form-group"><input type="text" name="ho_ten" placeholder="Họ tên" required></div>
-        <div class="form-group"><input type="text" name="sdt" placeholder="Số điện thoại" required></div>
-        <div class="form-group"><input type="email" name="email" placeholder="Email" required></div>
-        <div class="form-group">
-          <select class="form-select form-select-sm mb-3" id="city" name="tinh"><option value="" selected>Chọn tỉnh thành</option></select>
-          <select class="form-select form-select-sm mb-3" id="district" name="quan"><option value="" selected>Chọn quận huyện</option></select>
-          <select class="form-select form-select-sm" id="ward" name="phuong"><option value="" selected>Chọn phường xã</option></select>
-        </div>
-        <div class="form-group"><input type="text" name="dia_chi" placeholder="Địa chỉ" required></div>
-        <div class="form-group"><textarea name="ghi_chu" placeholder="Yêu cầu khác (không bắt buộc)"></textarea></div>
-        <button type="submit" class="checkout-btn">ĐẶT HÀNG</button>
-      </form>
     </div>
+
+    <form id="checkout-section" method="post" action="dat_hang.php"  style="display: none; " onsubmit="return validateCheckout()">
+      <div class="cart-right">
+        <div class="checkout-columns" style="display: flex; gap: 30px;">
+        <!-- Cột trái: Thông tin khách hàng -->
+        <div style="flex: 1; width: 600px;">
+          <h3>THÔNG TIN KHÁCH HÀNG:</h3>
+          <div class="form-group">
+            <label for="ho_ten">Họ và tên</label>
+            <input type="text" id="ho_ten" name="ho_ten" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="sdt">Số điện thoại</label>
+            <input type="text" id="sdt" name="sdt" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email (không bắt buộc)</label>
+            <input type="email" id="email" name="email">
+          </div>
+        </div>
+
+        <!-- Cột phải: Thông tin nhận hàng -->
+        <div style="flex: 1; width: 600px;">
+          <h3>THÔNG TIN NHẬN HÀNG:</h3>
+          <div class="form-group">
+            <label>
+              <input type="radio" name="pttt" value="pos" id="pttt_nhan" checked> Nhận hàng tại cửa hàng
+            </label><br>
+            <label>
+              <input type="radio" name="pttt" value="cod" id="pttt_cod"> Giao hàng tận nơi
+            </label>
+          </div>
+
+          <div id="store-addresses" style="margin-left: 20px; margin-top: 10px;">
+            <h4>Vị trí cửa hàng:</h4>
+            <label><input type="radio" name="store_address" value="127G Lê Văn Duyệt, Quận Bình Thạnh, TP.HCM"> 127G Lê Văn Duyệt, Quận Bình Thạnh, TP.HCM</label><br>
+            <label><input type="radio" name="store_address" value="456 Minh Phụng, Quận 11, TP.HCM"> 456 Minh Phụng, Quận 11, TP.HCM</label>
+          </div>
+
+          <!-- Phần địa chỉ giao hàng: ẩn ban đầu -->
+          <div id="delivery-address" style="display: none; margin-top: 10px;">
+            <div class="form-group">
+              <label for="city">Tỉnh/Thành phố</label>
+              <select id="city" class="form-select" name="tinh">
+                <option value="" selected>Chọn tỉnh thành</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="district">Quận/Huyện</label>
+              <select id="district" class="form-select" name="quan">
+                <option value="" selected>Chọn quận huyện</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="ward">Phường/Xã</label>
+              <select id="ward" class="form-select" name="phuong">
+                <option value="" selected>Chọn phường xã</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="dia_chi">Địa chỉ chi tiết</label>
+              <input type="text" id="dia_chi" name="dia_chi">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="ghi_chu">Ghi chú (nếu có)</label>
+            <textarea id="ghi_chu" name="ghi_chu"></textarea>
+          </div>
+          <div class="button-group" style="text-align: right; margin-top: 20px;">
+            <button type="reset" class="checkout-btn" style="background-color: rgb(202, 203, 207); margin-right: 5px;">Hủy</button>
+            <button type="submit" class="checkout-btn">Xác nhận</button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 <?php endif; ?>
 </div>
@@ -198,6 +259,78 @@ while ($row = mysqli_fetch_assoc($result)) {
       }
     };
   }
+    const ptttNhan = document.getElementById("pttt_nhan");
+    const ptttCod = document.getElementById("pttt_cod");
+    const storeAddresses = document.getElementById("store-addresses");
+    const deliveryAddress = document.getElementById("delivery-address");
+
+    // Khi người dùng chọn "Nhận tại cửa hàng"
+    ptttNhan.addEventListener("change", function () {
+      if (this.checked) {
+        storeAddresses.style.display = "block";
+        deliveryAddress.style.display = "none";
+      }
+    });
+
+    // Khi người dùng chọn "Thanh toán khi nhận hàng"
+    ptttCod.addEventListener("change", function () {
+      if (this.checked) {
+        storeAddresses.style.display = "none";
+        deliveryAddress.style.display = "block";
+      }
+    });
+
+    // Hàm kiểm tra đầu vào trước khi submit
+    function validateCheckout() {
+      const isNhanTaiCuaHang = ptttNhan.checked;
+      const isCOD = ptttCod.checked;
+
+      if (!isNhanTaiCuaHang && !isCOD) {
+        alert("Vui lòng chọn hình thức thanh toán!");
+        return false;
+      }
+
+      if (isNhanTaiCuaHang) {
+        const selectedStore = document.querySelector("input[name='store_address']:checked");
+        if (!selectedStore) {
+          
+          alert("Vui lòng chọn địa chỉ cửa hàng!");
+          return false;
+        }
+
+        // Disable các input trong địa chỉ giao hàng để tránh lỗi required
+        document.querySelectorAll("#delivery-address input, #delivery-address select, #delivery-address textarea").forEach(el => {
+          el.disabled = true;
+        });
+      }
+
+      else if (isCOD) {
+        const requiredFields = ["ho_ten", "sdt", "tinh", "quan", "phuong", "dia_chi"];
+        for (const name of requiredFields) {
+          const field = document.querySelector(`[name='${name}']`);
+          if (!field || !field.value.trim()) {
+            alert("Vui lòng nhập đầy đủ thông tin giao hàng!");
+            field.focus();
+            return false;
+          }
+        }
+
+        // Disable các radio địa chỉ cửa hàng để tránh lỗi
+        document.querySelectorAll("#store-addresses input").forEach(el => {
+          el.disabled = true;
+        });
+      }
+
+      return true;
+    }
+
+    document.getElementById("btn-show-checkout").addEventListener("click", function () {
+    document.querySelector(".cart-left").style.display = "none";         // Ẩn sản phẩm
+    document.getElementById("checkout-section").style.display = "block"; // Hiện thanh toán
+    this.style.display = "none"; // Ẩn nút luôn
+  });
+</script>
+
 </script>
 
 <?php include "footer.php"; ?>

@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <label>Trạng thái:</label>
     <select name="trangThai">
         <?php
-        $trangThaiList = ['Chờ xử lý', 'Đã xác nhận', 'Đang giao hàng', 'Đã giao', 'Đã hủy'];
+        $trangThaiList = ['Chờ xác nhận', 'Đang xử lý', 'Đang giao hàng', 'Đã giao', 'Đã hủy'];
         foreach ($trangThaiList as $tt) {
             $selected = $dh['trangThai'] === $tt ? 'selected' : '';
             echo "<option value='$tt' $selected>$tt</option>";
