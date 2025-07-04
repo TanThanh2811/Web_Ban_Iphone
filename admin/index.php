@@ -10,8 +10,6 @@ if (!isset($_SESSION['admin'])) {
     }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>

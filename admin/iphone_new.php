@@ -1,8 +1,12 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-    header("Location: login.php");
-    exit();
+if (!isset($_SESSION['admin'])) {
+    if (isset($_COOKIE['admin_login']) && $_COOKIE['admin_login'] === 'admin') {
+        $_SESSION['admin'] = 'admin';
+    } else {
+        header("Location: login.php");
+        exit();
+    }
 }
 include 'connect.php';
 
@@ -13,7 +17,7 @@ $result = mysqli_query($conn, "SELECT * FROM iphone_new");
 
 <h2>Danh sách iPhone Mới</h2>
 <a href="add_iphone_new.php"><button>+ Thêm sản phẩm</button></a>
-<a href="index.php"><button>về trang chủ</button></a>
+<a href="index.php"><button>Về trang chủ</button></a>
 <br><br>
 <table border="1">
     <tr>
