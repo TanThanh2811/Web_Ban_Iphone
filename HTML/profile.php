@@ -109,9 +109,14 @@ if (isset($_SESSION['username'])) {
   <p><strong>Số điện thoại:</strong> <?= htmlspecialchars($userInfo['sdt']) ?></p>
   <p><strong>Email:</strong> <?= htmlspecialchars($userInfo['email']) ?></p>
   <p><strong>Địa chỉ:</strong> <?= htmlspecialchars($userInfo['diaChi']) ?></p>
-  <form id="logoutForm" method="post" action="logout.php" onsubmit="return confirmLogout();">
-  <button type="submit" name="logout">Đăng xuất</button>
-  </form>
+  <div style = "display: flex; text-align: center;">
+    <form id="changePasswordForm" method="get" action="doimatkhau.php" style="display: inline-block; flex : 1;">
+      <button type="submit">Đổi mật khẩu</button>
+    </form>
+    <form id="logoutForm" method="post" action="logout.php" onsubmit="return confirmLogout();" style="display: inline-block; flex : 1;">
+      <button type="submit" name="logout">Đăng xuất</button>
+    </form>
+  </div>
 <?php elseif (isset($_SESSION['tenKH'])): ?>
   <div style="text-align: center; margin-top: 20px;">
     <p>✅ Đăng nhập thành công!</p>
@@ -186,7 +191,9 @@ if (isset($_SESSION['username'])) {
         <label>Nhập lại mật khẩu:</label>
         <input type="password" name="regConfirm" required>
       </div>
-      <button type="submit" name="register">Đăng ký</button>
+      <div style = "text-align: center;">
+        <button type="submit" name="register">Đăng ký</button>
+      </div>
     </form>
     <div class="link">Đã có tài khoản? <a onclick="showLogin()">Đăng nhập</a></div>
   </div>
