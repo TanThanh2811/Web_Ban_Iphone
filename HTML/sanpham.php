@@ -76,7 +76,12 @@ if ($table != "") {
           <?php endif; ?>
 
           <p><b>Giá:</b> <?= number_format($product['giaBan'], 0, ',', '.') ?> VNĐ</p>
-          <p><b>Số lượng:</b> <?= $product['soLuong'] ?></p>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <p style ="font-weight: bold; color: black; margin: 0;">Tình trạng:</p>
+            <div class="discount-badge <?= ($product['soLuong'] == 0) ? 'out-of-stock' : '' ?>">
+              <?= ($product['soLuong'] == 0) ? 'Hết hàng' : 'Còn hàng' ?>
+            </div>
+          </div>
 
           <form action="them_vao_gio.php" method="get">
             <input type="hidden" name="maSP" value="<?= $product[$id_field] ?>">

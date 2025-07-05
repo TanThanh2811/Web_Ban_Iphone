@@ -125,9 +125,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                 <button name="action" value="tang">+</button>
               </form>
             </div>
-            <div><?= number_format($giaBan * $soLuong, 0, ',', '.') ?>đ</div>
+            <div><b>Giá: </b><?= number_format($giaBan * $soLuong, 0, ',', '.') ?>đ</div>
             <a href="gio_hang.php?xoa_id=<?= $maSP ?>&loaiSP=<?= urlencode($loaiSP) ?>" onclick="return confirm('Xác nhận xóa sản phẩm này?')">❌ Xóa</a>
-          </div>
+          </div>  
         </div>
       <?php $total += $giaBan * $soLuong; endforeach; ?>
       <div class="cart-total">Tổng tiền: <?= number_format($total, 0, ',', '.') ?>đ</div>
@@ -210,7 +210,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <textarea id="ghi_chu" name="ghi_chu"></textarea>
           </div>
           <div class="button-group" style="text-align: right; margin-top: 20px;">
-            <button type="reset" class="checkout-btn" style="background-color: rgb(202, 203, 207); margin-right: 5px;">Hủy</button>
+            <a href="../HTML/gio_hang.php" class="checkout-btn" style="background-color: rgb(202, 203, 207); margin-right: 5px;">Hủy</a>
             <button type="submit" class="checkout-btn">Xác nhận</button>
           </div>
         </div>
@@ -325,12 +325,27 @@ while ($row = mysqli_fetch_assoc($result)) {
     }
 
     document.getElementById("btn-show-checkout").addEventListener("click", function () {
-    document.querySelector(".cart-left").style.display = "none";         // Ẩn sản phẩm
-    document.getElementById("checkout-section").style.display = "block"; // Hiện thanh toán
-    this.style.display = "none"; // Ẩn nút luôn
-  });
+      // Gửi yêu cầu kiểm tra tồn kho bằng AJAX
+      fetch('kiem_tra_ton_kho.php')
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'ok') {
+            // Không có sản phẩm nào hết hàng → cho phép hiển thị form thanh toán
+            document.querySelector(".cart-left").style.display = "none";
+            document.getElementById("checkout-section").style.display = "block";
+            this.style.display = "none";
+          } else {
+            // Có sản phẩm hết hàng
+            alert(data.message); // Ví dụ: "Sản phẩm iPhone 13 Pro Max 128GB đã hết hàng! Vui lòng xóa khỏi giỏ hàng!"
+            window.location.href = "gio_hang.php"; // Quay về giỏ hàng
+          }
+        })
+        .catch(error => {
+          console.error("Lỗi khi kiểm tra tồn kho:", error);
+          alert("Đã xảy ra lỗi khi kiểm tra tồn kho. Vui lòng thử lại sau!");
+        });
+    });
 </script>
-
 </script>
 
 <?php include "footer.php"; ?>

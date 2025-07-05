@@ -82,6 +82,8 @@ if (isset($_SESSION['username'])) {
 <head>
   <meta charset="UTF-8">
   <title>Thông tin cá nhân / Đăng nhập</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/icons/fontawesome-free-6.7.2-web/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <style>
     body { font-family: Arial; background: #f2f2f2; padding: 0px; }
@@ -145,7 +147,9 @@ if (isset($_SESSION['username'])) {
         <label>Mật khẩu:</label>
         <input type="password" name="loginPass" required>
       </div>
-      <button type="submit" name="login">Đăng nhập</button>
+      <div style = "text-align: center">
+        <button type="submit" name="login">Đăng nhập</button>
+      </div>
     </form>
     <div class="link">Chưa có tài khoản? <a onclick="showRegister()">Đăng ký</a></div>
   </div>

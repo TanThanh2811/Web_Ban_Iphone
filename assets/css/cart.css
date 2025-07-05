@@ -8,6 +8,10 @@ body {
   margin-left: 100px;
   margin-right: 100px;
 }
+.cart-left{
+  margin-left: 300px;
+  margin-right: 300px;
+}
 .cart-right {
   display: flex;
   justify-content: center;
@@ -92,17 +96,6 @@ body {
 .content {
   flex: 1;
   padding: 20px 10px;
-}
-
-.cart-item img {
-  height: 80px;
-  object-fit: cover;
-}
-
-.cart-item a {
-  color: red;
-  text-decoration: none;
-  font-weight: bold;
 }
 #checkoutForm {
   display: flex;

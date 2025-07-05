@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 05, 2025 lúc 09:59 AM
+-- Thời gian đã tạo: Th7 05, 2025 lúc 07:58 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -74,6 +74,13 @@ CREATE TABLE `gio_hang` (
   `loaiSP` enum('new','used','pk') NOT NULL,
   `soLuong` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `gio_hang`
+--
+
+INSERT INTO `gio_hang` (`username`, `maSP`, `loaiSP`, `soLuong`) VALUES
+('maivanhao', 14, 'new', 1);
 
 -- --------------------------------------------------------
 

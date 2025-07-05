@@ -8,7 +8,8 @@ if (!$conn) {
 
 
 if (!isset($_SESSION['username'])) {
-    die("Chưa đăng nhập!");
+    header("Location: profile.php");
+    exit();
 }
 
 $username = $_SESSION['username'];
