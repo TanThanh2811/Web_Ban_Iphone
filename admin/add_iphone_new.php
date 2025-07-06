@@ -15,18 +15,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<link rel="stylesheet" href="../assets/css/style_admin.css">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang quản trị</title>
+    <link rel="stylesheet" href="../assets/css/style_admin.css">
+</head>
+<body>
 
-<h2>Thêm iPhone mới</h2>
-<form method="post">
-    Tên SP: <input type="text" name="tenSP" required><br>
-    Mô tả: <textarea name="moTa"></textarea><br>
-    Giá bán: <input type="number" name="giaBan" required><br>
-    Số lượng: <input type="number" name="soLuong" required><br>
-    Ảnh (URL): <input type="text" name="hinhAnh"><br>
-    Dung lượng: <input type="number" name="dungLuong"><br>
-    <button type="submit">Thêm</button>
+<header>
+    <img src="../assets/images/logo.png" class="logo" alt="Logo">
+    <h1>Trang thêm sản phẩm</h1>
+</header>
 
-    <a href="iphone_new.php"><button type="button">Trở về</button></a>
-   
-</form>
+<main>
+    <h2>Thêm iPhone mới</h2>
+    <form method="post" style = "width: 700px;">
+        Tên SP: <input type="text" name="tenSP" required><br>
+        Mô tả: <textarea name="moTa"></textarea><br>
+        Giá bán: <input type="number" name="giaBan" required><br>
+        Số lượng: <input type="number" name="soLuong" required><br>
+        Ảnh (URL): <input type="text" name="hinhAnh"><br>
+        Dung lượng: <input type="number" name="dungLuong"><br>
+        <button type="submit">Thêm</button>
+        <a href="iphone_new.php"><button type="button">Trở về</button></a>
+    </form>
+</main>
+
+</body>
+</html>
+
+

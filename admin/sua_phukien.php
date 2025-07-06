@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin'])) {
 include 'connect.php';
 
 $id = $_GET['id'];
-$result = mysqli_query($conn, "SELECT * FROM phukien WHERE maPK = $id");
+$result = mysqli_query($conn, "SELECT * FROM phukien WHERE maSP = $id");
 $row = mysqli_fetch_assoc($result);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -32,28 +32,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<link rel="stylesheet" href="../assets/css/style_admin.css">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang quản trị</title>
+    <link rel="stylesheet" href="../assets/css/style_admin.css">
+</head>
+<body>
 
-<h2>Sửa thông tin phụ kiện</h2>
-<form method="POST">
-    <label>Tên sản phẩm:</label>
-    <input type="text" name="tenSP" value="<?= $row['tenSP'] ?>" required>
+<header>
+    <img src="../assets/images/logo.png" class="logo" alt="Logo">
+    <h1>Danh sách Phụ kiện </h1>
+</header>
 
-    <label>Loại phụ kiện:</label>
-    <input type="text" name="loaiPK" value="<?= $row['loaiPK'] ?>" required>
+<main>
+    <h2>Sửa thông tin phụ kiện</h2>
+    <form method="POST" style = "width: 700px;">
+        <label>Tên sản phẩm:</label>
+        <input type="text" name="tenSP" value="<?= $row['tenSP'] ?>" required>
 
-    <label>Số lượng:</label>
-    <input type="number" name="soLuong" value="<?= $row['soLuong'] ?>" required>
+        <label>Loại phụ kiện:</label>
+        <input type="text" name="loaiPK" value="<?= $row['loaiPK'] ?>" required>
 
-    <label>Giá bán:</label>
-    <input type="number" name="giaBan" value="<?= $row['giaBan'] ?>" required>
+        <label>Số lượng:</label>
+        <input type="number" name="soLuong" value="<?= $row['soLuong'] ?>" required>
 
-    <label>Mô tả:</label>
-    <textarea name="moTa"><?= $row['moTa'] ?></textarea>
+        <label>Giá bán:</label>
+        <input type="number" name="giaBan" value="<?= $row['giaBan'] ?>" required>
 
-    <label>Link hình ảnh:</label>
-    <input type="text" name="hinhAnh" value="<?= $row['hinhAnh'] ?>">
+        <label>Mô tả:</label>
+        <textarea name="moTa"><?= $row['moTa'] ?></textarea>
 
-    <button type="submit">Cập nhật</button>
-</form>
-<a href="phukien.php"><button>Quay lại</button></a>
+        <label>Link hình ảnh:</label>
+        <input type="text" name="hinhAnh" value="<?= $row['hinhAnh'] ?>">
+
+        <button type="submit">Cập nhật</button>
+    </form>
+    <a href="phukien.php"><button>Quay lại</button></a>
+
+</main>
+
+</body>
+</html>

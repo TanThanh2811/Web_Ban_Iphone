@@ -22,15 +22,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $result = mysqli_query($conn, "SELECT * FROM iphone_new WHERE maSP=$id");
 $row = mysqli_fetch_assoc($result);
 ?>
-<link rel="stylesheet" href="../assets/css/style_admin.css">
-<h2>Sửa sản phẩm iPhone</h2>
-<form method="post">
-    Tên SP: <input type="text" name="tenSP" value="<?= $row['tenSP'] ?>" required><br>
-    Mô tả: <textarea name="moTa"><?= $row['moTa'] ?></textarea><br>
-    Giá bán: <input type="number" name="giaBan" value="<?= $row['giaBan'] ?>" required><br>
-    Số lượng: <input type="number" name="soLuong" value="<?= $row['soLuong'] ?>" required><br>
-    Ảnh (URL): <input type="text" name="hinhAnh" value="<?= $row['hinhAnh'] ?>"><br>
-    Dung lượng: <input type="number" name="dungLuong" value="<?= $row['dungLuong'] ?>"><br>
-    <button type="submit">Cập nhật</button>
-    <a href="iphone_new.php"><button>Trở lại</button></a>
-</form>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang quản trị</title>
+    <link rel="stylesheet" href="../assets/css/style_admin.css">
+</head>
+<body>
+
+<header>
+    <img src="../assets/images/logo.png" class="logo" alt="Logo">
+    <h1>Danh sách Iphone mới </h1>
+</header>
+
+<main>
+    <h2>Sửa sản phẩm iPhone</h2>
+    <form method="post" style = "width: 700px;">
+        Tên SP: <input type="text" name="tenSP" value="<?= $row['tenSP'] ?>" required><br>
+        Mô tả: <textarea name="moTa"><?= $row['moTa'] ?></textarea><br>
+        Giá bán: <input type="number" name="giaBan" value="<?= $row['giaBan'] ?>" required><br>
+        Số lượng: <input type="number" name="soLuong" value="<?= $row['soLuong'] ?>" required><br>
+        Ảnh (URL): <input type="text" name="hinhAnh" value="<?= $row['hinhAnh'] ?>"><br>
+        Dung lượng: <input type="number" name="dungLuong" value="<?= $row['dungLuong'] ?>"><br>
+        <a href="iphone_new.php"><button>Trở lại</button></a>
+        <button type="submit">Cập nhật</button>
+    </form>
+</main>
+
+</body>
+</html>

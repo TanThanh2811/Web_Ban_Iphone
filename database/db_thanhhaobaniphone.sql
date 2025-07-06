@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 05, 2025 lúc 07:58 PM
+-- Thời gian đã tạo: Th7 06, 2025 lúc 01:21 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -35,13 +35,6 @@ CREATE TABLE `chitiet_donhang` (
   `giaBan` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `chitiet_donhang`
---
-
-INSERT INTO `chitiet_donhang` (`maDH`, `maSP`, `loaiSP`, `soLuong`, `giaBan`) VALUES
-(57, 11, 'new', 1, 28500000);
-
 -- --------------------------------------------------------
 
 --
@@ -55,13 +48,6 @@ CREATE TABLE `donhang` (
   `trangThai` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `donhang`
---
-
-INSERT INTO `donhang` (`maDH`, `maKH`, `ngayDat`, `trangThai`) VALUES
-(57, 7, '2025-07-05 13:32:32', 'Đang xử lý');
-
 -- --------------------------------------------------------
 
 --
@@ -69,18 +55,11 @@ INSERT INTO `donhang` (`maDH`, `maKH`, `ngayDat`, `trangThai`) VALUES
 --
 
 CREATE TABLE `gio_hang` (
-  `username` varchar(255) NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `maSP` int(11) NOT NULL,
   `loaiSP` enum('new','used','pk') NOT NULL,
   `soLuong` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `gio_hang`
---
-
-INSERT INTO `gio_hang` (`username`, `maSP`, `loaiSP`, `soLuong`) VALUES
-('maivanhao', 14, 'new', 1);
 
 -- --------------------------------------------------------
 
@@ -114,7 +93,7 @@ INSERT INTO `iphone_new` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `hinhAnh
 (11, 'Iphone 14 Pro', 'iPhone 14 Pro là một trong những sản phẩm cao cấp nhất của Apple, ra mắt vào tháng 9 năm 2022. Với thiết kế mới lạ, hiệu năng mạnh mẽ và những cải tiến đáng kể trong công nghệ, iPhone 14 Pro đã nhanh chóng thu hút sự quan tâm của người dùng và trở thành một trong những lựa chọn hàng đầu trên thị trường.', 28500000, 6, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-14-pro-tim-3-camera-41031.png', 256),
 (12, 'Iphone 14 Pro Max', 'iPhone 14 Pro Max là phiên bản cao cấp nhất trong dòng sản phẩm iPhone 14 của Apple, được ra mắt vào tháng 9 năm 2022. Với thiết kế tinh tế, hiệu năng mạnh mẽ, và những cải tiến vượt trội về camera, iPhone 14 Pro Max đã nhanh chóng trở thành lựa chọn hàng đầu cho những người yêu công nghệ.', 29999000, 4, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone14promaxspaceblackpurebackiphone14promaxspaceblackpurefront2-upscreenusen-1454.png', 512),
 (13, 'iPhone 15', 'iPhone 15 là phiên bản tiêu chuẩn trong dòng sản phẩm mới của Apple, mang đến sự cân bằng giữa hiệu năng, thiết kế và giá cả. Với những cải tiến về camera, chip xử lý và màn hình, iPhone 15 là lựa chọn lý tưởng cho người dùng cần một chiếc điện thoại mạnh mẽ, hiện đại nhưng không quá cầu kỳ.', 16999000, 0, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-pink-thumbtz0-650x650-3280.png', 128),
-(14, 'iPhone 14 Plus', 'iPhone 14 Plus là phiên bản có màn hình lớn trong dòng iPhone 14, với cấu hình mạnh mẽ từ chip A15 Bionic, camera cải tiến, và thời lượng pin dài. Đây là sự lựa chọn tốt cho người dùng cần một thiết bị có màn hình lớn và hiệu suất cao​\r\n\r\n', 18990000, 3, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/14plusshopdunkblue-9665.png', 128),
+(14, 'iPhone 14 Plus', 'iPhone 14 Plus là phiên bản có màn hình lớn trong dòng iPhone 14, với cấu hình mạnh mẽ từ chip A15 Bionic, camera cải tiến, và thời lượng pin dài. Đây là sự lựa chọn tốt cho người dùng cần một thiết bị có màn hình lớn và hiệu suất cao​\r\n\r\n', 18990000, 2, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/14plusshopdunkblue-9665.png', 128),
 (15, 'iPhone 14 Plus', 'iPhone 14 Plus là phiên bản có màn hình lớn trong dòng iPhone 14, với cấu hình mạnh mẽ từ chip A15 Bionic, camera cải tiến, và thời lượng pin dài. Đây là sự lựa chọn tốt cho người dùng cần một thiết bị có màn hình lớn và hiệu suất cao​\r\n\r\n', 18900000, 7, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone14-shopdunk-starnight-60711.png', 256),
 (20, 'iPhone 16 Pro Max', 'iPhone 16 Pro Max sở hữu màn hình Super Retina XDR 6.9 inch, khung viền titan bền bỉ và chip A18 Pro mạnh mẽ. Camera 48MP nâng cấp cho ảnh sắc nét, hỗ trợ quay video 4K 120fps. Thời lượng pin dài hơn, mang đến trải nghiệm cao cấp suốt cả ngày. ', 31000000, 9, 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-16-pro-max_1.png', 512);
 
@@ -176,14 +155,6 @@ CREATE TABLE `khachhang` (
   `matKhau` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Đang đổ dữ liệu cho bảng `khachhang`
---
-
-INSERT INTO `khachhang` (`maKH`, `tenKH`, `email`, `sdt`, `diaChi`, `username`, `matKhau`) VALUES
-(6, 'Mai Văn Hảo', 'maivanhao5667@gmail.com', '0399714932', '11/12 trung mỹ tây', 'maivanhao', '$2y$10$2T6jSvSwKLEOxKqhYivADOLWE8nDuJtoqyGj0r7BHZrfgqerw/lGm'),
-(7, '2n2t', 'thanh@gmail.com', '0123456789', 'trung mỹ tây', '2n2t', '$2y$10$meJfptHD2u6P3hPfcV.IqO06jBl3WbEQd1gT1lUmP0wpWtlVqZbA2');
-
 -- --------------------------------------------------------
 
 --
@@ -215,7 +186,7 @@ INSERT INTO `phukien` (`maSP`, `tenSP`, `loaiPK`, `soLuong`, `giaBan`, `moTa`, `
 (8, 'Củ sạc Apple Power Adapter 20W Type-C', 'Sạc Iphone', 1, 549000, 'Sạc nhanh 20W USB-C Power Adapter là phụ kiện hoàn hảo cho iPhone, iPad có hỗ trợ sạc nhanh, đặc biệt là dòng iPhone 12 mới ra mắt. Một sản phẩm phụ kiện chính hãng từ Apple sẽ mang đến hiệu suất sạc và độ an toàn tối ưu cho iPhone, iPad của bạn.\r\n\r\n', 'https://cdn2.fptshop.com.vn/unsafe/750x0/filters:format(webp):quality(75)/2020_10_20_637387863045789128_pk-apple-00720432-2.png'),
 (9, 'Pencil 2', 'Pencil ', 5, 2900000, 'Apple Pencil 2 mang đến trải nghiệm viết, vẽ mượt mà với độ chính xác cao và độ trễ gần như bằng 0. Thiết kế nam châm giúp gắn chặt vào iPad và sạc không dây tiện lợi. Hỗ trợ thao tác chạm để chuyển công cụ nhanh chóng, đây là phụ kiện hoàn hảo cho những ai yêu thích sáng tạo và làm việc chuyên nghiệp.', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/image2025-01-03111954652-6314.png'),
 (10, 'Pencil Pro', 'Pencil ', 7, 390000, 'Apple Pencil Pro mang đến trải nghiệm viết vẽ siêu mượt với độ nhạy lực và độ trễ gần như bằng 0. Cảm biến lực bóp giúp thao tác nhanh hơn, cùng phản hồi xúc giác tăng độ chân thực. Sạc không dây tiện lợi, gắn từ tính vào iPad, đây là lựa chọn hoàn hảo cho người dùng chuyên nghiệp và sáng tạo', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/image2025-01-03111717388-5859.png'),
-(11, 'Airtag 4 Pack', 'Airtag ', 12, 2900000, 'AirTag giúp bạn dễ dàng tìm đồ thất lạc với công nghệ định vị chính xác và mạng lưới Find My mạnh mẽ. Thiết kế nhỏ gọn, chống nước IP67, pin dùng hơn 1 năm và kết nối mượt mà với iPhone. Gói 4 chiếc tiện lợi, hoàn hảo để theo dõi nhiều vật dụng quan trọng như chìa khóa, ví, balo hay hành lý', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/image2025-01-03110645575-2682.png'),
+(11, 'Airtag 4 Pack', 'Airtag ', 11, 2900000, 'AirTag giúp bạn dễ dàng tìm đồ thất lạc với công nghệ định vị chính xác và mạng lưới Find My mạnh mẽ. Thiết kế nhỏ gọn, chống nước IP67, pin dùng hơn 1 năm và kết nối mượt mà với iPhone. Gói 4 chiếc tiện lợi, hoàn hảo để theo dõi nhiều vật dụng quan trọng như chìa khóa, ví, balo hay hành lý', 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/image2025-01-03110645575-2682.png'),
 (12, 'Earpods Lightning', 'Tai Nghe', 20, 139000, 'Tai nghe có dây, kết nối bằng cổng Type-C', 'https://cdn.mobilecity.vn/mobilecity-vn/images/2022/08/w80/tai-nghe-earpods-lightning-chinh-hang-3.jpg.webp'),
 (13, 'Cáp Apple Usb-C to lightning', 'Sạc Iphone', 17, 499000, 'Thiết kế 2 đầu kết nối, một đầu Type C và một đầu\r\nLightning, lý tưởng cho sạc và truyền dữ liệu\r\nDây dài 2m, tiện lợi cho việc sử dụng, chất liệu dai\r\nbền, chống xoắn rối\r\nTương thích với nhiều adapter, sử dụng kèm với\r\nAdapter 29W, 30W, 61W, 87W USB-C cua Apple để sạc nhanh', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/c/a/cap-type-c-to-lightning-apple-2m.png'),
 (14, 'Củ sạc Apple 2 cổng Type-C', 'Sạc Iphone', 24, 1290000, 'Công suất 35W với công nghệ PD đảm bao sạc\r\nnhanh và an toàn cho các thiết bị\r\n2 cổng Type-C tích hợp phù hợp với nhiều thiết bị\r\nApple, tiện lợi cho người dùng\r\nThiết kế thanh lịch với màu trắng nhẹ nhàng, phù hợp với mọi không gian\r\nCủ sạc chính hãng cua Apple, đảm bảo sử dụng lâu dài', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_8_1__2.png'),
@@ -239,13 +210,6 @@ CREATE TABLE `thongtin_giaohang` (
   `dia_chi` text NOT NULL,
   `ghi_chu` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `thongtin_giaohang`
---
-
-INSERT INTO `thongtin_giaohang` (`id`, `maDH`, `ho_ten`, `sdt`, `email`, `thanhToan`, `dia_chi`, `ghi_chu`) VALUES
-(54, 57, 'thanh', '0123456789', '', 'pos', '127G Lê Văn Duyệt, Quận Bình Thạnh, TP.HCM', '');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -280,7 +244,7 @@ ALTER TABLE `iphone_used`
 -- Chỉ mục cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
-  ADD PRIMARY KEY (`maKH`);
+  ADD PRIMARY KEY (`maKH`,`username`) USING BTREE;
 
 --
 -- Chỉ mục cho bảng `phukien`
@@ -303,7 +267,7 @@ ALTER TABLE `thongtin_giaohang`
 -- AUTO_INCREMENT cho bảng `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT cho bảng `iphone_new`
@@ -327,7 +291,7 @@ ALTER TABLE `phukien`
 -- AUTO_INCREMENT cho bảng `thongtin_giaohang`
 --
 ALTER TABLE `thongtin_giaohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

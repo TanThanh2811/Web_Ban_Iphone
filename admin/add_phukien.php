@@ -22,30 +22,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<link rel="stylesheet" href="../assets/css/style_admin.css">
 
-<h2>Thêm phụ kiện mới</h2>
-<form method="POST">
-    <label>Tên sản phẩm:</label>
-    <input type="text" name="tenSP" required>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang quản trị</title>
+    <link rel="stylesheet" href="../assets/css/style_admin.css">
+</head>
+<body>
 
-    <label>Loại phụ kiện:</label>
-    <input type="text" name="loaiPK" required>
+<header>
+    <img src="../assets/images/logo.png" class="logo" alt="Logo">
+    <h1>Trang thêm sản phẩm</h1>
+</header>
 
-    <label>Số lượng:</label>
-    <input type="number" name="soLuong" required>
+<main>
+    <h2>Thêm phụ kiện mới</h2>
+    <form method="POST" style = "width: 700px;">
+        <label>Tên sản phẩm:</label>
+        <input type="text" name="tenSP" required>
 
-    <label>Giá bán:</label>
-    <input type="number" name="giaBan" required>
+        <label>Loại phụ kiện:</label>
+        <input type="text" name="loaiPK" required>
 
-    <label>Mô tả:</label>
-    <textarea name="moTa"></textarea>
+        <label>Số lượng:</label>
+        <input type="number" name="soLuong" required>
 
-    <label>Link hình ảnh:</label>
-    <input type="text" name="hinhAnh">
+        <label>Giá bán:</label>
+        <input type="number" name="giaBan" required>
 
-    <button type="submit">Thêm</button>
+        <label>Mô tả:</label>
+        <textarea name="moTa"></textarea>
 
-    <a href="phukien.php"><button type="button">Trở về</button></a>
-</form>
+        <label>Link hình ảnh:</label>
+        <input type="text" name="hinhAnh">
+
+        <button type="submit">Thêm</button>
+
+        <a href="phukien.php"><button type="button">Trở về</button></a>
+    </form>
+</main>
+
+</body>
+</html>
 
