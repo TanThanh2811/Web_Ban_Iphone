@@ -11,6 +11,20 @@ if ($conn->connect_error) {
     die("Kết nối thất bại: " . $conn->connect_error);
 }
 
+// Tự động đăng nhập nếu có cookie "remember_username"
+if (!isset($_SESSION['username']) && isset($_COOKIE['remember_username'])) {
+    $cookieUsername = $_COOKIE['remember_username'];
+    $stmt = $conn->prepare("SELECT * FROM khachhang WHERE username = ? LIMIT 1");
+    $stmt->bind_param("s", $cookieUsername);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows == 1) {
+        $user = $result->fetch_assoc();
+        $_SESSION['tenKH'] = $user['tenKH'];
+        $_SESSION['username'] = $user['username'];
+    }
+}
+
 // Nếu đã đăng nhập → Lấy thông tin người dùng
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
@@ -38,16 +52,37 @@ if (isset($_SESSION['username'])) {
           $msg = "⚠️ Mật khẩu không khớp!";
           $showLogin = false;
       } else {
+        // Kiểm tra username/email/sdt đã tồn tại chưa
+        $checkStmt = $conn->prepare("SELECT * FROM khachhang WHERE username = ? OR email = ? OR sdt = ?");
+        $checkStmt->bind_param("sss", $username, $email, $sdt);
+        $checkStmt->execute();
+        $result = $checkStmt->get_result();
+        if ($result->num_rows > 0) {
+          // Lấy dữ liệu để thông báo chính xác hơn
+          $existing = $result->fetch_assoc();
+          if ($existing['username'] === $username) {
+            $msg = "❌ Tên đăng nhập đã được sử dụng.";
+          } elseif ($existing['sdt'] === $sdt) {
+            $msg = "❌ Số điện thoại đã được sử dụng.";
+          } elseif ($existing['email'] === $email) {
+            $msg = "❌ Email đã được sử dụng.";
+          } else {
+            $msg = "❌ Thông tin đã tồn tại.";
+          }
+          $showLogin = false;
+          }
+        else{
           $hashed = password_hash($pass, PASSWORD_DEFAULT);
           $stmt = $conn->prepare("INSERT INTO khachhang (username, tenKH, sdt, email, diaChi, matKhau) VALUES (?, ?, ?, ?, ?, ?)");
           $stmt->bind_param("ssssss", $username, $tenKH, $sdt, $email, $diaChi, $hashed);
           if ($stmt->execute()) {
-              $msg = "✅ Đăng ký thành công! Vui lòng đăng nhập.";
-              $showLogin = true;
+            $msg = "✅ Đăng ký thành công! Vui lòng đăng nhập.";
+            $showLogin = true;
           } else {
-              $msg = "❌ Lỗi khi đăng ký. Có thể username hoặc email đã tồn tại!";
-              $showLogin = false;
+            $msg = "❌ Lỗi khi đăng ký. Có thể username hoặc email đã tồn tại!";
+            $showLogin = false;
           }
+        }
       }
     }
 
@@ -65,6 +100,12 @@ if (isset($_SESSION['username'])) {
           if (password_verify($pass, $user['matKhau'])) {
               $_SESSION['tenKH'] = $user['tenKH'];
               $_SESSION['username'] = $user['username']; // Lưu username vào session
+              // Nếu người dùng chọn ghi nhớ
+              if (isset($_POST['rememberMe'])) {
+                  // Lưu cookie trong 30 ngày
+                  setcookie("remember_username", $user['username'], time() + (30 * 24 * 60 * 60), "/");
+              }
+
               $msg = "✅ Đăng nhập thành công. Xin chào, " . $user['tenKH'] . "! Bạn sẽ được chuyển về trang chủ trong 3 giây...";
               header(" url=../HTML/trangchu.php");
           } else {
@@ -87,8 +128,13 @@ if (isset($_SESSION['username'])) {
   <link rel="stylesheet" href="../assets/css/style.css">
   <style>
     body { font-family: Arial; background: #f2f2f2; padding: 0px; }
-.container { width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 8px #ccc; }
-    .form-group { margin-bottom: 10px; }
+    .container { width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 8px #ccc; }
+    .form-group {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
     input { width: 95%; padding: 8px; margin-top: 5px; }
     button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
     .link { margin-top: 10px; text-align: center; }
@@ -151,6 +197,12 @@ if (isset($_SESSION['username'])) {
       <div class="form-group">
         <label>Mật khẩu:</label>
         <input type="password" name="loginPass" required>
+      </div>
+      <div class="form-group remember-me">
+        <label for="rememberMe">
+          <input type="checkbox" name="rememberMe" id="rememberMe">
+          Ghi nhớ đăng nhập
+        </label>
       </div>
       <div style = "text-align: center">
         <button type="submit" name="login">Đăng nhập</button>

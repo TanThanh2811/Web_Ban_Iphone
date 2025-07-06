@@ -307,3 +307,16 @@ header {
   font-weight: bold;
 }
 
+.remember-me {
+  margin-top: 10px;
+}
+
+.remember-me label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px; /* khoảng cách giữa checkbox và chữ */
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
