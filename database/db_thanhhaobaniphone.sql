@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 06, 2025 lúc 01:21 PM
+-- Thời gian đã tạo: Th7 07, 2025 lúc 08:18 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -35,6 +35,16 @@ CREATE TABLE `chitiet_donhang` (
   `giaBan` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `chitiet_donhang`
+--
+
+INSERT INTO `chitiet_donhang` (`maDH`, `maSP`, `loaiSP`, `soLuong`, `giaBan`) VALUES
+(60, 1, 'used', 1, 4500000),
+(60, 11, 'new', 1, 28500000),
+(61, 12, 'new', 1, 29999000),
+(62, 15, 'pk', 1, 950000);
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +57,15 @@ CREATE TABLE `donhang` (
   `ngayDat` datetime NOT NULL,
   `trangThai` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `donhang`
+--
+
+INSERT INTO `donhang` (`maDH`, `maKH`, `ngayDat`, `trangThai`) VALUES
+(60, 8, '2025-07-07 12:45:02', 'Chờ xác nhận'),
+(61, 8, '2025-07-07 12:45:30', 'Chờ xác nhận'),
+(62, 8, '2025-07-07 12:46:45', 'Đang xử lý');
 
 -- --------------------------------------------------------
 
@@ -90,8 +109,8 @@ INSERT INTO `iphone_new` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `hinhAnh
 (6, 'Iphone 15 Plus', 'iPhone 15 Plus mang đến trải nghiệm di động với màn hình lớn, thời lượng pin dài, và hiệu năng mạnh mẽ. Đây là sự lựa chọn hoàn hảo cho những ai yêu thích không gian hiển thị rộng rãi nhưng vẫn giữ được thiết kế sang trọng, hiện đại của Apple.', 27900000, 7, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-plus-blue-thumbtz-1-650x650-1712.png', 256),
 (7, 'Iphone 15', 'iPhone 15 là phiên bản tiêu chuẩn trong dòng sản phẩm mới của Apple, mang đến sự cân bằng giữa hiệu năng, thiết kế và giá cả. Với những cải tiến về camera, chip xử lý và màn hình, iPhone 15 là lựa chọn lý tưởng cho người dùng cần một chiếc điện thoại mạnh mẽ, hiện đại nhưng không quá cầu kỳ.', 19900000, 3, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-black-thumbtz0-650x650-1646.png', 256),
 (9, 'Iphone 14', NULL, 18990000, 0, 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone_14_blue_pdp_image_position-1a_blue_color_vn_1.png', 256),
-(11, 'Iphone 14 Pro', 'iPhone 14 Pro là một trong những sản phẩm cao cấp nhất của Apple, ra mắt vào tháng 9 năm 2022. Với thiết kế mới lạ, hiệu năng mạnh mẽ và những cải tiến đáng kể trong công nghệ, iPhone 14 Pro đã nhanh chóng thu hút sự quan tâm của người dùng và trở thành một trong những lựa chọn hàng đầu trên thị trường.', 28500000, 6, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-14-pro-tim-3-camera-41031.png', 256),
-(12, 'Iphone 14 Pro Max', 'iPhone 14 Pro Max là phiên bản cao cấp nhất trong dòng sản phẩm iPhone 14 của Apple, được ra mắt vào tháng 9 năm 2022. Với thiết kế tinh tế, hiệu năng mạnh mẽ, và những cải tiến vượt trội về camera, iPhone 14 Pro Max đã nhanh chóng trở thành lựa chọn hàng đầu cho những người yêu công nghệ.', 29999000, 4, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone14promaxspaceblackpurebackiphone14promaxspaceblackpurefront2-upscreenusen-1454.png', 512),
+(11, 'Iphone 14 Pro', 'iPhone 14 Pro là một trong những sản phẩm cao cấp nhất của Apple, ra mắt vào tháng 9 năm 2022. Với thiết kế mới lạ, hiệu năng mạnh mẽ và những cải tiến đáng kể trong công nghệ, iPhone 14 Pro đã nhanh chóng thu hút sự quan tâm của người dùng và trở thành một trong những lựa chọn hàng đầu trên thị trường.', 28500000, 5, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone-14-pro-tim-3-camera-41031.png', 256),
+(12, 'Iphone 14 Pro Max', 'iPhone 14 Pro Max là phiên bản cao cấp nhất trong dòng sản phẩm iPhone 14 của Apple, được ra mắt vào tháng 9 năm 2022. Với thiết kế tinh tế, hiệu năng mạnh mẽ, và những cải tiến vượt trội về camera, iPhone 14 Pro Max đã nhanh chóng trở thành lựa chọn hàng đầu cho những người yêu công nghệ.', 29999000, 3, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone14promaxspaceblackpurebackiphone14promaxspaceblackpurefront2-upscreenusen-1454.png', 512),
 (13, 'iPhone 15', 'iPhone 15 là phiên bản tiêu chuẩn trong dòng sản phẩm mới của Apple, mang đến sự cân bằng giữa hiệu năng, thiết kế và giá cả. Với những cải tiến về camera, chip xử lý và màn hình, iPhone 15 là lựa chọn lý tưởng cho người dùng cần một chiếc điện thoại mạnh mẽ, hiện đại nhưng không quá cầu kỳ.', 16999000, 0, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/anyconvcomiphone-15-pink-thumbtz0-650x650-3280.png', 128),
 (14, 'iPhone 14 Plus', 'iPhone 14 Plus là phiên bản có màn hình lớn trong dòng iPhone 14, với cấu hình mạnh mẽ từ chip A15 Bionic, camera cải tiến, và thời lượng pin dài. Đây là sự lựa chọn tốt cho người dùng cần một thiết bị có màn hình lớn và hiệu suất cao​\r\n\r\n', 18990000, 2, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/14plusshopdunkblue-9665.png', 128),
 (15, 'iPhone 14 Plus', 'iPhone 14 Plus là phiên bản có màn hình lớn trong dòng iPhone 14, với cấu hình mạnh mẽ từ chip A15 Bionic, camera cải tiến, và thời lượng pin dài. Đây là sự lựa chọn tốt cho người dùng cần một thiết bị có màn hình lớn và hiệu suất cao​\r\n\r\n', 18900000, 7, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/iphone14-shopdunk-starnight-60711.png', 256),
@@ -121,7 +140,7 @@ CREATE TABLE `iphone_used` (
 
 INSERT INTO `iphone_used` (`maSP`, `tenSP`, `moTa`, `giaBan`, `soLuong`, `hinhAnh`, `dungLuong`, `doMoi`, `pin`) VALUES
 (0, 'iPhone 15 Cũ', 'iPhone 15 có thiết kế Dynamic Island hiện đại, màn hình Super Retina XDR 6.1 inch và chip A16 Bionic mạnh mẽ. Camera 48MP cải tiến cho ảnh chụp sắc nét, cùng cổng USB-C tiện lợi. Máy mang đến trải nghiệm mượt mà, phù hợp cho mọi nhu cầu sử dụng.', 15900000, 1, 'https://traidepbaniphone.com/thumbs/760x540x2/upload/product/z58309511573103477b63d4bb5c7c5bd7b106c3d9378f5-2860.jpg', 128, 98, 95),
-(1, 'iPhone X Cũ', 'iPhone X với thiết kế sang trọng, hiệu năng ổn định, phù hợp nhu cầu sử dụng cơ bản.', 4500000, 5, 'https://th.bing.com/th/id/OIP.aYHzTdyRvM_yBtEXkVzPEgHaI4?w=159&h=191&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 97, 90),
+(1, 'iPhone X Cũ', 'iPhone X với thiết kế sang trọng, hiệu năng ổn định, phù hợp nhu cầu sử dụng cơ bản.', 4500000, 4, 'https://th.bing.com/th/id/OIP.aYHzTdyRvM_yBtEXkVzPEgHaI4?w=159&h=191&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 97, 90),
 (2, 'iPhone XS Cũ', 'iPhone XS sở hữu Face ID, camera kép chụp ảnh sắc nét, hiệu năng mạnh mẽ. ', 5000000, 4, 'https://th.bing.com/th/id/OIP.4pVRG1Gm2op3GyjZMsU9YwHaEw?w=246&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 91),
 (3, 'iPhone XS Max Cũ', 'Màn hình lớn 6.5 inch, camera đẹp, pin ổn định, trải nghiệm giải trí tuyệt vời.', 5900000, 3, 'https://th.bing.com/th/id/OIP.v1xvmFed4Vl9dAJBCsTHuAHaEK?w=299&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 98, 92),
 (4, 'iPhone 11 Cũ', 'iPhone 11 nổi bật với camera góc rộng, hiệu năng vượt trội.', 6300000, 6, 'https://th.bing.com/th/id/OIP.4mzSBXcKinjxs3C-jonFcAHaGr?w=200&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3', 64, 99, 93),
@@ -154,6 +173,13 @@ CREATE TABLE `khachhang` (
   `username` varchar(255) NOT NULL,
   `matKhau` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `khachhang`
+--
+
+INSERT INTO `khachhang` (`maKH`, `tenKH`, `email`, `sdt`, `diaChi`, `username`, `matKhau`) VALUES
+(8, 'Mai Văn Hảo', 'maivanhao5667@gmail.com', '0399714932', '11/12 trung mỹ tây 9', 'maivanhao', '$2y$10$UiujFhozK7I.6Ndr.lb8TulWd8RsNlN6ML4fIPGaPAvrW3h.ziVrK');
 
 -- --------------------------------------------------------
 
@@ -190,7 +216,7 @@ INSERT INTO `phukien` (`maSP`, `tenSP`, `loaiPK`, `soLuong`, `giaBan`, `moTa`, `
 (12, 'Earpods Lightning', 'Tai Nghe', 20, 139000, 'Tai nghe có dây, kết nối bằng cổng Type-C', 'https://cdn.mobilecity.vn/mobilecity-vn/images/2022/08/w80/tai-nghe-earpods-lightning-chinh-hang-3.jpg.webp'),
 (13, 'Cáp Apple Usb-C to lightning', 'Sạc Iphone', 17, 499000, 'Thiết kế 2 đầu kết nối, một đầu Type C và một đầu\r\nLightning, lý tưởng cho sạc và truyền dữ liệu\r\nDây dài 2m, tiện lợi cho việc sử dụng, chất liệu dai\r\nbền, chống xoắn rối\r\nTương thích với nhiều adapter, sử dụng kèm với\r\nAdapter 29W, 30W, 61W, 87W USB-C cua Apple để sạc nhanh', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/c/a/cap-type-c-to-lightning-apple-2m.png'),
 (14, 'Củ sạc Apple 2 cổng Type-C', 'Sạc Iphone', 24, 1290000, 'Công suất 35W với công nghệ PD đảm bao sạc\r\nnhanh và an toàn cho các thiết bị\r\n2 cổng Type-C tích hợp phù hợp với nhiều thiết bị\r\nApple, tiện lợi cho người dùng\r\nThiết kế thanh lịch với màu trắng nhẹ nhàng, phù hợp với mọi không gian\r\nCủ sạc chính hãng cua Apple, đảm bảo sử dụng lâu dài', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/g/r/group_8_1__2.png'),
-(15, 'Ốp lưng iPhone 15 Plus Silicone hỗ trợ sạc Magsafe', 'Ốp Lưng iPhone', 7, 950000, 'Ốp lưng iPhone 15 Plus có hỗ trợ Magsafe, làm bằng nhựa cao cấp\nChính hãng Apple', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/o/p/op-lung-magsafe-iphone-15-plus-silicone.png'),
+(15, 'Ốp lưng iPhone 15 Plus Silicone hỗ trợ sạc Magsafe', 'Ốp Lưng iPhone', 6, 950000, 'Ốp lưng iPhone 15 Plus có hỗ trợ Magsafe, làm bằng nhựa cao cấp\nChính hãng Apple', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/o/p/op-lung-magsafe-iphone-15-plus-silicone.png'),
 (16, 'Ốp lưng iPhone 13/14 Apple Leather Case hỗ trợ sạc Magsafe', 'Ốp Lưng iPhone', 17, 945000, 'Ốp lưng iPhone 13/14 có hỗ trợ Magsafe, làm bằng nhựa cao cấp Chính hãng Apple', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/p/mpp83_av5.jpg'),
 (17, 'Ốp lưng iPhone 14 Pro Apple Silicone Case ', 'Ốp Lưng iPhone', 39, 450000, 'Ốp lưng iPhone 14 Pro Apple Silicone Case, có hỗ trơ sac Magsafe, làm bằng silicon cao cấp, chính hãng Apple ', 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/p/mpu63_av1.jpg');
 
@@ -210,6 +236,15 @@ CREATE TABLE `thongtin_giaohang` (
   `dia_chi` text NOT NULL,
   `ghi_chu` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `thongtin_giaohang`
+--
+
+INSERT INTO `thongtin_giaohang` (`id`, `maDH`, `ho_ten`, `sdt`, `email`, `thanhToan`, `dia_chi`, `ghi_chu`) VALUES
+(57, 60, 'hảo 1', '0222222', '', 'pos', '127G Lê Văn Duyệt, Quận Bình Thạnh, TP.HCM', ''),
+(58, 61, 'hao 2', '12222111', '', 'pos', '456 Minh Phụng, Quận 11, TP.HCM', ''),
+(59, 62, 'haảo 3', '10100101', '', 'cod', '123 đường a, Xã Dục Tú, Huyện Đông Anh, Thành phố Hà Nội', '');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -267,7 +302,7 @@ ALTER TABLE `thongtin_giaohang`
 -- AUTO_INCREMENT cho bảng `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `maDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT cho bảng `iphone_new`
@@ -279,7 +314,7 @@ ALTER TABLE `iphone_new`
 -- AUTO_INCREMENT cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `maKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `maKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `phukien`
@@ -291,7 +326,7 @@ ALTER TABLE `phukien`
 -- AUTO_INCREMENT cho bảng `thongtin_giaohang`
 --
 ALTER TABLE `thongtin_giaohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

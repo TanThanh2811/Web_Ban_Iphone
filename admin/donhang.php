@@ -67,7 +67,11 @@ $result = mysqli_query($conn, $sql);
         <?php while ($row = mysqli_fetch_assoc($result)) { ?>
         <tr>
             <td><?= $row['maDH'] ?></td>
-            <td><?= $row['tenKH'] ?></td>
+            <?php //Lấy thông tin giao hàng.
+            $giaohang = mysqli_fetch_assoc(mysqli_query($conn, "
+                SELECT * FROM thongtin_giaohang WHERE maDH = $row[maDH]
+            "));?>
+            <td><?= $giaohang['ho_ten'] ?></td>
             <td><?= $row['ngayDat'] ?></td>
             <td><?= $row['trangThai'] ?></td>
             <td>

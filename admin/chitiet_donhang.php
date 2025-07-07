@@ -7,11 +7,17 @@ if (!isset($_SESSION['admin'])) {
 }
 
 $id = $_GET['id'];
+
 // Lấy thông tin đơn hàng
 $donhang = mysqli_fetch_assoc(mysqli_query($conn, "
     SELECT d.*, k.tenKH, k.sdt, k.diaChi 
     FROM donhang d JOIN khachhang k ON d.maKH = k.maKH
     WHERE d.maDH = $id
+"));
+
+//Lấy thông tin giao hàng.
+$giaohang = mysqli_fetch_assoc(mysqli_query($conn, "
+    SELECT * FROM thongtin_giaohang WHERE maDH = $id
 "));
 
 // Lấy chi tiết sản phẩm
@@ -66,8 +72,8 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 <main>
     <h2>Chi tiết đơn hàng #<?= $id ?></h2>
-    <p><strong>Khách hàng:</strong> <?= $donhang['tenKH'] ?> - <?= $donhang['sdt'] ?></p>
-    <p><strong>Địa chỉ:</strong> <?= $donhang['diaChi'] ?></p>
+    <p><strong>Khách hàng:</strong> <?= $giaohang['ho_ten'] ?> - <?= $giaohang['sdt'] ?></p>
+    <p><strong>Địa chỉ:</strong> <?= $giaohang['dia_chi'] ?></p>
     <p><strong>Ngày đặt:</strong> <?= $donhang['ngayDat'] ?> | <strong>Trạng thái:</strong> <?= $donhang['trangThai'] ?></p>
     <div class="cart-left" style = "width: 700px;">
       <h3>SẢN PHẨM TRONG ĐƠN:</h3>

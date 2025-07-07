@@ -140,7 +140,7 @@ if (isset($_SESSION['username'])) {
     .link { margin-top: 10px; text-align: center; }
     .link a { color: #007bff; cursor: pointer; text-decoration: underline; }
     .msg { background: #fff3cd; padding: 10px; border: 1px solid #ffeeba; margin-bottom: 15px; }
-    h3 { margin-top: 0; text-align: center; }
+    h3 { margin-top: 0;}
   </style>
 </head>
 <body>
@@ -150,7 +150,7 @@ if (isset($_SESSION['username'])) {
 <div class="container">
 <?php if (isset($_SESSION['tenKH'])): ?>
   <?php if (isset($userInfo) && $userInfo): ?>
-  <h3>Thông tin cá nhân</h3>
+  <h3 style = "text-align: center;">Thông tin cá nhân</h3>
   <p><strong>Tên:</strong> <?= htmlspecialchars($userInfo['tenKH']) ?></p>
   <p><strong>Số điện thoại:</strong> <?= htmlspecialchars($userInfo['sdt']) ?></p>
   <p><strong>Email:</strong> <?= htmlspecialchars($userInfo['email']) ?></p>
@@ -189,7 +189,7 @@ if (isset($_SESSION['username'])) {
   <!-- Đăng nhập -->
   <div id="loginForm" style="display: <?= $showLogin ? 'block' : 'none' ?>;">
     <form method="POST">
-      <h3>Đăng nhập</h3>
+      <h3 style = "text-align: center;">Đăng nhập</h3>
       <div class="form-group">
         <label>Tài khoản hoặc Email:</label>
         <input type="text" name="loginUser" required>
@@ -214,7 +214,7 @@ if (isset($_SESSION['username'])) {
   <!-- Đăng ký -->
   <div id="registerForm" style="display: <?= $showLogin ? 'none' : 'block' ?>;">
     <form method="POST">
-      <h3>Đăng ký</h3>
+      <h3 style = "text-align : center;">Đăng ký</h3>
       <div class="form-group">
         <label>Tên khách hàng:</label>
         <input type="text" name="regUser" required>
